@@ -32,6 +32,8 @@ var consolelog = function(){
                         self.onGridData(data);
                      }else if(data.type=='shot'){
                         self.onPeerShot(data);
+                     }else if(data.type=='complete'){
+                        self.onPeerComplete(data);
                      }
                   });
                   connection.on('close', function(data) {
@@ -71,6 +73,10 @@ var consolelog = function(){
          onPeerStart: function(data){
             this.set('peerready', true);
             this.ready();
+         },
+         onPeerComplete: function(data){
+            this.set('peerready', false);
+            this.changeState('loose');
          },
          onPeerShot: function(data){
             var peerGrid = this.get('peerGrid');
@@ -134,6 +140,19 @@ var consolelog = function(){
          },
          shot: function(row, col, value){
             this.get('connection').send({type: "shot", row: row, col: col, value: value});
+            var grid = sudoku.getData().cellData;
+            var size = sudoku.getData().size;
+            var wrong = false;
+            for(var i = 0; i < size; i++){
+               for(var j = 0; j < size; j++){
+                  if(grid[i][j].value != grid[i][j].answer) wrong = true;
+               }
+            }
+            if(!wrong){
+               this.get('connection').send({type: "complete", data: sudoku.getData()});
+               this.set('peerready', false);
+               this.changeState('win');
+            }
          },
          countClues: function(){
             var clueCount = 0;
