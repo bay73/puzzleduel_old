@@ -86,7 +86,7 @@ var consolelog = function(){
             var init = this.get('initialClueCount');
             var clues = this.get('clueCount');
             var needCount = size*size - this.get('initialClueCount');
-            if(clues > init - init * (correctCount - 5)/(needCount - 5)){
+            if(clues > init - (init-5) * (correctCount - 5)/(needCount - 5)){
                this.removeClue();
             }
          },
