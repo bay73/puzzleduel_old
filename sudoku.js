@@ -528,7 +528,7 @@ sudoku.random = function(){
    }
    if(putRandom(0, 0)){
       var clueCount = sudoku.prop.sudokuSize*sudoku.prop.sudokuSize;
-      var minCount = 35;
+      var minCount = 37;
       if (sudoku.prop.sudokuSize==4) minCount = 3;
       if (sudoku.prop.sudokuSize==6) minCount = 6;
       var variants = new Array(sudoku.prop.sudokuSize*sudoku.prop.sudokuSize);
