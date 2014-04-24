@@ -39,8 +39,7 @@
          },
          onChangeState: function(){
             var state = this.game.get('state');
-            consolelog('state='+state);
-            $('#info').toggle(state == 'peer_not_found' || state == 'peer_closed' || state == 'win' || state == 'loose');
+            $('#info').toggle(state == 'peer_not_found' || state == 'peer_closed' || state == 'win' || state == 'loose' || state == 'draw');
             if(state == 'peer_closed')
                $('#info').text('Соперник отлючился. Можно найти нового');
             else if(state == 'peer_not_found')
@@ -48,7 +47,9 @@
             else if(state == 'win')
                $('#info').text('Поздравляем. Вы победили. Еще партию?');
             else if(state == 'loose')
-               $('#info').text('К сожалению, соперник оказался быстрее. Еще партию?');
+               $('#info').text('К сожалению, вы проиграли. Еще партию?');
+            else if(state == 'draw')
+               $('#info').text('Зафиксирована ничья. Еще партию?');
             $('#name').toggle(state == 'init' || state == 'peer_not_found');
             $('#namelabel').toggle(state == 'init');
             $('#peerName').toggle(this.game.get('peername') != '' );
@@ -57,7 +58,7 @@
             if(!$('#name').val() || state == 'look_for_peer' ) $('#connect').button('disable');
             else $('#connect').button('enable');
             $('#spinner').toggle(state == 'look_for_peer' || state == 'waiting');
-            $('#ready').toggle(state == 'connected' || state == 'win' || state == 'loose');
+            $('#ready').toggle(state == 'connected' || state == 'win' || state == 'loose' || state == 'draw');
             $('#waitingforready').toggle(state == 'waiting' || state == 'ready');
             if(state == 'ready')
                $('#waitingforready').text('Начало через ' + this.game.get('counter'));
@@ -65,7 +66,7 @@
                $('#waitingforready').text('Ожидаем готовности соперника');
             if(state == 'go')
                $('#connectDialog').dialog('close');
-            else if(state == 'peer_closed' || state == 'win' || state == 'loose')
+            else if(state == 'peer_closed' || state == 'win' || state == 'loose' || state == 'draw')
                $('#connectDialog').dialog('open');
          },
          tryConnect: function(){

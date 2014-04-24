@@ -21,6 +21,20 @@ sudoku.init = function(parentElement, properties){
          textColor:     "black",
          textFont:      $('body').css('font-family')
       },
+      both: {                        // text proprties for common cells
+         textColor:     "black",
+         textFont:      $('body').css('font-family')
+      },
+      green: {                        // proprties for green cells
+         textColor:     "black",
+         textFont:      $('body').css('font-family'),
+         color:         "palegreen"
+      },
+      red: {                        // proprties for red cells
+         textColor:     "black",
+         textFont:      $('body').css('font-family'),
+         color:         "lightpink"
+      },
       clue: {                          // color and text properties for clue cells
          textFont:      "bold " + $('body').css('font-family'),
          textColor:     "darkBlue"
@@ -372,7 +386,7 @@ sudoku.shoot = function(keyCode){
          sudoku.onShot(sudoku.sightRow, sudoku.sightColumn, value);
       }
    }else if (currentData.type != "clue"){
-      currentData.type = "common";
+      if(!currentData.type) currentData.type = "common";
       currentData.value = value;
       if(sudoku.onShot){
          sudoku.onShot(sudoku.sightRow, sudoku.sightColumn, value);

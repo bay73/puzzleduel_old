@@ -6,9 +6,6 @@ var consolelog = function(){
          initialize: function(){
             this.changeState('init');
             var size = sudoku.getData().size;
-            var peerGrid = new Array(size);
-            for(var i = 0; i < size; i++) peerGrid[i] = new Array(size);
-            this.set('peerGrid', peerGrid)
          },
          findPeer: function(){
             var self = this;
@@ -62,7 +59,6 @@ var consolelog = function(){
             this.set('connected', false);
             this.set('sudokudata', false);
             this.set('connection', null);
-            this.set('peerGrid', null);
             this.set('isMain', null);
             this.changeState('peer_closed');
          },
@@ -79,22 +75,31 @@ var consolelog = function(){
             this.changeState('loose');
          },
          onPeerShot: function(data){
-            var peerGrid = this.get('peerGrid');
             var grid = sudoku.getData().cellData;
             var size = sudoku.getData().size;
-            peerGrid[data.row][data.col] = data.value;
-            var correctCount = 0;
-            for(var i = 0; i < size; i++){
-               for(var j = 0; j < size; j++){
-                  if(peerGrid[i][j] == grid[i][j].answer) correctCount++;
+            var row = data.row;
+            var col = data.col;
+            var value = data.value;
+            if(value > 0){
+               if(grid[row][col].answer == value){
+                  grid[row][col].value = value;
+                  if(grid[row][col].type == "green") {
+                     if(data.our == true){
+                        grid[row][col].type = "both";
+                     }
+                  } else {
+                     if(data.our == true){
+                        grid[row][col].type = "red";
+                     }
+                  }
+               }else{
+                  if(grid[row][col].type != "both"){
+                     grid[row][col].type = "green";
+                  }
                }
             }
-            var init = this.get('initialClueCount');
-            var clues = this.get('clueCount');
-            var needCount = size*size - this.get('initialClueCount');
-            if(clues > init - (init-10) * (correctCount - 5)/(needCount - 5)){
-               this.removeClue();
-            }
+            sudoku.redraw();
+            this.checkFinish();
          },
          onGridData: function(data){
             this.set('sudokudata', true);
@@ -139,19 +144,47 @@ var consolelog = function(){
             }
          },
          shot: function(row, col, value){
-            this.get('connection').send({type: "shot", row: row, col: col, value: value});
             var grid = sudoku.getData().cellData;
-            var size = sudoku.getData().size;
-            var wrong = false;
-            for(var i = 0; i < size; i++){
-               for(var j = 0; j < size; j++){
-                  if(grid[i][j].value != grid[i][j].answer) wrong = true;
+            var isOur = false;
+            if(value > 0){
+               if(grid[row][col].answer == value){
+                  if(grid[row][col].type == "common"){
+                     grid[row][col].type = "green";
+                     isOur = true;
+                  }
+               }else{
+                  grid[row][col].type = "red";
+                  grid[row][col].value = "";
                }
             }
-            if(!wrong){
-               this.get('connection').send({type: "complete", data: sudoku.getData()});
+            this.get('connection').send({type: "shot", row: row, col: col, value: value, our: isOur});
+            sudoku.redraw();
+            this.checkFinish();
+         },
+         checkFinish: function(){
+            var grid = sudoku.getData().cellData;
+            var size = sudoku.getData().size;
+            var empty = 0;
+            var green = 0;
+            var red = 0;
+            for(var i = 0; i < size; i++){
+               for(var j = 0; j < size; j++){
+                  if(!grid[i][j].value) empty++;
+                  if(grid[i][j].type=="green") green++;
+                  if(grid[i][j].type=="red") red++;
+               }
+            }
+            if(empty == 0){
+               this.set('counter', 0);
+               this.set('ready', false);
                this.set('peerready', false);
-               this.changeState('win');
+               this.set('sudokudata', false);
+               if(green > red)
+                  this.changeState('win');
+               else if (green==red)
+                  this.changeState('draw');
+               else
+                  this.changeState('loose');
             }
          },
          countClues: function(){
