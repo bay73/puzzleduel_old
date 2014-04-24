@@ -72,14 +72,11 @@ sudoku.init = function(parentElement, properties){
    sudoku.footerPanel.width(size);
    sudoku.gridPanel.append(sudoku.puzzleGrid);
    sudoku.puzzleGrid.attr("tabindex","1");
-   sudoku.showRules();
    sudoku.showSudoku();
 }
 
-sudoku.showRules = function(){
-   sudoku.headerPanel.html('Ваша задача - заполнить сетку цифрами от 1 до 9 так, чтобы цфиры в столбцах, строках и выделенных квадратах 3x3 не повторялись. Часть цифр уже расставлена. '+
-      'Ваш соперник одновременно решает точно такую же задачу. Клетка закрашивается зеленым, если вы поставили в нее цифру раньше соперника и красным - в противном случае. Вы видите цфиры поставленные и вами и соперником. <br>' +
-      'Для ввода цифры наведите прицел на требуемую клетку и нажмите клавишу с цифрой, которую хотите вставить.')
+sudoku.showHeader = function(html){
+   sudoku.headerPanel.html(html)
 }
 
 sudoku.gridSize = function(){
@@ -366,9 +363,9 @@ sudoku.shoot = function(keyCode){
    gridCanvas = sudoku.puzzleGrid;
    var value = null;
    if (keyCode >= 48 && keyCode <= 57) value = keyCode - 48;
-   if (keyCode >= 96 && keyCode <= 105) value = keyCode - 96;
+//   if (keyCode >= 96 && keyCode <= 105) value = keyCode - 96;
    if (keyCode == 45 || keyCode == 32) value = 0;
-   if (keyCode == 35) value = 1;
+/*   if (keyCode == 35) value = 1;
    if (keyCode == 40) value = 2;
    if (keyCode == 34) value = 3;
    if (keyCode == 37) value = 4;
@@ -377,6 +374,7 @@ sudoku.shoot = function(keyCode){
    if (keyCode == 36) value = 7;
    if (keyCode == 38) value = 8;
    if (keyCode == 33) value = 9;
+   */
    if (sudoku.sightRow == null)
       return;
    var currentData = sudoku.gridData.cellData[sudoku.sightRow][sudoku.sightColumn];

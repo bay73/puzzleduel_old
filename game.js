@@ -139,6 +139,7 @@ var consolelog = function(){
                   }
                },
                1000);
+               this.checkFinish();
             }else if(this.get('ready')){
                this.changeState('waiting');
             }
@@ -165,15 +166,18 @@ var consolelog = function(){
             var grid = sudoku.getData().cellData;
             var size = sudoku.getData().size;
             var empty = 0;
+            var both = 0;
             var green = 0;
             var red = 0;
             for(var i = 0; i < size; i++){
                for(var j = 0; j < size; j++){
                   if(!grid[i][j].value) empty++;
+                  if(grid[i][j].type=="both") both++;
                   if(grid[i][j].type=="green") green++;
                   if(grid[i][j].type=="red") red++;
                }
             }
+            sudoku.showHeader(translate["Score"] + ' <span class="ourscore">' + (green + both/2) + '</span> : <span class="otherscore">' + (red + both/2) + '</span>');
             if(empty == 0){
                this.set('counter', 0);
                this.set('ready', false);

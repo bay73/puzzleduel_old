@@ -5,7 +5,7 @@
    <title>
       Sudoku Duel
    </title>
-   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
+   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/blitzer/jquery-ui.css">
    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
    <script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
@@ -32,14 +32,66 @@
 <body>
    <div id="connectDialog">
       <table>
-         <tr><td><label id="peerName"></label></td></tr>
-         <tr><td><label id="info">Соперника найти не удалось</label></td></tr>
-         <tr><td><label id="namelabel" for="name">Представьтесь</label> <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all"></td></tr>
-         <tr><td><img id="spinner" src="spinner.gif"></img></td></tr>
-         <tr><td><button id="connect">Поиск соперника</button></td></tr>
-         <tr><td><button id="ready">Начать</button></td></tr>
-         <tr><td><label id="waitingforready">Ожидаем готовности соперника</label></td></tr>
+         <tr><td colspan=2><label id="peerName"></label></td></tr>
+         <tr><td colspan=2><label id="info"></label></td></tr>
+         <tr><td colspan=2><label id="namelabel" for="name"></label> <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all"></td></tr>
+         <tr><td colspan=2><img id="spinner" src="spinner.gif"></img></td></tr>
+         <tr><td colspan=2><button id="connect"></button></td></tr>
+         <tr><td colspan=2><button id="ready"></button></td></tr>
+         <tr><td colspan=2><label id="waitingforready"></label></td></tr>
+         <tr><td><label id="rules"></label></td><td><label id="switchlang"></label></td></tr>
       </table>
    </div>
+   <div id="rulesDialog">
+      
+   </div>
 </body>
+<script>
+   var translate_ru = {
+      "PeerNotFound": "Соперника найти не удалось",
+      "PeerDisconnected": "Соперник отключился. Можно найти нового",
+      "Win": "Поздравляем. Вы победили. Еще партию?",
+      "Draw": "Зафиксирована ничья. Еще партию?",
+      "Loose": "К сожалению, вы проиграли. Еще партию?",
+      "Versus": "Ваш соперник",
+      "RepeatSearch": "Повторный поиск",
+      "StartAt": "Начало через",
+      "Waiting": "Ожидаем готовности соперника",
+      "Score": "Текущий счет",
+      "GameRules": "Правила игры",
+      "Start": "Начать",
+      "Rules": "Правила",
+      "SwitchLanguage": "To English",
+      "AskName": "Представьтесь",
+      "SearchRivals": "Поиск соперника",
+      "RulesText": "Ваша задача - заполнить сетку цифрами от 1 до 9 так, чтобы цфиры в столбцах, строках и выделенных квадратах 3x3 не повторялись. Часть цифр уже расставлена.<br>"+
+                  "Ваш соперник одновременно решает точно такую же задачу. Клетка закрашивается зеленым, если вы поставили в нее цифру раньше соперника и красным - в противном случае. Вы видите цфиры поставленные и вами и соперником.<br>"+
+                  "Если вы поставите цифры одновременно, то клетка не будет засчитана ни кому.<br>"+
+                  "Если вы укажите неверную цифру, то она автоматически будет отдана сопернику вне зависимости от того, когда туда будет вписана верная цифра.<br>"+
+                  "Для ввода цифры наведите прицел на требуемую клетку и нажмите клавишу с цифрой, которую хотите вставить.<br>"
+   }
+   var translate_en = {
+      "PeerNotFound": "No rivals found",
+      "PeerDisconnected": "Rival's disconnected. You can try other",
+      "Win": "Congratulations. You WON. One more game?",
+      "Draw": "It's DRAW. One more game?",
+      "Loose": "Sorry, but you LOST. One more game?",
+      "Versus": "You rival",
+      "RepeatSearch": "Repeat Search",
+      "StartAt": "Start at",
+      "Waiting": "Waitnig for rival ready",
+      "Score": "Current score",
+      "GameRules": "Game rules",
+      "Start": "Start",
+      "Rules": "Rules",
+      "SwitchLanguage": "Русский",
+      "AskName": "Enter your name",
+      "SearchRivals": "Search for rivals",
+      "RulesText": "Your goal is to fill in the grid with digits 1 through 9. Each row, column and outlined 3x3 square must contain every digit exactly once. Some digits are already placed.<br>"+
+                  "Your rivals will solve the same puzzle simultaniously. A cell will be painted green if you put the digit faster than the rival and red in other case. You will see all digits which are place by you as well as by your rival.<br>"+
+                  "If you both put the digit at the same time it will not be added to anyones score.<br>" +
+                  "If you place wrong digit, then the cell will be counted to rivals score.<br>" +
+                  "To put digit aim your mouse to the selectted celll and press digit button on your keyboard"
+   }
+</script>
 </html>
