@@ -20,6 +20,10 @@
    font-size: xx-large;
 }
 
+#footerPanel{
+   text-align: left;
+}
+
 .ourscore {
 	color: green;
 }
@@ -30,6 +34,12 @@
 
 #rules{
    font-size: x-small;
+   text-align: left;
+   text-decoration: underline;
+   cursor: pointer;
+}
+
+#ruleslink{
    text-align: left;
    text-decoration: underline;
    cursor: pointer;

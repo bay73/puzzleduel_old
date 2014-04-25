@@ -11,6 +11,8 @@
             $('#connect').button();
             $('#ready').button();
             $('#rules').click(self.showRules);
+            sudoku.showFooter('<label id="ruleslink"></label>')
+            $('#ruleslink').click(self.showRules);
             $('#connectDialog').dialog({
                title: '',
                autoOpen: false,
@@ -97,6 +99,7 @@
             else if(state == 'peer_closed' || state == 'win' || state == 'loose' || state == 'draw')
                $('#connectDialog').dialog('open');
             $('#rules').text(translate["Rules"]);
+            $('#ruleslink').text(translate["Rules"]);
             $('#switchlang').text(translate["SwitchLanguage"]);
             $('#rulesDialog').html(translate["RulesText"])
          },

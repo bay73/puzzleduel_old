@@ -79,6 +79,10 @@ sudoku.showHeader = function(html){
    sudoku.headerPanel.html(html)
 }
 
+sudoku.showFooter = function(html){
+   sudoku.footerPanel.html(html)
+}
+
 sudoku.gridSize = function(){
    var wwidth = $(window).width();
    var wheight = $(window).height();
