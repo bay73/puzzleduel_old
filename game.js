@@ -44,7 +44,7 @@ var consolelog = function(){
                },
                function() {
                   self.changeState('peer_not_found');
-                  console.log('Error!!! Cannot connect');
+                  consolelog('Error!!! Cannot connect');
                }
             );
          },
