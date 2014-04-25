@@ -6,6 +6,7 @@
          var signalConnected = false;
          var signalReceived = false;
          var mainConnected = false;
+         var counter = 0;
          peer.on('open', function(id) {
             mainPeerId = id;
             lookForSignalListener();
@@ -39,25 +40,38 @@
                }, 3000
             );
             signalConnected = false;
-            signalConnection = signalPeer.connect('initial_peer');
+            signalConnection = signalPeer.connect('initial_peer'+counter);
             signalConnection.on('open',
                function() {
                   signalConnected = true;
                   signalConnection.send(mainPeerId);
                }
             );
+            signalConnection.on('eroor',
+               function(err) {
+                  consolelog('connection error', err);
+               }
+            );
          }
 
          listenSignal = function(){
             signalCreated = false;
-            signalPeer = new Peer('initial_peer', peer.options);
+            signalPeer = new Peer('initial_peer'+counter, peer.options);
             signalPeer.on('open', function(id) {
                signalCreated = true;
+            });
+            signalPeer.on('error', function(err) {
+               consolelog('peer 2 error', err);
             });
             setTimeout(
                function(){
                   if(!mainConnected && !signalCreated){
                      closeSignalConnection();
+                     if(counter < 20){
+                        counter++;
+                     }else{
+                        counter = 0;
+                     }
                      lookForSignalListener();
                   }
                }, 3000
@@ -74,7 +88,7 @@
                         if (errorCallback)
                            errorCallback();
                      }
-                  }, 20000
+                  }, 60000
                );
                signalConnection.on('data',function(data){
                   if(!signalReceived){
