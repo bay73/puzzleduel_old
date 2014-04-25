@@ -40,6 +40,7 @@
                }, 3000
             );
             signalConnected = false;
+            consolelog('try for next id', 'initial_peer'+counter);
             signalConnection = signalPeer.connect('initial_peer'+counter);
             signalConnection.on('open',
                function() {
