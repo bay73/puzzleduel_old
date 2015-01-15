@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+   <title>
+      Board
+   </title>
+   <script src="js/jquery-1.9.1.min.js"></script>
+   <script src="js/jquery-ui.min.js"></script>
+   <script src="js/jcanvas.min.js"></script>
+   <script src="js/io_test.js"></script>
+   <script src="js/translate.js"></script>
+   <script src="js/skins.js"></script>
+   <script src="js/sudoku.js"></script>
+   <script src="js/server.js"></script>
+   <script src="js/puzzle.js"></script>
+   <script src="js/board.js"></script>
+   <script src="js/layout.js"></script>
+   <link href="css/jquery-ui.min.css" rel="stylesheet">
+</head>
+<body style="margin: 0px; padding: 0px; border: 0px;">
+   <div id="board" style="position:absolute;">
+   </div>
+   <div id="connectDialog">
+      <table>
+         <tr><td colspan=2><label id="peerName"></label></td></tr>
+         <tr><td colspan=2><label id="info"></label></td></tr>
+         <tr><td colspan=2><label id="namelabel" for="name"></label> <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all"></td></tr>
+         <tr><td colspan=2><img id="spinner" src="img/spinner.gif"></img></td></tr>
+         <tr><td colspan=2><button id="connect"></button></td></tr>
+         <tr><td colspan=2><button id="ready"></button></td></tr>
+         <tr><td colspan=2><label id="waitingforready"></label></td></tr>
+      </table>
+   </div>
+   <div id="rulesDialog">
+   </div>
+</body>
+</html>
+<script>
+  var server = io();
+  server.on('connection', SudokuServer);
+
+   var btnMenu = new BayButton('arrow-36-xxl.png','Menu',function(){alert('Menu doesn`t work yet!');});
+   var btnSettings = new BayButton('settings-4-xxl.png','Settings',function(){alert('Settings not available now!');});
+   var btnHelp = new BayButton('question-mark-2-xxl.png','Help',function(){puzzle.showRules();});
+   var buttonPanel = new BayLayout([btnMenu, btnSettings, btnHelp],[33, 33, 33]);
+   var scorePanel = new BayTextPanel(2.3);
+   var statusPanel = new BayTextPanel(10);
+   var infoPanel = new BayLayout([scorePanel, statusPanel],[72, 28]);
+   var servicePanel = new BayLayout([buttonPanel, infoPanel],[25, 75]);
+   var puzzle = new BayPuzzle({generator: new SquareGridGenerator(), width: 9, height: 9, sudoku: true, digits: 9});
+   var board = new BayBoard({puzzle: puzzle, colorScheme: BayColorScheme.grey});
+   var layout = new BayLayout([servicePanel, board],[25, 75]);
+   puzzle.setScorePanel(scorePanel);
+   puzzle.setInfoPanel(statusPanel);
+   puzzle.setBoard(board);
+
+   scorePanel.text = '0 : 0';
+
+   var resizeTimer;
+   $(window).bind('resize',function(){
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function(){layout.onResize($(window))},100);
+   })
+   layout.onResize($(window));
+</script>
