@@ -37,11 +37,11 @@ app.use('/bower_components',  express.static(__dirname + 'public/bower_component
 
 require('./routes')(app);
 
-app.use(require('./scripts/error').notFound);
-app.use(require('./scripts/error').errorHandler);
+app.use(require('./scripts/error').notFound(app));
+app.use(require('./scripts/error').errorHandler(app));
 
-var server = app.listen(config.get('port'), function () {
+var server = app.listen(process.env.PORT || config.get('port'), process.env.IP || config.get('host'), function () {
   var host = server.address().address
   var port = server.address().port
-  log.info('Example app listening at http://%s:%s', host, port)
+  log.info('Puzzleduel app listening at http://%s:%s', host, port)
 })

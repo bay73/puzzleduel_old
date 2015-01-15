@@ -4,7 +4,6 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "jquery": "2.1",
-    "jquery-ui": ""
+    "jquery": "2.1"
   }
 }

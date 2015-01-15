@@ -1,9 +1,9 @@
-// var User = require('../models/user').User;
+var User = require('../models/user').User;
 var AuthError = require('../models/user').AuthError;
 
 exports.post = function(req, res, next){
-   username = req.body.username;
-   password = req.body.password;
+   var username = req.body.username;
+   var password = req.body.password;
    
    User.authorize(username, password, function(err, user){
       if(err) {

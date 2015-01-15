@@ -1,6 +1,7 @@
 var path = require('path');
 var util = require('util');
 var http = require('http');
+var log = require('../scripts/log')(module);
 var errorHandler = require('errorhandler');
 
 util.inherits(HttpError, Error);
@@ -22,23 +23,27 @@ function sendHttpError(res, error){
       res.render('error', {title: 'Error', error: error});
    }
 }
-exports.notFound = function(req, res, next){
-   next(new HttpError(404, 'Page ' + path.basename(req.url) + ' not found!'));
+exports.notFound = function(app){
+   return function(req, res, next){
+      next(new HttpError(404, 'Page ' + path.basename(req.url) + ' not found!'));
+   }
 }
 
-exports.errorHandler = function(err, req, res, next){
-   console.log(err);
-   if(typeof err == 'number' ) {
-      err = new HttpError(err);
-   }
-   if(err instanceof HttpError) {
-     sendHttpError(res, err);
-   } else {
-      if(app.get('env') == 'development') {
-          errorHandler()(err, req, res, next);
+exports.errorHandler = function(app){
+   return function(err, req, res, next){
+      console.log(err);
+      if(typeof err == 'number' ) {
+         err = new HttpError(err);
+      }
+      if(err instanceof HttpError) {
+        sendHttpError(res, err);
       } else {
-         log.error(err);
-         sendHttpError(res, new HttpError(500));
+         if(app.get('env') == 'development') {
+             errorHandler()(err, req, res, next);
+         } else {
+            log.error(err);
+            sendHttpError(res, new HttpError(500));
+         }
       }
    }
 }
