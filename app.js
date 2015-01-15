@@ -1,0 +1,47 @@
+var express = require('express');
+var config = require('./config');
+var path = require('path');
+var favicon = require('serve-favicon');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('express-session')
+var logger = require('morgan');
+var log = require('./scripts/log')(module);
+var mongoose = require('./scripts/mongoose');
+var app = express();
+
+
+app.engine('ejs', require('ejs-locals'));
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use(favicon(__dirname + '/public/favicon.ico'));
+if(app.get('env') == 'development'){
+   app.use(logger('dev'));
+} else {
+   app.use(logger('short'));
+}
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+var MongoStore = require('connect-mongo')(session);
+var sessionconfig = config.get("session")
+sessionconfig.store = new MongoStore({mongooseConnection: mongoose.connection});
+app.use(session(sessionconfig));
+app.use(require('./scripts/loaduser'));
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/bower_components',  express.static(__dirname + 'public/bower_components'));
+
+require('./routes')(app);
+
+app.use(require('./scripts/error').notFound);
+app.use(require('./scripts/error').errorHandler);
+
+var server = app.listen(config.get('port'), function () {
+  var host = server.address().address
+  var port = server.address().port
+  log.info('Example app listening at http://%s:%s', host, port)
+})

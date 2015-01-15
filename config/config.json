@@ -1,0 +1,25 @@
+{
+   "port": 8888,
+   "mongoose": {
+      "uri": "mongodb://localhost/mydb",
+      "options": {
+         "server": {
+            "socetOptions": {
+               "keepAlive": 1
+            }
+         }
+      }
+   },
+   "session": {
+      "name": "sid",
+      "secret": "baysessionsecret",
+      "resave": false,
+      "saveUninitialized": true,
+      "cookie": { 
+         "path": "/", 
+         "httpOnly": true, 
+         "secure": false, 
+         "maxAge": 1209600000 
+      }
+   }
+}

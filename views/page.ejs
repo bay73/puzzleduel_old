@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= title %></title>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/js/style.js"></script>
+    <link rel='stylesheet' href='/css/style.css' />
+  </head>
+  <body>
+     <div class="container raised">
+        <%-partial('login') %>
+        <header class="logo"></header>
+        <content class="content">
+           <%-body -%>
+        </content>
+     </div>
+  </body>
+</html>

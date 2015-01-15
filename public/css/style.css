@@ -1,0 +1,269 @@
+html,body {
+   height: 98%;
+   margin: 0;
+}
+
+body {
+   background-color: #f9f9f9;
+   font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+}
+
+* {
+   margin: 0;
+   padding: 0;
+}
+
+.raised {
+   transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+   transition-delay: 0.2s;
+   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+   border-radius: 2px;
+   background-color: #fff;
+}
+
+.container{
+   display: block;
+   margin: 5px auto;
+   width: 1000px;
+   max-width: 60%;
+   min-height: 98%;
+   min-width: 460px;
+   text-align: center;
+}
+
+@media screen and (min-width:480px) and (max-width:1200px) {
+.container{
+   width: 696px;
+   max-width: 90%;
+   min-width: 440px;
+}
+   
+}
+
+@media screen and (min-width:40px) and (max-width:480px) {
+.container{
+   width: 98%
+   max-width: 98%;
+   min-width: 98%;
+}
+}
+
+.logo {
+   width: 100%;
+   min-height: 100px;
+   height: 15%;
+}
+
+.content {
+   margin: 100px auto;
+}
+
+.button {
+   position: relative;
+   outline: none;
+   border: none;
+   overflow: hidden;
+   cursor: pointer;
+   min-width: 120px;
+   min-height: 32px;
+   background-color: #fff;
+   border-radius: 2px;
+   font-weight: bold;
+   vertical-align: middle;
+}
+
+.button.default{
+   color: #008;
+}
+
+.button:hover, .button:focus {
+   background-color: #fafaff;
+}
+
+.button.raised:active {
+   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+   transition-delay: 0s;
+}
+
+.button.login {
+   position: relative;
+   top: 5px;
+   right: 5px;
+   float:right;
+}
+
+.ripple-effect {
+	display: block;
+   position: absolute;
+	background-color: #228;
+	border-radius: 100%;
+	transform: scale(0);
+}
+
+.ripple-effect.animate {
+   animation: ripple .5s linear;
+   -webkit-animation: ripple .5s linear;
+}
+
+@-webkit-keyframes ripple {
+	100% {opacity: 0; transform: scale(2.0);}
+}
+@keyframes ripple {
+	100% {opacity: 0; transform: scale(2.0);}
+}
+
+.dialog {
+   position: absolute;
+   display: none;
+   overflow: hidden;
+   padding-top: 20px;
+   padding-left: 20px;
+   text-align: center;
+}
+
+.overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   height: 100%;
+   width: 100%;
+   background-color: rgba(0,0,0,0.5);
+   z-index: 10;
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.overlay.animate {
+   animation: overlay .5s linear;
+   -webkit-animation: overlay .5s linear;
+}
+
+@keyframes overlay {
+	0% {opacity: 0;}
+	100% {opacity: 1;}
+}
+@-webkit-keyframes overlay {
+	0% {opacity: 0;}
+	100% {opacity: 1;}
+}
+
+.overlay.animatehide {
+   animation: overlayhide .5s linear;
+   -webkit-animation: overlayhide .5s linear;
+}
+
+@keyframes overlayhide {
+	0% {opacity: 1;}
+	100% {opacity: 0;}
+}
+@-webkit-keyframes overlayhide {
+	0% {opacity: 1;}
+	100% {opacity: 0;}
+}
+
+.group{ 
+   position:relative; 
+   margin-bottom:15px; 
+}
+input {
+   font-size:18px;
+   font-weight: bold;
+   display:block;
+   width:260px;
+   padding: 10px 10px 10px 5px;
+   display: block;
+   border: none;
+   background-color: #fff;
+   border-bottom: 1px solid #757575;
+   outline:none;
+   z-index: 1;
+}
+
+label 				 {
+  color: #bbb; 
+  font-size: 18px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: 0.2s ease all; 
+  -moz-transition: 0.2s ease all; 
+  -webkit-transition: 0.2s ease all;
+}
+
+input:focus ~ label, input:valid ~ label {
+  top:-10px;
+  font-size:14px;
+  color:#5264AE;
+}
+
+.bar { 
+   position:relative; 
+   display:block; 
+   width:275px;
+}
+
+.bar:before, .bar:after 	{
+  content:'';
+  height:2px; 
+  width:0;
+  bottom:1px; 
+  position:absolute;
+  background:#5264AE; 
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+
+.bar:before {
+  left:50%;
+}
+
+.bar:after {
+  right:50%; 
+}
+
+/* active state */
+input:focus ~ .bar:before, input:focus ~ .bar:after {
+   width:50%;
+}
+
+.highlight {
+  position:absolute;
+  height:60%; 
+  width:275px; 
+  top:25%; 
+  left:0;
+  pointer-events:none;
+  opacity:0.5;
+}
+
+/* active state */
+input:focus ~ .highlight {
+  -webkit-animation:inputHighlighter 0.3s ease;
+  -moz-animation:inputHighlighter 0.3s ease;
+  animation:inputHighlighter 0.3s ease;
+}
+
+@-webkit-keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+
+.error {
+   display: block;
+   width: 100%;
+   height: 16px;
+   color: #c00;
+   text-align: center;
+   padding-bottom: 5px;
+}

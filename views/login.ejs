@@ -1,0 +1,78 @@
+<% if (user) { %>
+   <button class="raised button login" id="userInfoButton"><%=user.username %></button>
+   <div class="raised dialog" id="userInfoDialog">
+      <button class="button default" id="userInfoOkButton">OK</button>
+      <button class="button" id="userLogoutButton" data-ripple-color="#89669b">LOGOUT</button>
+   </div>
+   <script>
+      rippleButton($('#userInfoButton'), function(){
+         showDialog($('#userInfoDialog'),{
+            from: $('#userInfoButton'),
+            width: 310,
+            height: 200,
+            direction: 'bottom-left'
+         });
+      });
+      rippleButton($('#userInfoOkButton'), function(){
+         closeDialog($('#userInfoDialog'));
+      });
+      rippleButton($('#userLogoutButton'), function(){
+         $('<form method="POST" action="/logout">').submit();
+      });
+   </script>   
+<% } else { %>
+   <button class="raised button login" id="userLoginButton">Login/Register</button>
+   <div class="raised dialog" id="userLoginDialog">
+      <form name="loginForm" id="loginForm" method="POST">
+         <div class="group">
+            <input type="text" name="username" id="username" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Name</label>
+         </div>
+         <div class="group">
+            <input type="password" name="password" id="password" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Password</label>
+         </div>
+         <span id="loginError" class="error"></span>
+         <button class="button default" id="userLoginOkButton" data-ripple-color="#89669b">OK</button>
+         <button class="button" id="userLoginCancelButton">CANCEL</button>
+      </form>
+   </div>
+   <script>
+      rippleButton($('#userLoginButton'), function(){
+         showDialog($('#userLoginDialog'),{
+            from: $('#userLoginButton'),
+            width: 310,
+            height: 200,
+            direction: 'bottom-left'
+         });
+      });
+      rippleButton($('#userLoginOkButton'), function(){
+         $('#loginError').text('');
+         var form = $('#loginForm');
+         $.ajax({
+            url: "/login",
+            method: "POST",
+            data: form.serialize(),
+            complete: function(){
+            },
+            statusCode: {
+               200: function(){
+                  console.log('login Ok!!!');
+                  window.location.href="/"
+               },
+               403: function(){
+                  $('#loginError').text('Wrong authorization data!');
+               }
+            }
+         })
+      });
+      rippleButton($('#userLoginCancelButton'), function(){
+         $('#loginError').text('');
+         closeDialog($('#userLoginDialog'));
+      });
+   </script>
+<% } %>
