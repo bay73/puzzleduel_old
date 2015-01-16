@@ -1,0 +1,12 @@
+{
+    "Name of the language": "English",
+    "Login button label" : "Login/Register",
+    "Logout button label" : "LOGOUT",
+    "OK button label" : "OK",
+    "Cancel button label" : "CANCEL",
+    "Name": "Name",
+    "Password": "Password",
+    "Wrong authorization data!": "Wrong authorization data!",
+    "Welcome to Puzzleduel text": "Welcome to Puzzleduel",
+    "EOF": 0
+}

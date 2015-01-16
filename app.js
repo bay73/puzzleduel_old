@@ -32,8 +32,10 @@ sessionconfig.store = new MongoStore({mongooseConnection: mongoose.connection});
 app.use(session(sessionconfig));
 app.use(require('./scripts/loaduser'));
 
+app.use(require('./translation').translate(app));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components',  express.static(__dirname + 'public/bower_components'));
+require('./translation').get(app);
 
 require('./routes')(app);
 

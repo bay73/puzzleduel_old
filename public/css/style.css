@@ -266,3 +266,9 @@ input:focus ~ .highlight {
    text-align: center;
    padding-bottom: 5px;
 }
+
+.langchooser {
+   position: fixed;
+   bottom: 0;
+   right: 0;
+}

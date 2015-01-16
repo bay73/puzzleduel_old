@@ -31,7 +31,6 @@ exports.notFound = function(app){
 
 exports.errorHandler = function(app){
    return function(err, req, res, next){
-      console.log(err);
       if(typeof err == 'number' ) {
          err = new HttpError(err);
       }

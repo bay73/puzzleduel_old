@@ -20,6 +20,7 @@
     "express-session": "1",
     "connect-mongo": "0",
     "async": "0",
-     "errorhandler": "1"
+    "errorhandler": "1",
+    "send": "0"
   }
 }

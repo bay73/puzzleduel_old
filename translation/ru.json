@@ -1,0 +1,12 @@
+{
+    "Name of the language": "Русский",
+    "Login button label" : "Регистрация",
+    "Logout button label" : "ВЫХОД",
+    "OK button label" : "OK",
+    "Cancel button label" : "ОТМЕНА",
+    "Name": "Имя",
+    "Password": "Пароль",
+    "Wrong authorization data!": "Неверное имя или пароль!",
+    "Welcome to Puzzleduel text": "Приветствуем вас на сайте Puzzleduel",
+   "EOF": 0
+}

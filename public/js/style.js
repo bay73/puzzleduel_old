@@ -1,4 +1,4 @@
-rippleButton = function(element, callback){
+var rippleButton = function(element, callback){
    $(element).on('click',function(e){
       e.preventDefault();
       var parent = $(element);
@@ -28,7 +28,7 @@ rippleButton = function(element, callback){
    });
 };
 
-showDialog = function(element, options){
+var showDialog = function(element, options){
    if($('body').find('.overlay').length === 0)
       $('body').append('<div class="overlay"></div>');
    
@@ -71,7 +71,7 @@ showDialog = function(element, options){
 
 };
 
-closeDialog = function(element){
+var closeDialog = function(element){
    var overlay = $('body').find('.overlay');
    overlay.addClass('animatehide');
    setTimeout(function(){

@@ -1,8 +1,8 @@
 <% if (user) { %>
    <button class="raised button login" id="userInfoButton"><%=user.username %></button>
    <div class="raised dialog" id="userInfoDialog">
-      <button class="button default" id="userInfoOkButton">OK</button>
-      <button class="button" id="userLogoutButton" data-ripple-color="#89669b">LOGOUT</button>
+      <button class="button default" id="userInfoOkButton"><%= translate["OK button label"]%></button>
+      <button class="button" id="userLogoutButton" data-ripple-color="#89669b"><%= translate["Logout button label"]%></button>
    </div>
    <script>
       rippleButton($('#userInfoButton'), function(){
@@ -21,24 +21,24 @@
       });
    </script>   
 <% } else { %>
-   <button class="raised button login" id="userLoginButton">Login/Register</button>
+   <button class="raised button login" id="userLoginButton"><%= translate["Login button label"]%></button>
    <div class="raised dialog" id="userLoginDialog">
       <form name="loginForm" id="loginForm" method="POST">
          <div class="group">
             <input type="text" name="username" id="username" required>
             <span class="highlight"></span>
             <span class="bar"></span>
-            <label>Name</label>
+            <label><%= translate["Name"]%></label>
          </div>
          <div class="group">
             <input type="password" name="password" id="password" required>
             <span class="highlight"></span>
             <span class="bar"></span>
-            <label>Password</label>
+            <label><%= translate["Password"]%></label>
          </div>
          <span id="loginError" class="error"></span>
-         <button class="button default" id="userLoginOkButton" data-ripple-color="#89669b">OK</button>
-         <button class="button" id="userLoginCancelButton">CANCEL</button>
+         <button class="button default" id="userLoginOkButton" data-ripple-color="#89669b"><%= translate["OK button label"]%></button>
+         <button class="button" id="userLoginCancelButton"><%= translate["Cancel button label"]%></button>
       </form>
    </div>
    <script>
@@ -61,11 +61,10 @@
             },
             statusCode: {
                200: function(){
-                  console.log('login Ok!!!');
                   window.location.href="/"
                },
                403: function(){
-                  $('#loginError').text('Wrong authorization data!');
+                  $('#loginError').text('<%= translate["Wrong authorization data!"]%>');
                }
             }
          })
