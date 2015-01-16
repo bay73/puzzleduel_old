@@ -99,7 +99,7 @@ body {
 	border-radius: 100%;
 	transform: scale(0);
 }
-q
+
 .ripple-effect.animate {
    animation: ripple .5s linear;
    -webkit-animation: ripple .5s linear;
