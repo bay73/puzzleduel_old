@@ -38,7 +38,8 @@ var schema = new Schema({
       default: 'en'
    },
    email: {
-      type: String
+      type: String,
+      default: ''
    }
 });
 

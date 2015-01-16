@@ -10,10 +10,13 @@
   <body>
      <div class="container raised">
         <%-partial('login') %>
-        <header class="logo"></header>
-        <content class="content">
+        <header class="logo">
+          <img src="images/logo.png">
+          <span class="title"><%= title %></span>
+        </header>
+        <div class="content">
            <%-body -%>
-        </content>
+        </div>
      </div>
   </body>
 </html>
