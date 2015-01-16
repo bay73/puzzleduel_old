@@ -27,6 +27,13 @@ var schema = new Schema({
    created: {
       type: Date,
       defaule: Date.now
+   },
+   displayname: {
+      type: String
+   },
+   language: {
+      type: String,
+      default: 'en'
    }
 });
 
@@ -43,7 +50,7 @@ schema.virtual('password')
    .set(function(password){
       password = password.trim().toLowerCase();
       this._plainPassword = password;
-      this.salt = Math.random + '';
+      this.salt = Math.random() + '';
       this.hashedPassword = this.encryptPassword(password);
    })
    .get(function(){
@@ -78,6 +85,14 @@ schema.statics.authorize = function(username, password, callback){
       
    ], callback);
 }
+
+
+schema.pre('save', function (next) {
+  if(!this.displayname) {
+     this.displayname = this.username;
+  }
+  next();
+})
 
 exports.User = mongoose.model('User', schema);
 
