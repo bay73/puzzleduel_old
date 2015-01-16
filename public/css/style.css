@@ -42,7 +42,7 @@ body {
 
 @media screen and (min-width:40px) and (max-width:480px) {
 .container{
-   width: 98%
+   width: 98%;
    max-width: 98%;
    min-width: 98%;
 }
@@ -69,7 +69,7 @@ body {
    background-color: #fff;
    border-radius: 2px;
    font-weight: bold;
-   vertical-align: middle;
+   line-height: 32px;
 }
 
 .button.default{
@@ -99,7 +99,7 @@ body {
 	border-radius: 100%;
 	transform: scale(0);
 }
-
+q
 .ripple-effect.animate {
    animation: ripple .5s linear;
    -webkit-animation: ripple .5s linear;
@@ -176,12 +176,11 @@ input {
    background-color: #fff;
    border-bottom: 1px solid #757575;
    outline:none;
-   z-index: 1;
 }
 
 label 				 {
   color: #bbb; 
-  font-size: 18px;
+  font-size: 14px;
   font-weight: normal;
   position: absolute;
   pointer-events: none;
@@ -194,7 +193,7 @@ label 				 {
 
 input:focus ~ label, input:valid ~ label {
   top:-10px;
-  font-size:14px;
+  font-size:12px;
   color:#5264AE;
 }
 
@@ -231,9 +230,9 @@ input:focus ~ .bar:before, input:focus ~ .bar:after {
 
 .highlight {
   position:absolute;
-  height:60%; 
+  height:50%; 
   width:275px; 
-  top:25%; 
+  top:15%; 
   left:0;
   pointer-events:none;
   opacity:0.5;

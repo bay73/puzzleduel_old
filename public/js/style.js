@@ -20,10 +20,11 @@ rippleButton = function(element, callback){
       setTimeout(function(){
          ripple.remove();
       },1000)
-      if(callback)
+      if(callback) {
          setTimeout(function(){
             callback(e);
          }, 300);
+      }
    });
 };
 
