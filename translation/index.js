@@ -48,6 +48,6 @@ function getLanguage(lang){
 }
 
 module.exports.languages = function(){
-    return [getLanguage('en'), getLanguage('ru')];
+    return [getLanguage('en'), getLanguage('de'), getLanguage('ru')];
     
 }
