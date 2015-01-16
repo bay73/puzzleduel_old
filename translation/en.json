@@ -4,9 +4,13 @@
     "Logout button label" : "LOGOUT",
     "OK button label" : "OK",
     "Cancel button label" : "CANCEL",
-    "Name": "Name",
+    "Login Name": "Name",
     "Password": "Password",
+    "Display Name": "Display Name",
+    "Email": "Email",
     "Wrong authorization data!": "Wrong authorization data!",
+    "Wrong data!": "Wrong data!",
     "Welcome to Puzzleduel text": "Welcome to Puzzleduel",
+    "Language": "Language",
     "EOF": 0
 }

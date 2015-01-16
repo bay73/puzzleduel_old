@@ -12,6 +12,7 @@ module.exports = function(app){
       })
    });
    
+   app.post('/info', require('./info').post);
    app.post('/login', require('./login').post);
    app.post('/logout', require('./logout').post);
    app.get('/logout', require('./logout').post);

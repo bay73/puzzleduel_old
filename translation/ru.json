@@ -4,9 +4,13 @@
     "Logout button label" : "ВЫХОД",
     "OK button label" : "OK",
     "Cancel button label" : "ОТМЕНА",
-    "Name": "Имя",
+    "Login Name": "Имя для входа",
     "Password": "Пароль",
+    "Display Name": "Имя для показа",
+    "Email": "Email",
     "Wrong authorization data!": "Неверное имя или пароль!",
+    "Wrong data!": "Ошибка сохранения данных!",
     "Welcome to Puzzleduel text": "Приветствуем вас на сайте Puzzleduel",
-   "EOF": 0
+    "Language": "Язык",
+    "EOF": 0
 }

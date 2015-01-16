@@ -1,8 +1,10 @@
 <% layout('/page.ejs') -%>
 <h1><%= title %></h1>
 <p><%= translate["Welcome to Puzzleduel text"]%></p>
-<div class="langchooser">
-<% for(var i=0; i<languages.length; i++) { %>
-    <a href="switchlang/<%=languages[i].lang %>"><%=languages[i].label %></a>
+<% if (!user) { %>
+    <div class="langchooser">
+        <% for(var i=0; i<languages.length; i++) { %>
+            <a href="switchlang/<%=languages[i].lang %>"><%=languages[i].label %></a>
+        <% } %>
+    <div>
 <% } %>
-<div>

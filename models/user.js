@@ -1,6 +1,8 @@
 var crypto = require('crypto');
 var async = require('async');
 var util = require('util');
+var validator = require("email-validator");
+var langs = require('../translation').languages();
 
 var mongoose = require('../scripts/mongoose'),
     Schema = mongoose.Schema;
@@ -34,6 +36,9 @@ var schema = new Schema({
    language: {
       type: String,
       default: 'en'
+   },
+   email: {
+      type: String
    }
 });
 
@@ -91,8 +96,23 @@ schema.pre('save', function (next) {
   if(!this.displayname) {
      this.displayname = this.username;
   }
-  next();
-})
+  this.displayname = shorten(this.displayname);
+  var err;
+  if(this.email && !validator.validate(this.email)){
+     err = new Error('Wrong email!');
+  }
+   var good=false;
+   for(var i=0;i<langs.length;i++){
+       if(langs[i].lang == this.language){
+           good = true;
+       }
+   }
+   if(!good){
+     err = new Error('Wrong language code!');
+   }
+   console.log(err);
+   next(err)
+});
 
 exports.User = mongoose.model('User', schema);
 
