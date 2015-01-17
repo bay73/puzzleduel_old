@@ -58,7 +58,6 @@ passport.use(new GoogleStrategy({
     callbackURL: config.get("google_login:callback_url")
   },
   function(accessToken, refreshToken, profile, done) {
-    console.log(profile);
     done(null, profile);
   }
 ));
