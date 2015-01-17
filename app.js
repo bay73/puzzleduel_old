@@ -9,6 +9,7 @@ var logger = require('morgan');
 var log = require('./scripts/log')(module);
 var mongoose = require('./scripts/mongoose');
 var passport = require('./scripts/passport');
+var io = require('socket.io');
 var app = express();
 
 
@@ -50,3 +51,7 @@ var server = app.listen(process.env.PORT || config.get('port'), process.env.IP |
   var port = server.address().port
   log.info('Puzzleduel app listening at http://%s:%s', host, port)
 })
+
+var socket = io(server);
+var sudokuServer = require('./scripts/server.js');
+socket.on('connection', sudokuServer);

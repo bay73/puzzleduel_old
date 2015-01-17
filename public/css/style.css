@@ -122,13 +122,26 @@ p {
    line-height: 32px;
 }
 
+.button:disabled {
+   color: #ccc;
+}
+
 .button.default{
    color: #008;
+}
+
+.button.default:disabled {
+   color: #aaf;
 }
 
 .button:hover, .button:focus {
    background-color: #fafaff;
 }
+
+.button:disabled:hover, .button:disabled:focus {
+   background-color: #fff;
+}
+
 
 .button.raised:active {
    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
@@ -145,6 +158,12 @@ p {
 .button.start {
    margin: auto;
    margin-bottom: 25px;
+}
+
+.button.closedialog {
+   float: right;
+   margin-top: 10px;
+   margin-bottom: 10px;
 }
 
 .ripple-effect {
@@ -231,12 +250,23 @@ input, span.text {
    height:18px;
    width:260px;
    padding: 10px 10px 10px 5px;
-   display: block;
    border: none;
    background-color: #fff;
    border-bottom: 1px solid #757575;
    outline:none;
    text-align: left;
+}
+
+span.infotext {
+   font-size:16px;
+   font-weight: bold;
+   display:block;
+   height:16px;
+   width:260px;
+   padding: 10px 10px 10px 5px;
+   border: none;
+   background-color: #fff;
+   text-align: center;
 }
 
 select.chooser {

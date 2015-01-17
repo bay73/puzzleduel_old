@@ -1,0 +1,51 @@
+<% layout('/gamepage.ejs') -%>
+   <div id="board" style="position:absolute;">
+   </div>
+   <div class="raised dialog" id="connectDialog">
+      <table>
+         <tr><td colspan=2><span class="infotext" id="peerName"></span></td></tr>
+         <tr><td colspan=2><span class="infotext" id="info"></span></td></tr>
+         <tr><td colspan=2>
+             <div class="group">
+                <input type="text" name="name" id="name" required value="<%= user?user.displayName:'' %>">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label id="namelabel" for="name"></label> 
+             </div>
+         </td></tr>
+         <tr><td colspan=2><img id="spinner" src="images/spinner.gif"></img></td></tr>
+         <tr><td colspan=2><button class="button default raised" id="connect"><%= translate["SearchRivals"]%></button></td></tr>
+         <tr><td colspan=2><button class="button default raised" id="ready"><%= translate["Start"]%></button></td></tr>
+         <tr><td colspan=2><span class="infotext" id="waitingforready"></span></td></tr>
+      </table>
+   </div>
+   <div class="raised dialog" id="rulesDialog">
+      <div id="rulestext"></div>
+      <button class="button default raised closedialog" id="rulesclose"><%= translate["OK button label"]%></button>
+   </div>
+<script>
+   var SIZE = 9;
+   translate = <%- JSON.stringify(translate) %>
+   var btnMenu = new BayButton('images/menu.png',translate["Menu"],function(){alert('Menu doesn`t work yet!');});
+   var btnSettings = new BayButton('images/settings.png',translate["Settings"],function(){alert('Settings not available now!');});
+   var btnHelp = new BayButton('images/help.png',translate["Help"],function(){puzzle.showRules();});
+   var buttonPanel = new BayLayout([btnMenu, btnSettings, btnHelp],[33, 33, 33]);
+   var scorePanel = new BayTextPanel(2.3);
+   var statusPanel = new BayTextPanel(10);
+   var infoPanel = new BayLayout([scorePanel, statusPanel],[72, 28]);
+   var servicePanel = new BayLayout([buttonPanel, infoPanel],[25, 75]);
+   var puzzle = new BayPuzzle({generator: new SquareGridGenerator(), width: SIZE, height: SIZE, sudoku: true, digits: SIZE});
+   var board = new BayBoard({puzzle: puzzle, colorScheme: BayColorScheme.grey});
+   var layout = new BayLayout([servicePanel, board],[25, 75]);
+   puzzle.setScorePanel(scorePanel);
+   puzzle.setInfoPanel(statusPanel);
+   puzzle.setBoard(board);
+
+   var resizeTimer;
+   $(window).bind('resize',function(){
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function(){layout.onResize($('#container'));puzzle.changeState()},100);
+   })
+
+    layout.onResize($('#container'));
+</script>

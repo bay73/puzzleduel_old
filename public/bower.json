@@ -4,6 +4,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "jquery": "2.1"
+    "jquery": "2.1",
+    "jcanvas": "14"
   }
 }

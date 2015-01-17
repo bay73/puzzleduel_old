@@ -1,4 +1,4 @@
-<% layout('/page.ejs') -%>
+<% layout('/logopage.ejs') -%>
 <h2><%= translate["Welcome to Puzzleduel header"]%></h2>
 <p><%- translate["Welcome to Puzzleduel text"]%></p>
 <button class="raised button start default" id="startDuelButton"><%= translate["Start duel button label"]%></button>
@@ -10,5 +10,5 @@
     <div>
 <% } %>
 <script>
-rippleButton($('#startDuelButton'), function(){});
+rippleButton($('#startDuelButton'), function(){window.location.href="/sudokuduel"});
 </script>

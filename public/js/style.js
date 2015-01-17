@@ -29,6 +29,8 @@ var rippleButton = function(element, callback){
 };
 
 var showDialog = function(element, options){
+   $('body').find('.dialog:visible').hide();
+
    if($('body').find('.overlay').length === 0)
       $('body').append('<div class="overlay"></div>');
    
@@ -53,8 +55,8 @@ var showDialog = function(element, options){
       top: starttop,
       left: startleft
    });
-   var endtop = starttop;
-   var endleft = startleft;
+   var endtop = ($(window).height() - options.height)/2;
+   var endleft = ($(window).width() - options.width)/2;;
    if(options.direction){
       var dirs = options.direction.split('-');
       if(dirs[0]=='top') endtop = starttop + startheight - options.height;
