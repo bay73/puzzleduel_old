@@ -25,6 +25,7 @@
     "email-validator": "1",
     "passport": "0",
     "passport-local": "1",
-    "passport-facebook": "1"
+    "passport-facebook": "1",
+    "passport-google-oauth": "0"
   }
 }

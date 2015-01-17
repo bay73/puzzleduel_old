@@ -1,6 +1,7 @@
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var LocalStrategy = require('passport-local').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var config = require('../config');
 var User = require('../models/user').User;
 var log = require('./log')(module);
@@ -22,9 +23,9 @@ passport.deserializeUser(function(obj, done) {
   }
 });
 passport.use(new FacebookStrategy({
-    clientID: config.get("facebook_api_key"),
-    clientSecret: config.get("facebook_api_secret"),
-    callbackURL: config.get("callback_url")
+    clientID: config.get("facebook_login:api_key"),
+    clientSecret: config.get("facebook_login:api_secret"),
+    callbackURL: config.get("facebook_login:callback_url")
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
@@ -51,6 +52,17 @@ passport.use(new LocalStrategy(
   }
 ));
 
+passport.use(new GoogleStrategy({
+    clientID: config.get("google_login:client_id"),
+    clientSecret: config.get("google_login:client_secret"),
+    callbackURL: config.get("google_login:callback_url")
+  },
+  function(accessToken, refreshToken, profile, done) {
+    console.log(profile);
+    done(null, profile);
+  }
+));
+
 module.exports.init = function(app){
   app.use(passport.initialize());
   app.use(passport.session());
@@ -72,7 +84,16 @@ module.exports.routes = function(app){
     function(req, res) {
       res.send({});
   });
-  
+
+  app.get('/auth/google', passport.authenticate('google',
+    { scope: ['https://www.googleapis.com/auth/userinfo.profile',
+              'https://www.googleapis.com/auth/userinfo.email'] })
+  );
+  app.get('/oauth2callback',
+    passport.authenticate('google'),
+    function(req, res) {
+      res.redirect('/');
+    });
   app.post('/logout',function(req, res, next){
     req.logout();
     res.redirect('/');

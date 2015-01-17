@@ -22,7 +22,14 @@
          "maxAge": 1209600000 
       }
    },
-   "facebook_api_key": "788712584538109",
-   "facebook_api_secret": "",
-   "callback_url" : "http://puzzleduel-bay73.c9.io/auth/facebook/callback"
+   "facebook_login": {
+      "api_key": "788712584538109",
+      "api_secret": "",
+      "callback_url" : "http://puzzleduel-bay73.c9.io/auth/facebook/callback"
+   },
+   "google_login" : {
+      "client_id": "1046633030815-8fb7tclfjk1iavrtdupommk2rq95ishj.apps.googleusercontent.com",
+      "client_secret": "",
+      "callback_url" : "http://puzzleduel-bay73.c9.io/oauth2callback"
+   }
 }
