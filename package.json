@@ -22,6 +22,9 @@
     "async": "0",
     "errorhandler": "1",
     "send": "0",
-    "email-validator": "1"
+    "email-validator": "1",
+    "passport": "0",
+    "passport-local": "1",
+    "passport-facebook": "1"
   }
 }

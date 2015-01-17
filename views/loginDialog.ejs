@@ -1,0 +1,57 @@
+   <button class="raised button login" id="userLoginButton"><%= translate["Login button label"]%></button>
+   <div class="raised dialog" id="userLoginDialog">
+      <form name="loginForm" id="loginForm" method="POST">
+         <div class="group loginselector">
+             <a href="/auth/facebook"><img src="images/fb-connect.png" width="100"></a >
+             <a href=""><img src="images/google-connect.png" width="100"></a >
+         </div>
+         <div class="group">
+            <input type="text" name="username" id="username" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label><%= translate["Login Name"]%></label>
+         </div>
+         <div class="group">
+            <input type="password" name="password" id="password" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label><%= translate["Password"]%></label>
+         </div>
+         <span id="loginError" class="error"></span>
+         <button class="button default" id="userLoginOkButton" data-ripple-color="#89669b"><%= translate["OK button label"]%></button>
+         <button class="button" id="userLoginCancelButton"><%= translate["Cancel button label"]%></button>
+      </form>
+   </div>
+   <script>
+      rippleButton($('#userLoginButton'), function(){
+         showDialog($('#userLoginDialog'),{
+            from: $('#userLoginButton'),
+            width: 310,
+            height: 230,
+            direction: 'bottom-left'
+         });
+      });
+      rippleButton($('#userLoginOkButton'), function(){
+         $('#loginError').text('');
+         var form = $('#loginForm');
+         $.ajax({
+            url: "/login",
+            method: "POST",
+            data: form.serialize(),
+            complete: function(){
+            },
+            statusCode: {
+               200: function(){
+                  window.location.href="/"
+               },
+               403: function(){
+                  $('#loginError').text('<%= translate["Wrong authorization data!"]%>');
+               }
+            }
+         })
+      });
+      rippleButton($('#userLoginCancelButton'), function(){
+         $('#loginError').text('');
+         closeDialog($('#userLoginDialog'));
+      });
+   </script>

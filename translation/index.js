@@ -2,13 +2,15 @@ var log = require('../scripts/log')(module);
 var send = require('send');
 var fs = require('fs');
 
+
+var supported = ['en', 'de', 'ru'];
+
 var get = function(app){
     app.get('/translate.json', function(req, res, next){
         var lang = req.session.lang;
         var path = __dirname + '/' +  lang + '.json';
         var stream = send(req, path, {});
         stream.on('directory', next);
-        
         stream.on('headers', function(res, path) {
             res.setHeader('Content-Type', 'application/json; charset=utf-8;');
         });
@@ -28,8 +30,19 @@ var get = function(app){
 module.exports.translate = function(app){
     app.use(function(req, res, next){
         if(req.user){
-            req.session.lang = req.user.language;
-        } else if(!req.session.lang){
+            if(req.user.provider=='facebook'){
+                if(req.session.lang = req.user._json.locale){
+                    req.session.lang = req.user._json.locale.substr(0,2);
+                }
+            }
+            if(req.user.language){
+                req.session.lang = req.user.language;
+            }
+        }
+        if(!req.session.lang){
+            req.session.lang = 'en';
+        }
+        if(supported.indexOf(req.session.lang) < 0) {
             req.session.lang = 'en';
         }
         var lang = req.session.lang;
@@ -49,6 +62,9 @@ function getLanguage(lang){
 }
 
 module.exports.languages = function(){
-    return [getLanguage('en'), getLanguage('de'), getLanguage('ru')];
-    
+    var list = [];
+    for(var i = 0; i<supported.length; i++){
+        list.push(getLanguage(supported[i]));
+    }
+    return list;
 }

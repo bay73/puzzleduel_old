@@ -21,5 +21,8 @@
          "secure": false, 
          "maxAge": 1209600000 
       }
-   }
+   },
+   "facebook_api_key": "788712584538109",
+   "facebook_api_secret": "",
+   "callback_url" : "http://puzzleduel-bay73.c9.io/auth/facebook/callback"
 }

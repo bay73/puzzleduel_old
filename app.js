@@ -8,6 +8,7 @@ var session = require('express-session')
 var logger = require('morgan');
 var log = require('./scripts/log')(module);
 var mongoose = require('./scripts/mongoose');
+var passport = require('./scripts/passport');
 var app = express();
 
 
@@ -30,13 +31,16 @@ var MongoStore = require('connect-mongo')(session);
 var sessionconfig = config.get("session")
 sessionconfig.store = new MongoStore({mongooseConnection: mongoose.connection});
 app.use(session(sessionconfig));
-app.use(require('./scripts/loaduser'));
+
+passport.init(app);
 
 require('./translation').translate(app);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components',  express.static(__dirname + 'public/bower_components'));
 
 require('./routes')(app);
+
+passport.routes(app);
 
 app.use(require('./scripts/error').notFound(app));
 app.use(require('./scripts/error').errorHandler(app));

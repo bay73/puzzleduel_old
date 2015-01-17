@@ -1,0 +1,35 @@
+   <button class="raised button login" id="userInfoButton"><%=user.displayName %></button>
+   <div class="raised dialog" id="userInfoDialog">
+      <form name="infoForm" id="infoForm" method="POST">
+         <div class="group">
+            <span class="text" id="username"><%=user.provider %></span>
+            <span class="bar"></span>
+            <label><%= translate["Logged through"]%></label>
+         </div>
+         <div class="group">
+            <span class="text" id="username"><%=user.displayName %></span>
+            <span class="bar"></span>
+            <label><%= translate["Display Name"]%></label>
+         </div>
+         <span id="infoError" class="error"></span>
+         <button class="button default" id="userInfoOkButton"><%= translate["OK button label"]%></button>
+         <button class="button" id="userLogoutButton" data-ripple-color="#89669b"><%= translate["Logout button label"]%></button>
+      </form>
+   </div>
+   <script>
+      rippleButton($('#userInfoButton'), function(){
+         showDialog($('#userInfoDialog'),{
+            from: $('#userInfoButton'),
+            width: 310,
+            height: 200,
+            direction: 'bottom-left'
+         });
+      });
+      rippleButton($('#userInfoOkButton'), function(){
+         closeDialog($('#userInfoDialog'));
+      });
+      rippleButton($('#userLogoutButton'), function(){
+         $('#infoError').text('');
+         $('<form method="POST" action="/logout">').submit();
+      });
+   </script>   

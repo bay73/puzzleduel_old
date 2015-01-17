@@ -1,0 +1,71 @@
+   <button class="raised button login" id="userInfoButton"><%=user.displayName %></button>
+   <div class="raised dialog" id="userInfoDialog">
+      <form name="infoForm" id="infoForm" method="POST">
+         <div class="group">
+            <span class="text" id="username"><%=user.username %></span>
+            <span class="bar"></span>
+            <label><%= translate["Login Name"]%></label>
+         </div>
+         <div class="group">
+            <input type="text" name="displayName" id="displayName" required value="<%=user.displayName %>">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label><%= translate["Display Name"]%></label>
+         </div>
+         <div class="group">
+            <input type="text" name="email" id="email" required value="<%=user.email %>">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label><%= translate["Email"]%></label>
+         </div>
+         <div class="group">
+            <select name="language" id="language" class="chooser">
+               <% for(var i=0; i<languages.length; i++) { %>
+                  <option value="<%=languages[i].lang -%>" <%=(languages[i].lang==user.language?'selected':'') -%> >
+                     <%=languages[i].label -%>
+                  </option>
+               <% } %>
+            </select>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label><%= translate["Language"]%></label>
+         </div>
+         <span id="infoError" class="error"></span>
+         <button class="button default" id="userInfoOkButton"><%= translate["OK button label"]%></button>
+         <button class="button" id="userLogoutButton" data-ripple-color="#89669b"><%= translate["Logout button label"]%></button>
+      </form>
+   </div>
+   <script>
+      rippleButton($('#userInfoButton'), function(){
+         showDialog($('#userInfoDialog'),{
+            from: $('#userInfoButton'),
+            width: 310,
+            height: 300,
+            direction: 'bottom-left'
+         });
+      });
+      rippleButton($('#userInfoOkButton'), function(){
+         $('#infoError').text('');
+         var form = $('#infoForm');
+         $.ajax({
+            url: "/info",
+            method: "POST",
+            data: form.serialize(),
+            complete: function(){
+            },
+            statusCode: {
+               200: function(){
+                  closeDialog($('#userInfoDialog'));
+                  window.location.href="/"
+               },
+               500: function(){
+                  $('#infoError').text('<%= translate["Wrong data!"]%>');
+               }
+            }
+         })
+      });
+      rippleButton($('#userLogoutButton'), function(){
+         $('#infoError').text('');
+         $('<form method="POST" action="/logout">').submit();
+      });
+   </script>   

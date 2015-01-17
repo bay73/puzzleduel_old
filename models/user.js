@@ -30,7 +30,7 @@ var schema = new Schema({
       type: Date,
       defaule: Date.now
    },
-   displayname: {
+   displayName: {
       type: String
    },
    language: {
@@ -94,10 +94,10 @@ schema.statics.authorize = function(username, password, callback){
 
 
 schema.pre('save', function (next) {
-  if(!this.displayname) {
-     this.displayname = this.username;
+  if(!this.displayName) {
+     this.displayName = this.username;
   }
-  this.displayname = shorten(this.displayname);
+  this.displayName = shorten(this.displayName);
   var err;
   if(this.email && !validator.validate(this.email)){
      err = new Error('Wrong email!');
@@ -111,7 +111,6 @@ schema.pre('save', function (next) {
    if(!good){
      err = new Error('Wrong language code!');
    }
-   console.log(err);
    next(err)
 });
 
