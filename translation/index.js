@@ -2,7 +2,7 @@ var log = require('../scripts/log')(module);
 var send = require('send');
 var fs = require('fs');
 
-module.exports.get = function(app){
+var get = function(app){
     app.get('/translate.json', function(req, res, next){
         var lang = req.session.lang;
         var path = __dirname + '/' +  lang + '.json';
@@ -26,7 +26,7 @@ module.exports.get = function(app){
 };
 
 module.exports.translate = function(app){
-    return function(req, res, next){
+    app.use(function(req, res, next){
         if(req.user){
             req.session.lang = req.user.language;
         } else if(!req.session.lang){
@@ -37,7 +37,8 @@ module.exports.translate = function(app){
         var data = fs.readFileSync(path, {encoding: 'utf-8'});         
         res.locals.translate = JSON.parse(data);
         next();
-    };
+    });
+    get(app);
 };
 
 function getLanguage(lang){
