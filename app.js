@@ -4,12 +4,10 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var session = require('express-session')
+var session = require('express-session');
 var logger = require('morgan');
 var log = require('./scripts/log')(module);
-var mongoose = require('./scripts/mongoose');
 var passport = require('./scripts/passport');
-var io = require('socket.io');
 var app = express();
 
 
@@ -28,9 +26,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-var MongoStore = require('connect-mongo')(session);
-var sessionconfig = config.get("session")
-sessionconfig.store = new MongoStore({mongooseConnection: mongoose.connection});
+var sessionconfig = config.get("session");
+sessionconfig.store = require('./scripts/sessionStore');
 app.use(session(sessionconfig));
 
 passport.init(app);
@@ -47,11 +44,9 @@ app.use(require('./scripts/error').notFound(app));
 app.use(require('./scripts/error').errorHandler(app));
 
 var server = app.listen(process.env.PORT || config.get('port'), process.env.IP || config.get('host'), function () {
-  var host = server.address().address
-  var port = server.address().port
-  log.info('Puzzleduel app listening at http://%s:%s', host, port)
-})
+  var host = server.address().address;
+  var port = server.address().port;
+  log.info('Puzzleduel app listening at http://%s:%s', host, port);
+});
 
-var socket = io(server);
-var sudokuServer = require('./scripts/server.js');
-socket.on('connection', sudokuServer);
+require('./scripts/socket')(server);

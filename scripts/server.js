@@ -214,6 +214,7 @@ BayMatch.prototype.emitCell = function(row, col, cell){
 BaySocket = function(bot){
    this.bot = bot;
    this.callbacks = {};
+   this.user = { type: 'bot', id: bot.name }
    bot.server = this;
 }
 
