@@ -119,6 +119,9 @@ SquareGridGenerator.prototype.generate = function(properties){
          addBigCells(4,2);
       }
    }
+   var grid = createBigCell(0, 0, width, height);
+   grid.type = 'doubleframe';
+   gridData.elements.push(grid);
    gridData.getCell = function(x,y){
       if(gridData.cells[Math.floor(x*width, 0)])
          return gridData.cells[Math.floor(x*width, 0)][Math.floor(y*height, 0)];
@@ -240,6 +243,8 @@ BayPuzzle.prototype.onCellData = function(cellData){
 };
 
 BayPuzzle.prototype.onRivalclosed = function(data){
+   this.board.setState('off');
+   this.grid = this.generator.generate(this.properties);
    this.changeState('peer_closed');
 };
 

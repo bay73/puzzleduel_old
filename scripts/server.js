@@ -22,7 +22,7 @@ SudokuServer = function(socket){
          socket.waitTimeout = setTimeout(function(){
             var botSocket = new BaySocket(new BaySudokuBot(data.size));
             SudokuServer(botSocket);
-         },3000);
+         },30000);
       } else {
          clearTimeout(rival.waitTimeout);
          clearTimeout(socket.waitTimeout);

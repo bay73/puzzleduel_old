@@ -25,6 +25,11 @@ var BayColorScheme = {
          borderColor: 'black',
          borderWidth: 2,
       },
+      doubleframe: {
+         fillColor: '',
+         borderColor: 'black',
+         borderWidth: 4,
+      },
       active: {
          fillColor: '',
          borderColor: 'red',
@@ -51,6 +56,10 @@ var BayColorScheme = {
          borderColor: 'silver',
          borderWidth: 3,
       },
+      doubleframe: {
+         borderColor: 'silver',
+         borderWidth: 6,
+      },
       active: {
          borderColor: 'pink',
          borderMargin: 6,
@@ -63,6 +72,10 @@ var BayColorScheme = {
          borderWidth: 2,
       },
       frame: {
+         borderColor: 'white',
+         borderWidth: 4,
+      },
+      doubleFrame: {
          borderColor: 'white',
          borderWidth: 4,
       },
@@ -80,6 +93,10 @@ var BayColorScheme = {
       frame: {
          borderColor: '#855',
          borderWidth: 4,
+      },
+      doubleFrame: {
+         borderColor: '#855',
+         borderWidth: 8,
       },
       active: {
          borderColor: 'yellow',
