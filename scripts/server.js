@@ -1,3 +1,5 @@
+var Match = require('../models/match').Match;
+
 if(typeof(module) != 'undefined')
   BaySudoku = require('./sudoku.js');
 
@@ -67,8 +69,14 @@ BayMatch = function(socket1, socket2){
 BayMatch.prototype.interrupt = function(socket){
    if(socket==this.socket[1]){
       this.emit(0,'rivalclosed',{});
+      if(this.started){
+         Match.addMatch(this.started, this.socket, [0, 0], true, 'interrupted', function(){});
+      }
    }else{
       this.emit(1,'rivalclosed',{});
+      if(this.started){
+         Match.addMatch(this.started, this.socket, [0, 0], false, 'interrupted', function(){});
+      }
    }
    var index = matches.indexOf(this);
    matches.splice(index, 1);
@@ -97,6 +105,7 @@ BayMatch.prototype.start = function(){
                      }
                   }
                }
+               self.started = Date.now();
                self.emptyCount = self.sudoku.sudokuSize*self.sudoku.sudokuSize - cells.length;
                self.emitAll('celldata', cells);
                self.emitScore();
@@ -132,6 +141,7 @@ BayMatch.prototype.setCellValue = function(cell, value){
 }
 
 BayMatch.prototype.onClick = function(socket, data){
+   if(!this.started) return;
    if(socket == this.socket[0]) var player = 0;
    if(socket == this.socket[1]) var player = 1;
    var row = data.row;
@@ -170,19 +180,22 @@ BayMatch.prototype.onClick = function(socket, data){
       for(var i=0;i<size;i++){
          for(var j=0;j<size;j++){
             var cell = this.sudoku.cellData[i][j];
-            if(typeof(cell.player) != 'indefined'){
+            if(typeof(cell.player) != 'undefined'){
                counter[cell.player]++;
             }
          }
       }
       if(counter[0] == counter[1]){
          self.emitAll('finish', {state: 'draw'});
+         Match.addMatch(this.started, this.socket, counter, undefined, 'finish', function(){});
       } else if(counter[0] > counter[1]) {
          self.emit(0, 'finish', {state: 'win'});
          self.emit(1, 'finish', {state: 'loose'});
+         Match.addMatch(this.started, this.socket, counter, true, 'finish', function(){});
       } else if(counter[0] < counter[1]) {
          self.emit(0, 'finish', {state: 'loose'});
          self.emit(1, 'finish', {state: 'win'});
+         Match.addMatch(this.started, this.socket, counter, false, 'finish', function(){});
       }
       this.socket[0].playerready = false;
       this.socket[1].playerready = false;
@@ -191,6 +204,7 @@ BayMatch.prototype.onClick = function(socket, data){
       this.score=[0, 0];
       this.emit(0,'serverready',{opponent: this.socket[1].name});
       this.emit(1,'serverready',{opponent: this.socket[0].name});
+      this.started = undefined;
    }
 }
 
@@ -214,7 +228,7 @@ BayMatch.prototype.emitCell = function(row, col, cell){
 BaySocket = function(bot){
    this.bot = bot;
    this.callbacks = {};
-   this.user = { type: 'bot', id: bot.name }
+   this.user = { type: 'bot', id: bot.name, displayName: bot.name }
    bot.server = this;
 }
 
@@ -232,13 +246,17 @@ BaySocket.prototype.emit = function(event, data){
 }
 
 BaySudokuBot = function(size){
+   this.thinktime = 500;
    this.callbacks = {};
    this.size = size;
    this.sudoku = new BaySudoku(size);
    this.sudoku.initSudoku();
    this.clueCount = 0;
    this.names = ['Bob', 'Alice', 'Игорь', 'Yoko', 'Katrine', 'Crazy', 'Wart']
-   this.name = this.names[Math.floor(Math.random()*this.names.length)]
+   this.speeds = [500, 600, 400, 300, 550, 200, 700]
+   var index = Math.floor(Math.random()*this.names.length);
+   this.name = this.names[index];
+   this.thinktime = this.speeds[index];
    var self = this;
 
    this.on('register', function(){
@@ -303,7 +321,7 @@ BaySudokuBot.prototype.onCelldata = function(cellData){
 
 BaySudokuBot.prototype.onStart = function(){
    var self = this;
-   var interval = Math.random()*this.sudoku.sudokuSize*2000 + this.sudoku.sudokuSize*1000;
+   var interval = Math.random()*this.sudoku.sudokuSize*this.thinktime*4 + this.sudoku.sudokuSize*this.thinktime*2;
    this.moveTimeout = setTimeout(function(){self.makeMove()}, interval);
 }
 
@@ -328,7 +346,7 @@ BaySudokuBot.prototype.makeMove = function(){
       }
    }
    var self = this;
-   var interval = (Math.random()*3 + 1)*500*(empty+size)/size;
+   var interval = (Math.random()*3 + 1)*this.thinktime*(empty+size)/size;
    if(self.rivals > 0){
       interval = interval * (self.mine + self.rivals)/ self.rivals;
    }

@@ -10,7 +10,7 @@ passport.serializeUser(function(user, done) {
   if(user.provider){
     done(null, user);
   } else {
-    done(null, {type: 'local', id: user.id});
+    done(null, {type: 'local', id: user.id, displayName: user.displayName});
   }
 });
 passport.deserializeUser(function(obj, done) {
