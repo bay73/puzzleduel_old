@@ -34,5 +34,8 @@
       "AskName": "Geben Sie Ihren Namen",
       "SearchRivals": "Suche nach Gegner",
       "RulesText": "Ihr Ziel ist, in der Tabelle mit den Zahlen 1 bis 9. Jede Zeile, Spalte und 3x3-Quadrat beschrieben muss jede Ziffer genau einmal enthalten zu füllen. Einige Stellen sind bereits gelegt.<br>Ihre Rivalen werden das gleiche Puzzle gleichzeitig zu lösen. Eine Zelle wird grün gestrichen werden, wenn Sie setzen die Ziffer schneller als die Rivalen und rot im anderen Fall. Sie werden alle Stellen, die von Ihnen als auch von Ihrem Konkurrenten platziert werden sehen.<br>Wenn Sie falsche Ziffer zu platzieren, wird die Zelle, um Rivalen Punktzahl gewertet.<br>Um stelligen wollen Sie mit der Maus auf die ausgewählte Zelle und drücken Sie Zifferntaste auf der Tastatur setzen.<br>",
-    "EOF": 0
+      "Rating": "Aktuelle Bewertung",
+      "News": "Neuigkeiten",
+       "FullRating": "Liste",
+   "EOF": 0
 }

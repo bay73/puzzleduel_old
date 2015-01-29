@@ -58,6 +58,19 @@ p {
    margin: 15px;
    text-align: justify;
 }
+
+.topic {
+   padding: 0px;
+}
+
+.topic.small {
+    width: 47%;
+    height: auto;
+    display: inline-block;
+    padding: 1%;
+    padding-bottom: 20px;
+}
+
 @media screen and (min-width:480px) and (max-width:1200px) {
 .container{
    width: 696px;
@@ -78,6 +91,10 @@ p {
    font-size: 32px;
    font-weight: bold;
    top: -20px;
+}
+
+.topic.small {
+    width: 47%;
 }
 }
 
@@ -102,6 +119,9 @@ p {
    top: -15px;
 }
 
+.topic.small {
+    width: 97%;
+}
 }
 
 .content {
@@ -382,4 +402,31 @@ input:focus ~ .highlight {
 .langchooser a {
    padding: 5px 10px;
    font-size:14px;
+}
+
+.ratingtable {
+   max-width: 300px;
+   margin: 0px auto;
+   border-collapse: collapse;
+   font-size: 14px;
+}
+
+.ratingtable tr:nth-child(even) {
+   background-color: #f8f8f8;
+   border: 0px;
+}
+
+.ratingtable .name{
+   padding: 5px 0 0 0;
+   text-align: left;
+}
+
+.ratingtable .value{
+   width: 80px;
+   text-align: right;
+}
+
+.ratingtable .link{
+   text-align: right;
+   font-size: 12px;
 }

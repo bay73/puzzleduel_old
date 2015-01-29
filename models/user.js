@@ -81,7 +81,7 @@ schema.statics.authorize = function(username, password, callback){
                callback(new AuthError());
             }
          } else {
-            user = new User({username: username, password: password});
+            user = new User({username: username, displayName: username, password: password});
             user.save(function(err){
                if(err) return callback(err);
                callback(null, user);
