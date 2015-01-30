@@ -136,7 +136,7 @@ var BayPuzzle = function(properties){
    this.size = properties.width;
    var self = this;
    rippleButton($('#connect'), function(){self.connect();});
-   rippleButton($('#rulesclose'), function(){closeDialog($('#rulesDialog'));});
+   rippleButton($('#rulesclose'), function(){closeDialog($('#rulesDialog'), function(){self.changeState();});});
    $('#connect').attr('disabled', 'disabled');
    rippleButton($('#ready'), function(){self.ready();});
    self.name = $('#name').val();

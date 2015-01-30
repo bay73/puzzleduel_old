@@ -17,6 +17,7 @@
          <tr><td colspan=2><button class="button default raised" id="connect"><%= translate["SearchRivals"]%></button></td></tr>
          <tr><td colspan=2><button class="button default raised" id="ready"><%= translate["Start"]%></button></td></tr>
          <tr><td colspan=2><span class="infotext" id="waitingforready"></span></td></tr>
+         <tr><td class="ruleslink" colspan=2><a id="ruleslink" href="#"><%= translate["Rules"]%></a></span></td></tr>
       </table>
    </div>
    <div class="raised dialog" id="rulesDialog">
@@ -26,6 +27,7 @@
 <script>
    var SIZE = 9;
    translate = <%- JSON.stringify(translate) %>
+   $('#ruleslink').click(function(){puzzle.showRules();});
    var btnMenu = new BayButton('images/menu.png',translate["Menu"],function(){alert('Menu doesn`t work yet!');});
    var btnSettings = new BayButton('images/settings.png',translate["Settings"],function(){alert('Settings not available now!');});
    var btnHelp = new BayButton('images/help.png',translate["Help"],function(){puzzle.showRules();});

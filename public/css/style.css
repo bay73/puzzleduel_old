@@ -125,7 +125,8 @@ p {
 }
 
 .content {
-   margin: 5px auto 15px auto;
+   margin: 5px auto 5px auto;
+   padding-bottom: 25px;
 }
 
 .button {
@@ -395,8 +396,8 @@ input:focus ~ .highlight {
 
 .langchooser {
    position: absolute;
-   bottom: 0;
-   right: 0;
+   bottom: 10px;
+   right: 10px;
 }
 
 .langchooser a {
@@ -427,6 +428,11 @@ input:focus ~ .highlight {
 }
 
 .ratingtable .link{
+   text-align: right;
+   font-size: 12px;
+}
+
+#connectDialog td.ruleslink {
    text-align: right;
    font-size: 12px;
 }

@@ -29,7 +29,7 @@ var rippleButton = function(element, callback){
 };
 
 var showDialog = function(element, options){
-   $('body').find('.dialog:visible').hide();
+   $('body').find('.dialog:visible').hide().appendTo('body');
 
    if($('body').find('.overlay').length === 0)
       $('body').append('<div class="overlay"></div>');
@@ -73,12 +73,13 @@ var showDialog = function(element, options){
 
 };
 
-var closeDialog = function(element){
+var closeDialog = function(element, callback){
    var overlay = $('body').find('.overlay');
    overlay.addClass('animatehide');
    setTimeout(function(){
       $(element).hide();
       $(element).appendTo($('body'));
       overlay.remove();
+      callback();
    }, 400);
 }
