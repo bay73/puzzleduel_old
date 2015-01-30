@@ -32,13 +32,13 @@ app.use(session(sessionconfig));
 
 passport.init(app);
 
+passport.routes(app);
+
 require('./translation').translate(app);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components',  express.static(__dirname + 'public/bower_components'));
 
 require('./routes')(app);
-
-passport.routes(app);
 
 app.use(require('./scripts/error').notFound(app));
 app.use(require('./scripts/error').errorHandler(app));

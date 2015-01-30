@@ -39,15 +39,16 @@ passport.use(new LocalStrategy(
       if (err) { return done(err); }
       if (!user) {
         user = new User({username: username, displayName: username, password: password});
-        user.save(function(err){
+        user.save(function(err, user){
            if(err) return done(err);
            return done(null, user);
         });
+      } else {
+        if (!user.checkPassword(password)) {
+          return done(null, false, { message: 'Incorrect password.' });
+        }
+        return done(null, user);
       }
-      if (!user.checkPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
     });
   }
 ));
