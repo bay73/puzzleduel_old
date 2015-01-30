@@ -9,10 +9,12 @@ exports.post = function(req, res, next){
        user.set('displayName', displayName);
        user.set('language', language);
        user.set('email', email);
-       user.save(function(err){
+       user.save(function(err, user){
           if(err) {
               return next(err);
           }
+          if(req.session && req.session.passport && req.session.passport.user)
+              req.session.passport.user.displayName = user.displayName;
           res.sendStatus(200);
        });
    } else {

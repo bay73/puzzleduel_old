@@ -6,17 +6,17 @@
     <script>
     rippleButton($('#startDuelButton'), function(){window.location.href="/sudokuduel"});
     </script>
-</div>    
+</div>
 <div class="topic small">
     <h4><%= translate["Rating"]%></h2>
     <table class="ratingtable">
         <%-partial('ratingrow',ratings)%>
         <tr><td class="link" colspan=10><a href="#"><%= translate["FullRating"]%></a></td></tr>
     </table>
-</div>    
+</div>
 <div class="topic small">
     <h4><%= translate["News"]%></h2>
-</div>    
+</div>
 <% if (!user) { %>
     <div class="langchooser">
         <% for(var i=0; i<languages.length; i++) { %>
