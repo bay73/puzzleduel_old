@@ -8,15 +8,25 @@
     <link rel='stylesheet' href='/css/style.css' />
   </head>
   <body>
-     <div class="container raised">
-        <%-partial('login') %>
-        <header class="logo">
-          <img src="images/logo.png">
-          <span class="title"><%= title %></span>
-        </header>
-        <div class="content">
-           <%-body -%>
+    <header class="logo">
+      <img src="images/logo.png">
+      <span class="title"><%= title %></span>
+      <%-partial('login') %>
+    </header>
+    <div class="menu">
+      <% if (!user) { %>
+        <div class="langchooser">
+          <% for(var i=0; i<languages.length; i++) { %>
+            <a class="short <%=languages[i].lang==lang?'current':'' %>" href="switchlang/<%=languages[i].lang %>"><%=languages[i].lang.toUpperCase() %></a>
+            <a class="long <%=languages[i].lang==lang?'current':'' %>" href="switchlang/<%=languages[i].lang %>"><%=languages[i].label %></a>
+          <% } %>
         </div>
+      <% } %>
+    </div>
+    <div class="container raised">
+      <div class="content">
+         <%-body -%>
+      </div>
      </div>
   </body>
 </html>

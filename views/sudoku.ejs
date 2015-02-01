@@ -24,12 +24,15 @@
       <div id="rulestext"></div>
       <button class="button default raised closedialog" id="rulesclose"><%= translate["OK button label"]%></button>
    </div>
+   <div class="raised dialog" id="skinsDialog">
+      <button class="button default raised closedialog" id="skinsclose"><%= translate["OK button label"]%></button>
+   </div>
 <script>
    var SIZE = 9;
    translate = <%- JSON.stringify(translate) %>
    $('#ruleslink').click(function(){puzzle.showRules();});
    var btnMenu = new BayButton('images/menu.png',translate["Menu"],function(){alert('Menu doesn`t work yet!');});
-   var btnSettings = new BayButton('images/settings.png',translate["Settings"],function(){alert('Settings not available now!');});
+   var btnSettings = new BayButton('images/settings.png',translate["Settings"],function(){puzzle.showSkins();});
    var btnHelp = new BayButton('images/help.png',translate["Help"],function(){puzzle.showRules();});
    var buttonPanel = new BayLayout([btnMenu, btnSettings, btnHelp],[33, 33, 33]);
    var scorePanel = new BayTextPanel(2.3);

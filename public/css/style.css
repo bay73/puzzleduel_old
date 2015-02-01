@@ -4,8 +4,9 @@ html,body {
 }
 
 body {
-   background-color: #f9f9f9;
+   background-color: f4f4f4;
    font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
+   font-size: 16px;
 }
 
 * {
@@ -14,9 +15,7 @@ body {
 }
 
 .raised {
-   transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-   transition-delay: 0.2s;
-   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+   box-shadow: 2px 2px 5px 3px rgba(0, 0, 0, 0.26);
    border-radius: 2px;
    background-color: #fff;
 }
@@ -24,7 +23,8 @@ body {
 .container{
    position: relative;
    display: block;
-   margin: 5px auto;
+   margin: 30px auto;
+   padding-top: 30px;
    width: 1000px;
    max-width: 60%;
    min-height: 98%;
@@ -35,23 +35,29 @@ body {
 .logo {
    width: 100%;
    height: 100px;
-   padding-bottom: 60px;
+   background-color: #fff9b6;
 }
 
 .logo img {
-   height: 100px;
+   padding-left: 100px;
+   height: 80px;
 }
 
 .title {
+   padding-left: 100px;
+   height: 80px;
    position: relative;
    color: #bbb;
-   font-size: 48px;
+   font-size: 300%;
    font-weight: bold;
    top: -30px;
 }
 
-h2 {
-   padding-bottom: 20px;
+.menu {
+   width: 100%;
+   height: 50px;
+   background-color: #3a386c;
+   box-shadow: 0px 3px 5px 2px rgba(0, 0, 0, 0.26);
 }
 
 p {
@@ -71,57 +77,29 @@ p {
     padding-bottom: 20px;
 }
 
-@media screen and (min-width:480px) and (max-width:1200px) {
-.container{
-   width: 696px;
-   max-width: 90%;
-   min-width: 440px;
-}
-   
-.logo {
-   height: 90px;
-   padding-bottom: 45px;
+.langchooser {
+   position: relative;
+   top: 15px;
+   left: -40px;
+   float: right;
 }
 
-.logo img {
-   height: 90px;
+.langchooser a {
+   padding: 5px 10px;
+   color: #ffffff;
+   text-decoration: none;
 }
 
-.title {
-   font-size: 32px;
+.langchooser a.short {
+   display: none;
+}
+
+.langchooser a.current {
    font-weight: bold;
-   top: -20px;
 }
 
-.topic.small {
-    width: 47%;
-}
-}
-
-@media screen and (min-width:40px) and (max-width:480px) {
-.container{
-   width: 98%;
-   max-width: 98%;
-   min-width: 98%;
-}
-
-.logo {
-   height: 80px;
-   padding-bottom: 30px;
-}
-
-.logo img {
-   height: 80px;
-}
-.title {
-   font-size: 22px;
-   font-weight: bold;
-   top: -15px;
-}
-
-.topic.small {
-    width: 97%;
-}
+.langchooser a:hover {
+   text-decoration: underline;
 }
 
 .content {
@@ -141,6 +119,12 @@ p {
    border-radius: 2px;
    font-weight: bold;
    line-height: 32px;
+   padding: 0px 8px;
+}
+
+.button.blue {
+   background-color: #3a386c;
+   color: #ffffff;
 }
 
 .button:disabled {
@@ -159,21 +143,37 @@ p {
    background-color: #fafaff;
 }
 
+.button.blue:hover, .button.blue:focus {
+   background-color: #6a689c;
+}
+
 .button:disabled:hover, .button:disabled:focus {
    background-color: #fff;
 }
 
 
 .button.raised:active {
-   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+   box-shadow: 8px 8px 8px 4px rgba(0, 0, 0, 0.3);
    transition-delay: 0s;
+}
+
+h1,h2,h3,h4 {
+   color: #3a386c;
+   padding-bottom: 15px;
 }
 
 .button.login {
    position: absolute;
-   top: 5px;
-   right: 5px;
+   background-color: #fff9b6;
+   color: #3a386c;
+   top: 25px;
+   right: 85px;
    float: right;
+   font-size: 120%;
+}
+
+.button.login:hover {
+   background-color: #eee9a6;
 }
 
 .button.start {
@@ -394,22 +394,12 @@ input:focus ~ .highlight {
    padding-bottom: 5px;
 }
 
-.langchooser {
-   position: absolute;
-   bottom: 10px;
-   right: 10px;
-}
-
-.langchooser a {
-   padding: 5px 10px;
-   font-size:14px;
-}
 
 .ratingtable {
    max-width: 300px;
    margin: 0px auto;
    border-collapse: collapse;
-   font-size: 14px;
+   font-size: 90%;
 }
 
 .ratingtable tr:nth-child(even) {
@@ -429,10 +419,184 @@ input:focus ~ .highlight {
 
 .ratingtable .link{
    text-align: right;
-   font-size: 12px;
+   font-size: 75%;
 }
 
-#connectDialog td.ruleslink {
-   text-align: right;
-   font-size: 12px;
+@media screen and (min-height:1000px) and (max-height:5000px) and (min-width:1600px) {
+body {
+   font-size: 22px;
+}
+
+.logo {
+   height: 160px;
+}
+
+.logo img {
+   height: 160px;
+}
+
+.title {
+   height: 120px;
+   top: -50px;
+}
+
+.button.login {
+   top: 60px;
+}
+
+.menu {
+   height: 80px;
+}
+
+.langchooser {
+   top: 30px;
+}
+}
+
+@media screen and (min-height:40px) and (max-height:560px) {
+.logo {
+   height: 60px;
+}
+
+.logo img {
+   height: 60px;
+}
+
+.title {
+   height: 60px;
+   font-size: 200%;
+   top: -20px;
+}
+
+.button.login {
+   top: 15px;
+}
+
+.menu {
+   height: 30px;
+}
+
+
+.langchooser {
+   top: 5px;
+}
+}
+
+@media screen and (min-width:1000px) and (max-width:10000px) {
+.logo img {
+   padding-left: 300px;
+}
+
+.title {
+   padding-left: 200px;
+}
+
+.button.login {
+   right: 260px;
+}
+
+.langchooser {
+   left: -260px;
+}
+
+}
+@media screen and (min-width:680px) and (max-width:1000px) {
+.container{
+   width: 696px;
+   max-width: 90%;
+   min-width: 440px;
+}
+
+.logo img {
+   padding-left: 50px;
+}
+
+.title {
+   padding-left: 50px;
+}
+
+.button.login {
+   right: 25px;
+}
+
+.langchooser {
+   left: -20px;
+}
+
+.topic.small {
+    width: 47%;
+}
+}
+
+@media screen and (min-width:560px) and (max-width:680px) {
+.container{
+   width: 696px;
+   max-width: 90%;
+   min-width: 440px;
+}
+
+.logo img {
+   padding-left: 5px;
+}
+
+.title {
+   padding-left: 5px;
+}
+
+.button.login {
+   right: 5px;
+}
+
+.langchooser {
+   left: -5px;
+}
+
+.topic.small {
+    width: 47%;
+}
+
+.langchooser a.short {
+   display: initial;
+}
+
+.langchooser a.long {
+   display: none;
+}
+
+}
+
+@media screen and (min-width:40px) and (max-width:560px) {
+.container{
+   width: 98%;
+   max-width: 98%;
+   min-width: 98%;
+}
+
+.logo img {
+   padding-left: 5px;
+}
+
+.title {
+   display: none;
+}
+
+.button.login {
+   right: 5px;
+}
+
+.langchooser {
+   left: -5px;
+}
+
+.topic.small {
+    width: 97%;
+}
+
+.langchooser a.short {
+   display: initial;
+}
+
+.langchooser a.long {
+   display: none;
+}
 }

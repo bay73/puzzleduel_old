@@ -1,4 +1,4 @@
-   <button class="raised button login" id="userInfoButton"><%=user.displayName %></button>
+   <button class="button login" id="userInfoButton"><%=user.displayName %></button>
    <div class="raised dialog" id="userInfoDialog">
       <form name="infoForm" id="infoForm" method="POST">
          <div class="group">
@@ -38,7 +38,9 @@
    <script>
       rippleButton($('#userInfoButton'), function(){
          showDialog($('#userInfoDialog'),{
-            from: $('#userInfoButton'),
+            start: {
+               from: $('#userInfoButton')
+            },
             width: 310,
             height: 300,
             direction: 'bottom-left'

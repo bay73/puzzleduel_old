@@ -96,8 +96,8 @@ BayLayout.prototype.Area = function(w,h){
 
 
 var BayButton = function(src, title, action){
-	this.element = $('<img src="'+src+'" style="position:relative; margin:0; padding:0; border:0; left:0; top:0; cursor:pointer;">');
-	this.span = $('<span style="position:relative; margin:0; padding:0; border:0; left:0; top:0; text-align:left; color:steelblue; display:none; cursor:pointer;">'+title+'</span>');
+	this.element = $('<img src="'+src+'" class="baybutton" style="position:relative; margin:0; padding:0; border:0; left:0; top:0; cursor:pointer;">');
+	this.span = $('<span class="baybutton" style="position:relative; margin:0; padding:0; border:0; left:0; top:0; text-align:left; color:steelblue; display:none; cursor:pointer;">'+title+'</span>');
 	this.element.appendTo($('body'));
 	this.span.appendTo($('body'));
 	this.element.click(action);
@@ -142,7 +142,7 @@ BayButton.prototype.onResize = function(parent){
 		this.element.width(w);
 		this.element.height(h);
 		this.span.appendTo(this.element.parent());
-		this.span.show();
+//		this.span.show();
 		this.span.width(w*9);
 		this.span.height(h);
 		this.span.css({'left': h/5, 'top': 0});

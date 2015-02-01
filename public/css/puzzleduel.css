@@ -50,3 +50,12 @@
 #rivalname {
 	color: red;
 }
+
+.baybutton {
+   display: none;
+}
+
+#connectDialog td.ruleslink {
+   text-align: right;
+   font-size: 12px;
+}

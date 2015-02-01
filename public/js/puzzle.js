@@ -137,6 +137,7 @@ var BayPuzzle = function(properties){
    var self = this;
    rippleButton($('#connect'), function(){self.connect();});
    rippleButton($('#rulesclose'), function(){closeDialog($('#rulesDialog'), function(){self.changeState();});});
+   rippleButton($('#skinsclose'), function(){closeDialog($('#skinsDialog'), function(){self.changeState();});});
    $('#connect').attr('disabled', 'disabled');
    rippleButton($('#ready'), function(){self.ready();});
    self.name = $('#name').val();
@@ -282,6 +283,12 @@ BayPuzzle.prototype.changeState = function(state){
    else {
       if($('#connectDialog').css('display')=='none'){
          showDialog($('#connectDialog'),{
+            start: {
+               top: 0,
+               left: 0,
+               width: 0,
+               height: 0
+            },
             height: 220,
             width: 310
          });
@@ -326,6 +333,12 @@ BayPuzzle.prototype.changeState = function(state){
    else if(state == 'peer_closed' || state == 'win' || state == 'loose' || state == 'draw')
       if($('#connectDialog').css('display')=='none'){
          showDialog($('#connectDialog'),{
+            start: {
+               top: 0,
+               left: 0,
+               width: 0,
+               height: 0
+            },
             height: 220,
             width: 310
          });
@@ -336,12 +349,30 @@ BayPuzzle.prototype.changeState = function(state){
 BayPuzzle.prototype.showRules = function() {
    if($('#rulesDialog').css('display')=='none'){
       showDialog($('#rulesDialog'),{
+         start: {
+            left: 1,
+            width: 1,
+            height: 400
+         },
          height: 400,
          width: 400
       });
    }      
 };
 
+BayPuzzle.prototype.showSkins = function() {
+   if($('#skinsDialog').css('display')=='none'){
+      showDialog($('#skinsDialog'),{
+         start: {
+            width: 0,
+            height: 400,
+            left: 0
+         },
+         height: 400,
+         width: 400
+      });
+   }
+};
 
 BayPuzzle.prototype.setName = function(name) {
    this.name = name;

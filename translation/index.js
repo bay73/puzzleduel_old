@@ -48,6 +48,7 @@ module.exports.translate = function(app){
         var lang = req.session.lang;
         var path = __dirname + '/' +  lang + '.json';
         var data = fs.readFileSync(path, {encoding: 'utf-8'});         
+        res.locals.lang = lang;
         res.locals.translate = JSON.parse(data);
         next();
     });

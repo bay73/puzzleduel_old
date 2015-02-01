@@ -43,11 +43,17 @@ var showDialog = function(element, options){
    var startheight = $(element).height();
    var starttop = $(element).offset().top;
    var startleft = $(element).offset().left;
-   if(options.from){
-      startwidth = $(options.from).width();
-      startheight = $(options.from).height();
-      starttop = $(options.from).offset().top;
-      startleft = $(options.from).offset().left;
+   if(options.start){
+      if(options.start.from){
+         startwidth = $(options.start.from).width();
+         startheight = $(options.start.from).height();
+         starttop = $(options.start.from).offset().top;
+         startleft = $(options.start.from).offset().left;
+      }
+      if(typeof(options.start.width) != 'undefined') startwidth = options.start.width;
+      if(typeof(options.start.height) != 'undefined') startheight = options.start.height;
+      if(typeof(options.start.top) != 'undefined') starttop = options.start.top;
+      if(typeof(options.start.left) != 'undefined') startleft = options.start.left;
    }
    $(element).css({
       height: startheight, 
@@ -59,6 +65,8 @@ var showDialog = function(element, options){
    var endleft = ($(window).width() - options.width)/2;;
    if(options.direction){
       var dirs = options.direction.split('-');
+      endtop = starttop;
+      endleft = startleft;
       if(dirs[0]=='top') endtop = starttop + startheight - options.height;
       if(dirs[0]=='center') endtop = starttop + (startheight - options.height)/2;
       if(dirs[1]=='left') endleft = startleft + startwidth - options.width;
@@ -80,6 +88,7 @@ var closeDialog = function(element, callback){
       $(element).hide();
       $(element).appendTo($('body'));
       overlay.remove();
-      callback();
+      if(callback)
+         callback();
    }, 400);
 }

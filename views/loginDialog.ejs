@@ -1,4 +1,4 @@
-   <button class="raised button login" id="userLoginButton"><%= translate["Login button label"]%></button>
+   <button class="button login" id="userLoginButton"><%= translate["Login button label"]%></button>
    <div class="raised dialog" id="userLoginDialog">
       <form name="loginForm" id="loginForm" method="POST">
          <div class="group loginselector">
@@ -25,7 +25,9 @@
    <script>
       rippleButton($('#userLoginButton'), function(){
          showDialog($('#userLoginDialog'),{
-            from: $('#userLoginButton'),
+            start: {
+               from: $('#userLoginButton')
+            },
             width: 310,
             height: 230,
             direction: 'bottom-left'

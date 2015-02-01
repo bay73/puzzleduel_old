@@ -2,7 +2,7 @@
 <div class="topic">
     <h2><%= translate["Welcome to Puzzleduel header"]%></h2>
     <p><%- translate["Welcome to Puzzleduel text"]%></p>
-    <button class="raised button start default" id="startDuelButton"><%= translate["Start duel button label"]%></button>
+    <button class="raised button start blue" id="startDuelButton"><%= translate["Start duel button label"]%></button>
     <script>
     rippleButton($('#startDuelButton'), function(){window.location.href="/sudokuduel"});
     </script>
@@ -17,10 +17,3 @@
 <div class="topic small">
     <h4><%= translate["News"]%></h2>
 </div>
-<% if (!user) { %>
-    <div class="langchooser">
-        <% for(var i=0; i<languages.length; i++) { %>
-            <a href="switchlang/<%=languages[i].lang %>"><%=languages[i].label %></a>
-        <% } %>
-    <div>
-<% } %>
