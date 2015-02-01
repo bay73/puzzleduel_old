@@ -1,3 +1,5 @@
+var config = require('../config');
+
 var Match = require('../models/match').Match;
 
 if(typeof(module) != 'undefined')
@@ -22,7 +24,7 @@ SudokuServer = function(socket){
          socket.waitTimeout = setTimeout(function(){
             var botSocket = new BaySocket(new BaySudokuBot(data.size));
             SudokuServer(botSocket);
-         },30000);
+         },config.get("bots:waitingtime"));
       } else {
          clearTimeout(rival.waitTimeout);
          clearTimeout(socket.waitTimeout);

@@ -32,5 +32,8 @@
       "client_id": "1046633030815-8fb7tclfjk1iavrtdupommk2rq95ishj.apps.googleusercontent.com",
       "client_secret": "",
       "callback_url" : "http://puzzleduel-bay73.c9.io/oauth2callback"
+   },
+   "bots" : {
+      "waitingtime": 30000
    }
 }
