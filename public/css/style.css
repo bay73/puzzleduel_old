@@ -4,7 +4,7 @@ html,body {
 }
 
 body {
-   background-color: f4f4f4;
+   background-color: #f4f4f4;
    font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
    font-size: 16px;
 }
@@ -24,12 +24,15 @@ body {
    position: relative;
    display: block;
    margin: 30px auto;
-   padding-top: 30px;
    width: 1000px;
    max-width: 60%;
-   min-height: 98%;
+   min-height: 70%;
    min-width: 460px;
    text-align: center;
+}
+
+.container.game{
+   min-height: 98%;
 }
 
 .logo {
@@ -422,7 +425,7 @@ input:focus ~ .highlight {
    font-size: 75%;
 }
 
-@media screen and (min-height:1000px) and (max-height:5000px) and (min-width:1600px) {
+@media screen and (min-height:1000px) and (max-height:5000px) and (min-width:2000px) {
 body {
    font-size: 22px;
 }
@@ -482,7 +485,7 @@ body {
 }
 }
 
-@media screen and (min-width:1000px) and (max-width:10000px) {
+@media screen and (min-width:2000px) and (max-width:10000px) {
 .logo img {
    padding-left: 300px;
 }
