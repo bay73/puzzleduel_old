@@ -1,8 +1,8 @@
 {
-   "port": 8080,
+   "port": 8888,
    "domain": "puzzleduel-bay73.c9.io:*",
    "mongoose": {
-      "uri": "mongodb://bay73:qwerty73@ds039421.mongolab.com:39421/puzzleduel",
+      "uri": "mongodb://localhost/mydb",
       "options": {
          "server": {
             "socetOptions": {
