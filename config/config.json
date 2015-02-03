@@ -1,8 +1,8 @@
 {
-   "port": 8888,
+   "port": 8080,
    "domain": "puzzleduel-bay73.c9.io:*",
    "mongoose": {
-      "uri": "mongodb://localhost/mydb",
+      "uri": "mongodb://bay73:qwerty73@ds039421.mongolab.com:39421/puzzleduel",
       "options": {
          "server": {
             "socetOptions": {
@@ -13,7 +13,7 @@
    },
    "session": {
       "name": "sid",
-      "secret": "",
+      "secret": "XxQBCH4uMVfsyBxHNz2HFGat",
       "resave": false,
       "saveUninitialized": true,
       "cookie": { 
@@ -25,15 +25,15 @@
    },
    "facebook_login": {
       "api_key": "788712584538109",
-      "api_secret": "",
+      "api_secret": "9bf88cfbfad1be169f13f6ac345bcab7",
       "callback_url" : "http://puzzleduel-bay73.c9.io/auth/facebook/callback"
    },
    "google_login" : {
       "client_id": "1046633030815-8fb7tclfjk1iavrtdupommk2rq95ishj.apps.googleusercontent.com",
-      "client_secret": "",
+      "client_secret": "xzBZjJgfg4BJoRTzdEQ95muR",
       "callback_url" : "http://puzzleduel-bay73.c9.io/oauth2callback"
    },
    "bots" : {
-      "waitingtime": 30000
+      "waitingtime": 3
    }
 }
