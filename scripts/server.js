@@ -254,7 +254,7 @@ BaySudokuBot = function(size){
    this.sudoku = new BaySudoku(size);
    this.sudoku.initSudoku();
    this.clueCount = 0;
-   this.names = ['Bob', 'Alice', 'Игорь', 'Yoko', 'Katrine', 'Crazy', 'Wart']
+   this.names = ['イザナギ', 'Alice Greenwell', 'Игорь Веселов', 'Yoko Tokawa', 'Leong Guotin', 'Crazy', 'Wart']
    this.speeds = [500, 600, 400, 300, 550, 200, 700]
    var index = Math.floor(Math.random()*this.names.length);
    this.name = this.names[index];
