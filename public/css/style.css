@@ -29,6 +29,7 @@ body {
    min-height: 70%;
    min-width: 460px;
    text-align: center;
+   overflow: auto;
 }
 
 .container.game{
@@ -76,8 +77,8 @@ p {
     width: 47%;
     height: auto;
     display: inline-block;
-    padding: 1%;
     padding-bottom: 20px;
+    float: left;
 }
 
 .langchooser {
@@ -162,6 +163,7 @@ p {
 
 h1,h2,h3,h4 {
    color: #3a386c;
+   padding-top: 30px;
    padding-bottom: 15px;
 }
 
@@ -400,7 +402,7 @@ input:focus ~ .highlight {
 
 .ratingtable {
    max-width: 300px;
-   margin: 0px auto;
+   margin: 15px auto;
    border-collapse: collapse;
    font-size: 90%;
 }
@@ -453,35 +455,6 @@ body {
 
 .langchooser {
    top: 30px;
-}
-}
-
-@media screen and (min-height:40px) and (max-height:560px) {
-.logo {
-   height: 60px;
-}
-
-.logo img {
-   height: 60px;
-}
-
-.title {
-   height: 60px;
-   font-size: 200%;
-   top: -20px;
-}
-
-.button.login {
-   top: 15px;
-}
-
-.menu {
-   height: 30px;
-}
-
-
-.langchooser {
-   top: 5px;
 }
 }
 
@@ -595,11 +568,54 @@ body {
     width: 97%;
 }
 
+h1,h2,h3,h4 {
+   padding-top: 20px;
+   padding-bottom: 10px;
+}
+
 .langchooser a.short {
    display: initial;
 }
 
 .langchooser a.long {
    display: none;
+}
+}
+
+@media screen and (min-height:40px) and (max-height:560px) {
+.logo {
+   height: 60px;
+}
+
+.logo img {
+   height: 60px;
+}
+
+.container{
+   margin: 10px auto;
+}
+
+.title {
+   height: 60px;
+   font-size: 200%;
+   top: -20px;
+}
+
+.button.login {
+   top: 15px;
+}
+
+.menu {
+   height: 30px;
+}
+
+
+.langchooser {
+   top: 5px;
+}
+
+h1,h2,h3,h4 {
+   padding-top: 10px;
+   padding-bottom: 5px;
 }
 }
