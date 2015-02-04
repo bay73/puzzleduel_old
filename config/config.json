@@ -26,12 +26,12 @@
    "facebook_login": {
       "api_key": "788712584538109",
       "api_secret": "9bf88cfbfad1be169f13f6ac345bcab7",
-      "callback_url" : "http://puzzleduel-bay73.c9.io/auth/facebook/callback"
+      "callback_url" : "https://puzzleduel.herokuapp.com/auth/facebook/callback"
    },
    "google_login" : {
       "client_id": "1046633030815-8fb7tclfjk1iavrtdupommk2rq95ishj.apps.googleusercontent.com",
       "client_secret": "xzBZjJgfg4BJoRTzdEQ95muR",
-      "callback_url" : "http://puzzleduel-bay73.c9.io/oauth2callback"
+      "callback_url" : "https://puzzleduel.herokuapp.com/oauth2callback"
    },
    "bots" : {
       "waitingtime": 30000
