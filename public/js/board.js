@@ -241,6 +241,6 @@ BayBoard.prototype.onResize = function(parent){
 };
 
 BayBoard.prototype.Area = function(w,h){
-   if(w < h){return w*w;}
-   else {return h*h;}
+   if(w < h){return 100*w*w;}
+   else {return 100*h*h;}
 };

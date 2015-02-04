@@ -2,9 +2,9 @@ var BayColorScheme = {
    basic: {
       cell: {
          fillColor: '',
-         borderColor: 'black',
+         borderColor: '#3a386c',
          borderWidth: 1,
-         fontColor: 'black',
+         fontColor: '#3a386c',
          fontSize: 8,
          fontFamily: 'Verdana',
          fontStyle: 'normal',
@@ -22,13 +22,13 @@ var BayColorScheme = {
       },
       frame: {
          fillColor: '',
-         borderColor: 'black',
-         borderWidth: 2,
+         borderColor: '#3a386c',
+         borderWidth: 3,
       },
       doubleframe: {
          fillColor: '',
-         borderColor: 'black',
-         borderWidth: 4,
+         borderColor: '#3a386c',
+         borderWidth: 6,
       },
       active: {
          fillColor: '',

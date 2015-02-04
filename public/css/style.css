@@ -143,6 +143,11 @@ p {
    color: #aaf;
 }
 
+.button.blue:disabled {
+   background-color: #8a88ac;
+   color: #aaf;
+}
+
 .button:hover, .button:focus {
    background-color: #fafaff;
 }
@@ -153,6 +158,10 @@ p {
 
 .button:disabled:hover, .button:disabled:focus {
    background-color: #fff;
+}
+
+.button.blue:disabled:hover, .button.blue:disabled:focus {
+   background-color: #8a88ac;
 }
 
 

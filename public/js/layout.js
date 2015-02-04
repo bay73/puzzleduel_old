@@ -1,9 +1,10 @@
-var BayLayout = function(children, size){
+var BayLayout = function(children, size, className){
 	this.children = [];
-	this.element = $('<div style="position:relative; margin:0; padding:0; border:0; left:0; top:0;">');
+	if(!className) className='';
+	this.element = $('<div class="baylayout ' + className + '">');
 	this.element.appendTo($('#board'));
 	for(var i in children){
-		var div = $('<div style="position:absolute; margin:0; padding:0; border:0; text-align: left;">');
+		var div = $('<div class="bayhandler">');
 		div.appendTo(this.element);
 		var child = children[i];
 		child.element.appendTo(div);
@@ -20,6 +21,7 @@ var BayLayout = function(children, size){
 
 BayLayout.VERTICAL = 0;	
 BayLayout.HORIZONTAL = 1;
+
 BayLayout.isMobile = function(){
     var isMobile = (/iphone|ipod|android|ie|blackberry|fennec/).test
          (navigator.userAgent.toLowerCase());
@@ -96,8 +98,8 @@ BayLayout.prototype.Area = function(w,h){
 
 
 var BayButton = function(src, title, action){
-	this.element = $('<img src="'+src+'" class="baybutton" style="position:relative; margin:0; padding:0; border:0; left:0; top:0; cursor:pointer;">');
-	this.span = $('<span class="baybutton" style="position:relative; margin:0; padding:0; border:0; left:0; top:0; text-align:left; color:steelblue; display:none; cursor:pointer;">'+title+'</span>');
+	this.element = $('<img src="'+src+'" class="baybutton">');
+	this.span = $('<span class="baybutton">'+title+'</span>');
 	this.element.appendTo($('body'));
 	this.span.appendTo($('body'));
 	this.element.click(action);
@@ -105,19 +107,19 @@ var BayButton = function(src, title, action){
 };
 
 BayButton.prototype.Area = function(w,h){
-	if(BayLayout.isMobile()){
+//	if(BayLayout.isMobile()){
 		if(w < h/3){return 3*w*w;}
 		else {return h*h/3;}
-	}else{
+/*	}else{
 		if(w < h*10){return w*w/10;}
 		else {return h*h*10;}
 	}
-};
+*/};
 
 BayButton.prototype.onResize = function(parent){
 	var w = parent.innerWidth();
 	var h = parent.innerHeight();
-	if(BayLayout.isMobile()){
+//	if(BayLayout.isMobile()){
 		if(w < h){
 			var d = h - w;
 			h = w;
@@ -135,7 +137,7 @@ BayButton.prototype.onResize = function(parent){
 		this.element.width(w);
 		this.element.height(h);
 		this.span.hide();
-	} else {
+/*	} else {
 		if(w < h*8) {h = w / 8;}
 		if(h > 48) h = 48;
 		w = h;
@@ -148,11 +150,13 @@ BayButton.prototype.onResize = function(parent){
 		this.span.css({'left': h/5, 'top': 0});
 		this.span.css({'font-size': 0.9*h});
 	}
+*/
 };
 
-var BayTextPanel = function(relation){
+var BayTextPanel = function(relation, className){
 	this.relation = relation;
-	this.element = $('<div style="position:relative; margin:0; padding:0; border:0; left:0; top:0; text-align:center; color:steelblue;">');
+	if(!className) className='';
+	this.element = $('<div class="baytext '+className+'">');
 	this.element.appendTo($('body'));
 };
 

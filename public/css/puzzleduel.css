@@ -51,11 +51,63 @@
 	color: red;
 }
 
-.baybutton {
-   display: none;
-}
-
 #connectDialog td.ruleslink {
    text-align: right;
    font-size: 12px;
+}
+
+.baylayout {
+   position:relative;
+   margin:0;
+   padding:0;
+   border:0;
+   left:0;
+   top:0;
+   overflow: auto;
+}
+
+.bayhandler {
+   position:absolute;
+   margin:0;
+   padding:0;
+   border:0;
+   text-align: left;
+}
+
+img.baybutton {
+   position:relative;
+   margin:0;
+   padding:0;
+   border:0;
+   left:0;
+   top:0;
+   cursor:pointer;
+}
+
+spn.baybutton {
+   position:relative;
+   margin:0;
+   padding:0;
+   border:0;
+   left:0;
+   top:0;
+   text-align:left;
+   color:#3a386c;
+   display:none;
+   cursor:pointer;
+}
+
+.baytext {
+   position:relative;
+   margin:0;
+   padding:0;
+   border:0;
+   left:0;
+   top:0;
+   text-align:center;
+   color:#3a386c;
+}
+
+.buttonpane {
+   background-color: #fff9b6;
 }
