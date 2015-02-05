@@ -2,23 +2,9 @@
    display: none;
 }
 
-#connectDialog td {
-   text-align: center;
-   font-size: xx-large;
-}
-
 #connectDialog table {
    width: 100%;
    height: 100%;
-}
-
-#headerPanel{
-   width: 800px;
-   height: 60px;
-   padding-top: 20px;
-   padding-bottom: 10px;
-   text-align: center;
-   font-size: xx-large;
 }
 
 .ourscore {
@@ -56,6 +42,11 @@
    font-size: 12px;
 }
 
+#board {
+   width: 100%;
+   height: 100%;
+}
+
 .baylayout {
    position:relative;
    margin:0;
@@ -63,7 +54,7 @@
    border:0;
    left:0;
    top:0;
-   overflow: auto;
+   overflow: hidden;
 }
 
 .bayhandler {

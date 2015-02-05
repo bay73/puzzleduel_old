@@ -18,6 +18,22 @@
     <link rel='stylesheet' href='/css/style.css' />
   </head>
   <body>
-    <%-body -%>
+    <header class="logo">
+      <img src="images/logo.png">
+      <span class="title"><%= title %></span>
+    </header>
+    <div class="menu">
+      <% if (!user) { %>
+        <div class="langchooser">
+          <% for(var i=0; i<languages.length; i++) { %>
+            <a class="short <%=languages[i].lang==lang?'current':'' %>" href="switchlang/<%=languages[i].lang %>"><%=languages[i].lang.toUpperCase() %></a>
+            <a class="long <%=languages[i].lang==lang?'current':'' %>" href="switchlang/<%=languages[i].lang %>"><%=languages[i].label %></a>
+          <% } %>
+        </div>
+      <% } %>
+    </div>
+    <div class="container raised">
+       <%-body -%>
+     </div>
   </body>
 </html>

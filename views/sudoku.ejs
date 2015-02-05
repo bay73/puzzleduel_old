@@ -31,31 +31,48 @@
    var SIZE = 9;
    translate = <%- JSON.stringify(translate) %>
    $('#ruleslink').click(function(){puzzle.showRules();});
-   var btnMenu = new BayButton('images/menu.png',translate["Menu"],function(){alert('Menu doesn`t work yet!');});
-   var btnSettings = new BayButton('images/settings.png',translate["Settings"],function(){puzzle.showSkins();});
-   var btnHelp = new BayButton('images/help.png',translate["Help"],function(){puzzle.showRules();});
-   var logo = new BayTextPanel(1);
-   var buttonPanel = new BayLayout([btnMenu, btnSettings, btnHelp, logo],[10, 10, 10, 70], 'buttonpane');
 
    var statusPanel = new BayTextPanel(10);
    var scorePanel = new BayTextPanel(2.3);
-   var infoPanel = new BayLayout([statusPanel, scorePanel],[28, 72]);
+   var infoPanel = new BayLayout([scorePanel, statusPanel],[72, 28]);
 
    var puzzle = new BayPuzzle({generator: new SquareGridGenerator(), width: SIZE, height: SIZE, sudoku: true, digits: SIZE});
    var board = new BayBoard({puzzle: puzzle, colorScheme: BayColorScheme.basic});
 
-   var gamePanel = new BayLayout([infoPanel, board],[20, 80]);
+   var layout = new BayLayout([infoPanel, board],[15, 85]);
 
-   var layout = new BayLayout([buttonPanel, gamePanel],[10, 90]);
    puzzle.setScorePanel(scorePanel);
    puzzle.setInfoPanel(statusPanel);
    puzzle.setBoard(board);
 
+
+   function BoardResize() {
+      var headerSize = Math.min($('header.logo').height(), $('header.logo').width());
+      var menuSize = Math.min($('.menu').height(), $('.menu').width());
+      var margin = $('.container').css('margin-top').match(/\d+/)[0];
+      var winHeight = $(window).height() - headerSize - menuSize - 2*margin;
+      var winWidth = $(window).width() - headerSize - menuSize - 2*margin;
+      if(winWidth > winHeight * 1.5 && winHeight < 400){
+         var width = Math.max(winHeight * 1.5, winWidth*0.9);
+         $('body').addClass('lefttitle');
+         $('#board').width(width);
+         $('.container').innerWidth(width);
+         $('#board').height($(window).height() - 2*margin);
+         $('.container').innerHeight($(window).height() - 2*margin);
+      } else {
+         $('body').removeClass('lefttitle');
+         $('#board').height(winHeight);
+         $('#board').width($('.container').innerWidth());
+         $('.container').innerHeight(winHeight);
+      }
+      layout.onResize($('#board'));
+      puzzle.changeState();
+   }
    var resizeTimer;
    $(window).bind('resize',function(){
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function(){layout.onResize($(window));puzzle.changeState()},100);
+      resizeTimer = setTimeout(BoardResize,100);
    })
 
-    layout.onResize($(window));
+    BoardResize();
 </script>

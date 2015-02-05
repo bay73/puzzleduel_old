@@ -1,12 +1,17 @@
-html,body {
-   height: 98%;
+html {
+   height: 100%;
    margin: 0;
 }
-
 body {
+   height: 98%;
+   margin: 0;
    background-color: #f4f4f4;
    font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
    font-size: 16px;
+}
+
+body.lefttitle {
+   height: 100%;
 }
 
 * {
@@ -21,47 +26,72 @@ body {
 }
 
 .container{
-   position: relative;
-   display: block;
-   margin: 30px auto;
+   margin: 20px auto;
    width: 1000px;
    max-width: 60%;
-   min-height: 70%;
+   min-height: 75%;
    min-width: 460px;
    text-align: center;
    overflow: auto;
 }
 
-.container.game{
-   min-height: 98%;
+body.lefttitle .container{
+   max-width: 100%;
+   margin: 20px 20px;
+   float: left;
 }
 
 .logo {
    width: 100%;
-   height: 100px;
+   height: 80px;
    background-color: #fff9b6;
 }
 
+body.lefttitle .logo {
+   width: 80px;
+   height: 100%;
+   float: left;
+}
+
 .logo img {
+   padding-top: 0px;
    padding-left: 100px;
    height: 80px;
+}
+
+body.lefttitle .logo img{
+   padding-top: 10px;
+   padding-left: 0px;
+   width: 80px;
+   height: auto;
 }
 
 .title {
    padding-left: 100px;
-   height: 80px;
+   height: 70px;
    position: relative;
    color: #bbb;
    font-size: 300%;
    font-weight: bold;
-   top: -30px;
+   top: -25px;
+}
+
+body.lefttitle .title{
+   display:none;
 }
 
 .menu {
    width: 100%;
-   height: 50px;
+   height: 40px;
    background-color: #3a386c;
    box-shadow: 0px 3px 5px 2px rgba(0, 0, 0, 0.26);
+}
+
+body.lefttitle .menu{
+   width: 40px;
+   height: 100%;
+   box-shadow: 3px 0px 5px 2px rgba(0, 0, 0, 0.26);
+   float: left;
 }
 
 p {
@@ -83,9 +113,14 @@ p {
 
 .langchooser {
    position: relative;
-   top: 15px;
+   top: 10px;
    left: -40px;
    float: right;
+}
+
+body.lefttitle .langchooser{
+   left: 0px;
+   bottom: 10px;
 }
 
 .langchooser a {
@@ -95,6 +130,14 @@ p {
 }
 
 .langchooser a.short {
+   display: none;
+}
+
+body.lefttitle .langchooser a.short{
+   display: inline-block;
+}
+
+body.lefttitle .langchooser a.long{
    display: none;
 }
 
@@ -451,7 +494,7 @@ body {
 
 .title {
    height: 120px;
-   top: -50px;
+   top: -55px;
 }
 
 .button.login {
@@ -520,6 +563,11 @@ body {
    min-width: 440px;
 }
 
+body.lefttitle .container{
+   max-width: 97%;
+   min-width: 300px;
+}
+
 .logo img {
    padding-left: 5px;
 }
@@ -552,9 +600,14 @@ body {
 
 @media screen and (min-width:40px) and (max-width:560px) {
 .container{
-   width: 98%;
-   max-width: 98%;
-   min-width: 98%;
+   width: 97%;
+   max-width: 97%;
+   min-width: 97%;
+}
+
+body.lefttitle .container{
+   max-width: 97%;
+   min-width: 40%;
 }
 
 .logo img {
@@ -593,34 +646,38 @@ h1,h2,h3,h4 {
 
 @media screen and (min-height:40px) and (max-height:560px) {
 .logo {
-   height: 60px;
+   height: 50px;
 }
 
 .logo img {
-   height: 60px;
+   height: 50px;
 }
 
 .container{
-   margin: 10px auto;
+   margin: 8px auto;
+}
+
+body.lefttitle .container{
+   margin: 8px 8px;
 }
 
 .title {
-   height: 60px;
+   height: 50px;
    font-size: 200%;
-   top: -20px;
+   top: -15px;
 }
 
 .button.login {
-   top: 15px;
+   top: 10px;
 }
 
 .menu {
-   height: 30px;
+   height: 25px;
 }
 
 
 .langchooser {
-   top: 5px;
+   top: 3px;
 }
 
 h1,h2,h3,h4 {
