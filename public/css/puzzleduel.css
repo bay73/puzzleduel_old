@@ -37,8 +37,13 @@
 	color: red;
 }
 
-#connectDialog td.ruleslink {
+#connectDialog td.rightlink {
    text-align: right;
+   font-size: 12px;
+}
+
+#connectDialog td.leftlink {
+   text-align: left;
    font-size: 12px;
 }
 

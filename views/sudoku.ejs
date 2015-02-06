@@ -17,7 +17,7 @@
          <tr><td colspan=2><button class="button blue raised" id="connect"><%= translate["SearchRivals"]%></button></td></tr>
          <tr><td colspan=2><button class="button blue raised" id="ready"><%= translate["Start"]%></button></td></tr>
          <tr><td colspan=2><span class="infotext" id="waitingforready"></span></td></tr>
-         <tr><td class="ruleslink" colspan=2><a id="ruleslink" href="#"><%= translate["Rules"]%></a></span></td></tr>
+         <tr><td class="leftlink"><a id="mainlink" href="/"><%= translate["MainPage"]%></a></td><td class="rightlink"><a id="ruleslink" href="#"><%= translate["Rules"]%></a></td></tr>
       </table>
    </div>
    <div class="raised dialog" id="rulesDialog">
@@ -32,14 +32,14 @@
    translate = <%- JSON.stringify(translate) %>
    $('#ruleslink').click(function(){puzzle.showRules();});
 
-   var statusPanel = new BayTextPanel(10);
-   var scorePanel = new BayTextPanel(2.3);
-   var infoPanel = new BayLayout([scorePanel, statusPanel],[72, 28]);
+   var statusPanel = new BayTextPanel(10, 'status');
+   var scorePanel = new BayTextPanel(2.3, 'score');
+   var infoPanel = new BayLayout([scorePanel, statusPanel],{vertical: [72, 28], horizontal: [50, 50]}, 'info');
 
    var puzzle = new BayPuzzle({generator: new SquareGridGenerator(), width: SIZE, height: SIZE, sudoku: true, digits: SIZE});
    var board = new BayBoard({puzzle: puzzle, colorScheme: BayColorScheme.basic});
 
-   var layout = new BayLayout([infoPanel, board],[15, 85]);
+   var layout = new BayLayout([infoPanel, board],{vertical: [15, 85], horizontal: [30, 70]});
 
    puzzle.setScorePanel(scorePanel);
    puzzle.setInfoPanel(statusPanel);

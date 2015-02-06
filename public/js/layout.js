@@ -8,14 +8,25 @@ var BayLayout = function(children, size, className){
 		div.appendTo(this.element);
 		var child = children[i];
 		child.element.appendTo(div);
-		this.children.push(
-			{
-				element:    div, 
-				size: 		size[i],
-				content:	child
-			}
-		);
-		this.sumSize += size[i];
+        if(size instanceof Array){
+			this.children.push(
+				{
+					element:    div,
+					vsize:      size[i],
+					hsize:      size[i],
+					content:    child
+				}
+			);
+		} else {
+			this.children.push(
+				{
+					element:    div,
+					vsize:      size.vertical[i],
+					hsize:      size.horizontal[i],
+					content:    child
+				}
+			);
+		}
 	}
 };
 
@@ -49,11 +60,11 @@ BayLayout.prototype.draw = function(parent, orientation){
 	this.element.height(height);
 	var offsite = 0;
 	for(var i in this.children){
-		var childwidth = width*this.children[i].size/100;
+		var childwidth = width*this.children[i].hsize/100;
 		var childheight = height;
 		if(orientation == BayLayout.VERTICAL){
 			childwidth = width;
-			childheight = height*this.children[i].size/100;
+			childheight = height*this.children[i].vsize/100;
 			this.children[i].element.css({left: 0, top: offsite});
 			offsite += childheight;
 		}else{
@@ -73,7 +84,7 @@ BayLayout.prototype.vArea = function(w,h){
 	}
 	var area = 0;
 	for(var i in this.children){
-		area += this.children[i].content.Area(w, h*this.children[i].size/100.0);
+		area += this.children[i].content.Area(w, h*this.children[i].vsize/100.0);
 	}
 	return area;
 };
@@ -84,7 +95,7 @@ BayLayout.prototype.hArea = function(w,h){
 	}
 	var area = 0;
 	for(var i in this.children){
-		area += this.children[i].content.Area(w*this.children[i].size/100.0, h);
+		area += this.children[i].content.Area(w*this.children[i].hsize/100.0, h);
 	}
 	return area;
 };
@@ -170,7 +181,7 @@ BayTextPanel.prototype.onResize = function(parent){
 	var h = parent.innerHeight();
 	if(w < h*this.relation){
 		h = w/this.relation;
-		this.element.css({'left': 0, 'top': 0});
+		this.element.css({'left': 0, 'top': (parent.innerHeight()-h)/2});
 	}
 	else {
 		w=h*this.relation;
@@ -179,7 +190,7 @@ BayTextPanel.prototype.onResize = function(parent){
 	this.element.width(w);
 	this.element.height(h);
 	this.element.html(this.text);
-	this.element.css({'font-size': 2*h/3});
+	this.element.css({'font-size': 2*h/3, 'padding-top': h/6});
 };
 
 BayTextPanel.prototype.reDraw = function(){

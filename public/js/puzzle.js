@@ -24,7 +24,7 @@ SquareCell.prototype.draw = function(canvas, colorScheme){
                      height: this.height * canvas.height()
       });
    }
-   var lineWidth = colorScheme[this.type].borderWidth;
+   var lineWidth = colorScheme[this.type].borderWidth * canvas.width() / 400;
    var borderColor = colorScheme[this.type].borderColor;
    var fillColor = colorScheme[this.type].fillColor;
    canvas.drawRect({
@@ -37,10 +37,10 @@ SquareCell.prototype.draw = function(canvas, colorScheme){
                      height: this.height * canvas.height() - lineWidth
                   });
    if(this.isActive){
-      lineWidth = colorScheme['active'].borderWidth;
+      lineWidth = colorScheme['active'].borderWidth * canvas.width() / 400;
       borderColor = colorScheme['active'].borderColor;
       fillColor = colorScheme['active'].fillColor;
-      var margin = colorScheme['active'].borderMargin;
+      var margin = colorScheme['active'].borderMargin * canvas.width() / 400;
       canvas.drawRect({
                         strokeWidth: lineWidth, 
                         strokeStyle: borderColor,

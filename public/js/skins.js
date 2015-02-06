@@ -34,7 +34,7 @@ var BayColorScheme = {
          fillColor: '',
          borderColor: 'red',
          borderWidth: 4,
-         borderMargin: 5,
+         borderMargin: 7,
       },
       pallet: {
          fillColor: 'lightblue',
@@ -62,7 +62,7 @@ var BayColorScheme = {
       },
       active: {
          borderColor: 'pink',
-         borderMargin: 6,
+         borderMargin: 8,
       }
    },
    sky: {
@@ -81,7 +81,7 @@ var BayColorScheme = {
       },
       active: {
          borderColor: 'black',
-         borderMargin: 6,
+         borderMargin: 8,
       }
    },
    wooden: {
@@ -100,7 +100,7 @@ var BayColorScheme = {
       },
       active: {
          borderColor: 'yellow',
-         borderMargin: 6,
+         borderMargin: 8,
       },
       pallet: {
          fillColor: 'red',
