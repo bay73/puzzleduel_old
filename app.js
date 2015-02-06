@@ -17,7 +17,7 @@ app.set('view engine', 'ejs');
 
 app.use(favicon(__dirname + '/public/favicon.ico'));
 if(app.get('env') == 'development'){
-   app.use(logger(':date[clf] :method :url :status :response-time ms - :res[content-length] :user-agent'));
+   app.use(logger(':date[clf] :method :url :status :response-time ms - :res[content-length]'));
 } else {
    app.use(logger('short'));
 }
