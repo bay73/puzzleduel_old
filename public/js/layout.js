@@ -1,25 +1,38 @@
-var BayLayout = function(children, size){
+var BayLayout = function(children, size, className){
 	this.children = [];
-	this.element = $('<div style="position:relative; margin:0; padding:0; border:0; left:0; top:0;">');
+	if(!className) className='';
+	this.element = $('<div class="baylayout ' + className + '">');
 	this.element.appendTo($('#board'));
 	for(var i in children){
-		var div = $('<div style="position:absolute; margin:0; padding:0; border:0; text-align: left;">');
+		var div = $('<div class="bayhandler">');
 		div.appendTo(this.element);
 		var child = children[i];
 		child.element.appendTo(div);
-		this.children.push(
-			{
-				element:    div, 
-				size: 		size[i],
-				content:	child
-			}
-		);
-		this.sumSize += size[i];
+        if(size instanceof Array){
+			this.children.push(
+				{
+					element:    div,
+					vsize:      size[i],
+					hsize:      size[i],
+					content:    child
+				}
+			);
+		} else {
+			this.children.push(
+				{
+					element:    div,
+					vsize:      size.vertical[i],
+					hsize:      size.horizontal[i],
+					content:    child
+				}
+			);
+		}
 	}
 };
 
 BayLayout.VERTICAL = 0;	
 BayLayout.HORIZONTAL = 1;
+
 BayLayout.isMobile = function(){
     var isMobile = (/iphone|ipod|android|ie|blackberry|fennec/).test
          (navigator.userAgent.toLowerCase());
@@ -47,11 +60,11 @@ BayLayout.prototype.draw = function(parent, orientation){
 	this.element.height(height);
 	var offsite = 0;
 	for(var i in this.children){
-		var childwidth = width*this.children[i].size/100;
+		var childwidth = width*this.children[i].hsize/100;
 		var childheight = height;
 		if(orientation == BayLayout.VERTICAL){
 			childwidth = width;
-			childheight = height*this.children[i].size/100;
+			childheight = height*this.children[i].vsize/100;
 			this.children[i].element.css({left: 0, top: offsite});
 			offsite += childheight;
 		}else{
@@ -71,7 +84,7 @@ BayLayout.prototype.vArea = function(w,h){
 	}
 	var area = 0;
 	for(var i in this.children){
-		area += this.children[i].content.Area(w, h*this.children[i].size/100.0);
+		area += this.children[i].content.Area(w, h*this.children[i].vsize/100.0);
 	}
 	return area;
 };
@@ -82,7 +95,7 @@ BayLayout.prototype.hArea = function(w,h){
 	}
 	var area = 0;
 	for(var i in this.children){
-		area += this.children[i].content.Area(w*this.children[i].size/100.0, h);
+		area += this.children[i].content.Area(w*this.children[i].hsize/100.0, h);
 	}
 	return area;
 };
@@ -96,8 +109,8 @@ BayLayout.prototype.Area = function(w,h){
 
 
 var BayButton = function(src, title, action){
-	this.element = $('<img src="'+src+'" class="baybutton" style="position:relative; margin:0; padding:0; border:0; left:0; top:0; cursor:pointer;">');
-	this.span = $('<span class="baybutton" style="position:relative; margin:0; padding:0; border:0; left:0; top:0; text-align:left; color:steelblue; display:none; cursor:pointer;">'+title+'</span>');
+	this.element = $('<img src="'+src+'" class="baybutton">');
+	this.span = $('<span class="baybutton">'+title+'</span>');
 	this.element.appendTo($('body'));
 	this.span.appendTo($('body'));
 	this.element.click(action);
@@ -105,19 +118,19 @@ var BayButton = function(src, title, action){
 };
 
 BayButton.prototype.Area = function(w,h){
-	if(BayLayout.isMobile()){
+//	if(BayLayout.isMobile()){
 		if(w < h/3){return 3*w*w;}
 		else {return h*h/3;}
-	}else{
+/*	}else{
 		if(w < h*10){return w*w/10;}
 		else {return h*h*10;}
 	}
-};
+*/};
 
 BayButton.prototype.onResize = function(parent){
 	var w = parent.innerWidth();
 	var h = parent.innerHeight();
-	if(BayLayout.isMobile()){
+//	if(BayLayout.isMobile()){
 		if(w < h){
 			var d = h - w;
 			h = w;
@@ -135,7 +148,7 @@ BayButton.prototype.onResize = function(parent){
 		this.element.width(w);
 		this.element.height(h);
 		this.span.hide();
-	} else {
+/*	} else {
 		if(w < h*8) {h = w / 8;}
 		if(h > 48) h = 48;
 		w = h;
@@ -148,11 +161,13 @@ BayButton.prototype.onResize = function(parent){
 		this.span.css({'left': h/5, 'top': 0});
 		this.span.css({'font-size': 0.9*h});
 	}
+*/
 };
 
-var BayTextPanel = function(relation){
+var BayTextPanel = function(relation, className){
 	this.relation = relation;
-	this.element = $('<div style="position:relative; margin:0; padding:0; border:0; left:0; top:0; text-align:center; color:steelblue;">');
+	if(!className) className='';
+	this.element = $('<div class="baytext '+className+'">');
 	this.element.appendTo($('body'));
 };
 
@@ -166,7 +181,7 @@ BayTextPanel.prototype.onResize = function(parent){
 	var h = parent.innerHeight();
 	if(w < h*this.relation){
 		h = w/this.relation;
-		this.element.css({'left': 0, 'top': 0});
+		this.element.css({'left': 0, 'top': (parent.innerHeight()-h)/2});
 	}
 	else {
 		w=h*this.relation;
@@ -175,7 +190,7 @@ BayTextPanel.prototype.onResize = function(parent){
 	this.element.width(w);
 	this.element.height(h);
 	this.element.html(this.text);
-	this.element.css({'font-size': 2*h/3});
+	this.element.css({'font-size': 2*h/3, 'padding-top': h/6});
 };
 
 BayTextPanel.prototype.reDraw = function(){

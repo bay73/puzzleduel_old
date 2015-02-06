@@ -2,9 +2,9 @@ var BayColorScheme = {
    basic: {
       cell: {
          fillColor: '',
-         borderColor: 'black',
+         borderColor: '#3a386c',
          borderWidth: 1,
-         fontColor: 'black',
+         fontColor: '#3a386c',
          fontSize: 8,
          fontFamily: 'Verdana',
          fontStyle: 'normal',
@@ -22,19 +22,19 @@ var BayColorScheme = {
       },
       frame: {
          fillColor: '',
-         borderColor: 'black',
-         borderWidth: 2,
+         borderColor: '#3a386c',
+         borderWidth: 3,
       },
       doubleframe: {
          fillColor: '',
-         borderColor: 'black',
-         borderWidth: 4,
+         borderColor: '#3a386c',
+         borderWidth: 6,
       },
       active: {
          fillColor: '',
          borderColor: 'red',
          borderWidth: 4,
-         borderMargin: 5,
+         borderMargin: 7,
       },
       pallet: {
          fillColor: 'lightblue',
@@ -62,7 +62,7 @@ var BayColorScheme = {
       },
       active: {
          borderColor: 'pink',
-         borderMargin: 6,
+         borderMargin: 8,
       }
    },
    sky: {
@@ -81,7 +81,7 @@ var BayColorScheme = {
       },
       active: {
          borderColor: 'black',
-         borderMargin: 6,
+         borderMargin: 8,
       }
    },
    wooden: {
@@ -100,7 +100,7 @@ var BayColorScheme = {
       },
       active: {
          borderColor: 'yellow',
-         borderMargin: 6,
+         borderMargin: 8,
       },
       pallet: {
          fillColor: 'red',
