@@ -104,8 +104,6 @@ matchschema.statics.addMatch = function(started, sockets, counter, result, resul
         function(user0, user1, callback) {
             var change = [0, 0];
             if(user1 && user0){
-                console.log(counter);
-                console.log(user0.rating, user1.rating);
                 if(user0.rating <= 0) user0.rating = INITIAL_RATING;
                 if(user1.rating <= 0) user1.rating = INITIAL_RATING;
                 var sumR = user0.rating + user1.rating;
@@ -124,7 +122,7 @@ matchschema.statics.addMatch = function(started, sockets, counter, result, resul
                     }
                 }
             }
-            console.log(change);
+            console.log('Result: ', counter, '[',user0.rating,'>',change[0], ', ',user1.rating,'>',change[1],']');
             return callback(null, user0, user1, change);
         },
         function(user0, user1, change, callback) {
