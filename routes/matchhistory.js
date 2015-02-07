@@ -25,7 +25,7 @@ exports.get = function(req, res, next){
               }
           }
           if(user){
-              return callback(null, user, userMap);
+              callback(null, user, userMap);
           }else{
               callback(403);
           }
@@ -66,7 +66,7 @@ exports.get = function(req, res, next){
           callback(null, data);
       },
       function(matches, callback){
-          res.render('matchhistory', { title: 'PuzzleDuel', languages: require('../translation').languages(), matches: matches });
+          res.render('matchhistory', { languages: require('../translation').languages(), matches: matches });
       }
       ], next);
 };

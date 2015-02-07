@@ -71,12 +71,12 @@ BayMatch.prototype.interrupt = function(socket){
    if(socket==this.socket[1]){
       this.emit(0,'rivalclosed',{});
       if(this.started){
-         Match.addMatch(this.started, this.socket, [0, 0], true, 'interrupted', function(){});
+         Match.addMatch(this.started, this.socket, [this.score[0], this.score[1]], true, 'interrupted', function(){});
       }
    }else{
       this.emit(1,'rivalclosed',{});
       if(this.started){
-         Match.addMatch(this.started, this.socket, [0, 0], false, 'interrupted', function(){});
+         Match.addMatch(this.started, this.socket, [this.score[1], this.score[0]], false, 'interrupted', function(){});
       }
    }
    var index = matches.indexOf(this);

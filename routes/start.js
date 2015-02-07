@@ -8,6 +8,6 @@ exports.get = function(req, res, next){
     .select('id displayName rating')
     .exec(function(err, data){
         if(err) return next(err);
-        res.render('index', { title: 'PuzzleDuel', languages: require('../translation').languages(), ratings: data });
+        res.render('index', { languages: require('../translation').languages(), ratings: data });
     });
 };

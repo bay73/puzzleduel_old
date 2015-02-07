@@ -7,6 +7,6 @@ exports.get = function(req, res, next){
     .select('id displayName rating')
     .exec(function(err, data){
         if(err) return next(err);
-        res.render('rating', { title: 'PuzzleDuel', languages: require('../translation').languages(), ratings: data });
+        res.render('rating', { languages: require('../translation').languages(), ratings: data });
     });
 };

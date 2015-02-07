@@ -20,7 +20,7 @@ function sendHttpError(res, error){
    if(res.req.headers['x-requested-with'] == 'XMLHttpRequest'){
       res.json(error);
    } else {
-      res.render('error', {title: 'Error', error: error});
+      res.render('error', {error: error, languages: require('../translation').languages()});
    }
 }
 exports.notFound = function(app){
