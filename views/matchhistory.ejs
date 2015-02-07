@@ -1,0 +1,21 @@
+<% layout('/logopage.ejs') -%>
+<div class="topic">
+    <h2><%= translate["PlayedMatches"]%></h2>
+    <table class="ratingtable">
+        <tr>
+            <th class="name">
+                <%=translate["Opponent"]%>
+            </th>
+            <th class="date">
+                <%=translate["MatchDate"]%>
+            </th>
+            <th class="score">
+                <%=translate["MatchResult"]%>
+            </th>
+            <th class="value">
+                <%=translate["RatingChange"]%>
+            </th>
+        </tr>
+        <%-partial('matchrow',matches)%>
+    </table>
+</div>

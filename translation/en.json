@@ -38,6 +38,11 @@
     "FullRating": "Full table",
     "News": "News",
     "MainPage": "Main page",
-    "Rating text": "Resgistered users are participated in this rating and can see it's history and the log of their matches.<br>Rating depends on completed matches and recalculate after finish every match. Rating change depends on match result and the diffirence of players' ratings. A win over more strong opponent is more valueable.",
+    "Rating text": "Resgistered users are participated in this rating and can see it's history and <a href='/matchhistory'>the log of their matches</a>.<br>Rating recalculates after finishing every match. Rating change depends on match result and the diffirence of players' ratings. A win over more strong opponent is more valuable.",
+    "PlayedMatches": "Finished games",
+    "Opponent": "Opponent",
+    "MatchDate": "Date",
+    "MatchResult": "Result",
+    "RatingChange": "Rating change",
     "EOF": 0
 }

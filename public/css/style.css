@@ -466,6 +466,13 @@ input:focus ~ .highlight {
    font-weight: bold;
 }
 
+.ratingtable tr.win {
+   color: darkgreen;
+}
+.ratingtable tr.loose {
+   color: darkred;
+}
+
 .ratingtable tr:nth-child(even) {
    background-color: #f8f8f8;
    border: 0px;
@@ -473,11 +480,24 @@ input:focus ~ .highlight {
 
 .ratingtable .name{
    padding: 5px 0 0 0;
+   min-width: 150px;
    text-align: left;
 }
 
+.ratingtable .date{
+   padding: 5px 0 0 0;
+   min-width: 80px;
+   text-align: right;
+}
+
+.ratingtable .score{
+   padding: 5px 0 0 0;
+   min-width: 110px;
+   text-align: center;
+}
+
 .ratingtable .value{
-   width: 80px;
+   min-width: 60px;
    text-align: right;
 }
 
