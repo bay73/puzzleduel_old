@@ -111,7 +111,7 @@ BayMatch.prototype.start = function(){
                self.emptyCount = self.sudoku.sudokuSize*self.sudoku.sudokuSize - cells.length;
                self.emitAll('celldata', cells);
                self.emitScore();
-               console.log('Match started: [', self.socket[0].user.type, self.socket[0].user.displayName,', ', self.socket[1].user.type, self.socket[1].user.displayName,']');
+               console.log('Match started: ', self.socket[0].user, self.socket[1].user);
             },1000);
          }
       },1000);
