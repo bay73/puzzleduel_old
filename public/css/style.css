@@ -462,6 +462,10 @@ input:focus ~ .highlight {
    font-size: 90%;
 }
 
+.ratingtable tr.currentuser {
+   font-weight: bold;
+}
+
 .ratingtable tr:nth-child(even) {
    background-color: #f8f8f8;
    border: 0px;
