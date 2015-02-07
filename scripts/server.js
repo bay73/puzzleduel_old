@@ -1,15 +1,14 @@
+var util = require('util');
 var config = require('../config');
-
 var Match = require('../models/match').Match;
 
 if(typeof(module) != 'undefined')
-  BaySudoku = require('./sudoku.js');
+var  BaySudoku = require('./sudoku.js');
 
-var start = new Date().getTime()
 var queue = [];
 var matches = [];
 
-SudokuServer = function(socket){
+var SudokuServer = function(socket){
    socket.emit('register',{});
 
    socket.on('choose',function(data){
@@ -22,13 +21,13 @@ SudokuServer = function(socket){
       if(!rival){
          queue.push(socket);
          socket.waitTimeout = setTimeout(function(){
-            var botSocket = new BaySocket(new BaySudokuBot(data.size));
+            var botSocket = new BaySocket(BayBotBuilder(data.size));
             SudokuServer(botSocket);
          },config.get("bots:waitingtime"));
       } else {
          clearTimeout(rival.waitTimeout);
          clearTimeout(socket.waitTimeout);
-         match = new BayMatch(socket, rival);
+         var match = new BayMatch(socket, rival);
          matches.push(match);
       }
    });
@@ -50,10 +49,10 @@ SudokuServer = function(socket){
       if(socket.match){
          socket.match.interrupt(socket);
       }
-   })
-}
+   });
+};
 
-BayMatch = function(socket1, socket2){
+var BayMatch = function(socket1, socket2){
    this.socket = [];
    this.socket[0] = socket1;
    this.socket[1] = socket2;
@@ -66,23 +65,23 @@ BayMatch = function(socket1, socket2){
    this.emit(0,'serverready',{opponent: socket2.name});
    this.emit(1,'serverready',{opponent: socket1.name});
    this.score=[0, 0];
-}
+};
 
 BayMatch.prototype.interrupt = function(socket){
    if(socket==this.socket[1]){
       this.emit(0,'rivalclosed',{});
       if(this.started){
-         Match.addMatch(this.started, this.socket, [0, 0], true, 'interrupted', function(){});
+         Match.addMatch(this.started, this.socket, [this.score[0], this.score[1]], true, 'interrupted', function(){});
       }
    }else{
       this.emit(1,'rivalclosed',{});
       if(this.started){
-         Match.addMatch(this.started, this.socket, [0, 0], false, 'interrupted', function(){});
+         Match.addMatch(this.started, this.socket, [this.score[1], this.score[0]], false, 'interrupted', function(){});
       }
    }
    var index = matches.indexOf(this);
    matches.splice(index, 1);
-}
+};
 
 BayMatch.prototype.start = function(){
    var self = this;
@@ -116,23 +115,23 @@ BayMatch.prototype.start = function(){
          }
       },1000);
    }
-}
+};
 
 BayMatch.prototype.emitAll = function(event, data){
    this.emit(0, event, data);
    this.emit(1, event, data);
-}
+};
 
 BayMatch.prototype.emit = function(index, event, data){
    if(this.socket[index]){
       this.socket[index].emit(event, data);
    }
-}
+};
 
 BayMatch.prototype.emitScore = function(){
    this.emit(0, 'info',{score: {mine: this.score[0], rivals: this.score[1]}});
    this.emit(1, 'info',{score: {mine: this.score[1], rivals: this.score[0]}});
-}
+};
 
 BayMatch.prototype.setCellValue = function(cell, value){
    if(!cell.value){
@@ -141,12 +140,12 @@ BayMatch.prototype.setCellValue = function(cell, value){
          this.emptyCount--;
       }
    }
-}
+};
 
 BayMatch.prototype.onClick = function(socket, data){
    if(!this.started) return;
    if(socket == this.socket[0]) var player = 0;
-   if(socket == this.socket[1]) var player = 1;
+   if(socket == this.socket[1]) player = 1;
    var row = data.row;
    var col = data.col;
    var self = this;
@@ -209,7 +208,7 @@ BayMatch.prototype.onClick = function(socket, data){
       this.emit(1,'serverready',{opponent: this.socket[0].name});
       this.started = undefined;
    }
-}
+};
 
 BayMatch.prototype.emitCell = function(row, col, cell){
    var cellType = function(player, cell){
@@ -218,26 +217,26 @@ BayMatch.prototype.emitCell = function(row, col, cell){
       } else {
          return cell.player==player?'mine':'others';
       }
-   }
+   };
    if(cell.value){
-      this.emit(0, 'celldata',[{row: row, col: col, value: cell.answer, type: cellType(0, cell)}])
-      this.emit(1, 'celldata',[{row: row, col: col, value: cell.answer, type: cellType(1, cell)}])
+      this.emit(0, 'celldata',[{row: row, col: col, value: cell.answer, type: cellType(0, cell)}]);
+      this.emit(1, 'celldata',[{row: row, col: col, value: cell.answer, type: cellType(1, cell)}]);
    }else{
-      this.emit(0, 'celldata',[{row: row, col: col, type: cellType(0, cell)}])
-      this.emit(1, 'celldata',[{row: row, col: col, type: cellType(1, cell)}])
+      this.emit(0, 'celldata',[{row: row, col: col, type: cellType(0, cell)}]);
+      this.emit(1, 'celldata',[{row: row, col: col, type: cellType(1, cell)}]);
    }
-}
+};
 
-BaySocket = function(bot){
+var BaySocket = function(bot){
    this.bot = bot;
    this.callbacks = {};
-   this.user = { type: 'bot', id: bot.name, displayName: bot.name }
+   this.user = { type: 'bot', id: bot.name, displayName: bot.name };
    bot.server = this;
-}
+};
 
 BaySocket.prototype.on = function(event, callback){
    this.callbacks[event] = callback;
-}
+};
 
 BaySocket.prototype.emit = function(event, data){
 //   console.log(event + ' to bot at ' + (new Date().getTime() - start));
@@ -246,27 +245,23 @@ BaySocket.prototype.emit = function(event, data){
       var func = this.bot.callbacks[event];
       setTimeout(function(){ func(data);},1);
    }
-}
+};
 
-BaySudokuBot = function(size){
-   this.thinktime = 500;
+var BaySudokuBot = function(size, botData){
+   this.thinktime = botData.delay;
+   this.name = botData.name;
    this.callbacks = {};
    this.size = size;
    this.sudoku = new BaySudoku(size);
    this.sudoku.initSudoku();
    this.clueCount = 0;
-   this.names = ['イザナギ', 'Alice Greenwell', 'Игорь Веселов', 'Yoko Tokawa', 'Leong Guotin', 'Crazy', 'Wart']
-   this.speeds = [500, 600, 400, 300, 550, 200, 700]
-   var index = Math.floor(Math.random()*this.names.length);
-   this.name = this.names[index];
-   this.thinktime = this.speeds[index];
    var self = this;
 
    this.on('register', function(){
-      self.emit('choose', {name: self.name, size: self.size})
+      self.emit('choose', {name: self.name, size: self.size});
    });
    this.on('serverready', function(){
-      self.emit('playerready', {})
+      self.emit('playerready', {});
    });
    this.on('celldata', function(cellData){
       self.onCelldata(cellData);
@@ -293,11 +288,11 @@ BaySudokuBot = function(size){
       self.server.delete();
       self.delete();
    });
-}
+};
 
 BaySudokuBot.prototype.on = function(event, callback){
    this.callbacks[event] = callback;
-}
+};
 
 BaySudokuBot.prototype.emit = function(event, data){
 //   console.log(event + ' from bot at ' + (new Date().getTime() - start));
@@ -306,31 +301,33 @@ BaySudokuBot.prototype.emit = function(event, data){
       var func = this.server.callbacks[event];
       setTimeout(function(){ func(data);},1);
    }
-}
+};
 
 BaySudokuBot.prototype.onCelldata = function(cellData){
    for(var i in cellData){
       var data = cellData[i];
+      var cell = this.sudoku.cellData[data.row][data.col];
       if(data.value){
-         var cell = this.sudoku.cellData[data.row][data.col];
          if(!cell.type || cell.type != 'clue'){
             this.clueCount++;
          }
          cell.type = 'clue';
          cell.value = data.value;
       }
+      if(this.processCellData){
+         this.processCellData(cell, data);
+      }
    }
-}
+};
 
 BaySudokuBot.prototype.onStart = function(){
    var self = this;
    var interval = Math.random()*this.sudoku.sudokuSize*this.thinktime*4 + this.sudoku.sudokuSize*this.thinktime*2;
    this.moveTimeout = setTimeout(function(){self.makeMove()}, interval);
-}
+};
 
 BaySudokuBot.prototype.makeMove = function(){
    var size = this.sudoku.sudokuSize;
-   var length = 0;
    if(this.clueCount > size*size/5){
       this.sudoku.solve();
       var cells = [];
@@ -354,7 +351,208 @@ BaySudokuBot.prototype.makeMove = function(){
       interval = interval * (self.mine + self.rivals)/ self.rivals;
    }
    this.moveTimeout = setTimeout(function(){self.makeMove();}, interval);
+};
+
+
+var BaySmartBot = function(size, botData){
+   BaySudokuBot.call(this, size, botData);
+};
+util.inherits(BaySmartBot, BaySudokuBot);
+
+BaySmartBot.prototype.onStart = function(){
+   BaySmartBot.super_.prototype.onStart.apply(this, arguments);
+   this.lastMove = null;
+   this.empty = this.size*this.size;
+   for(var i=0;i<this.size;i++){
+      for(var j=0;j<this.size;j++){
+         var cell = this.sudoku.cellData[i][j];
+         cell.possibleValues = [];
+         for(var v=1;v<=this.size;v++){
+            cell.possibleValues.push(v);
+         }
+      }
+   }
 }
+
+BaySmartBot.prototype.excludeValue = function(x, y, v){
+   var area = this.sudoku.gridData.rows[x].cells[y];
+   for(var i=0;i<this.size;i++){
+      for(var j=0;j<this.size;j++){
+         var cell = this.sudoku.cellData[i][j];
+         if(cell){
+            var bDelete = false;
+            if( i == x ) bDelete = true;
+            if( j == y ) bDelete = true;
+            if(area==this.sudoku.gridData.rows[i].cells[j]) bDelete = true;
+            if(bDelete){
+               if(cell.possibleValues.indexOf(v)>=0){
+                  cell.possibleValues.splice(cell.possibleValues.indexOf(v), 1);
+               }
+            }
+         }
+      }
+   }
+};
+
+
+BaySmartBot.prototype.processCellData = function(cell, data){
+   if(data.value) {
+      this.excludeValue(data.row, data.col, data.value);
+      cell.possibleValues = [];
+      this.empty--;
+      if(this.empty < 0) this.empty = 0;
+   }
+};
+
+
+BaySmartBot.prototype.findMove = function(){
+   var rowCounter = [];
+   var colCounter = [];
+   var areaCounter = [];
+   for(var a=0; a<this.size; a++){
+      rowCounter[a] = [];
+      colCounter[a] = [];
+      areaCounter[a+1] = [];
+      for(var v=1; v<=this.size; v++){
+         rowCounter[a][v] = 0;
+         colCounter[a][v] = 0;
+         areaCounter[a+1][v] = 0;
+      }
+   }
+   for(var i=0;i<this.size;i++){
+      for(var j=0;j<this.size;j++){
+         var cell = this.sudoku.cellData[i][j];
+         if(cell){
+            if(!cell.value) {
+               if(cell.possibleValues.length==1){
+                  var unique = {row: i, col: j, value: cell.possibleValues[0]};
+               }
+               for(var v=0;v<cell.possibleValues.length;v++){
+                  rowCounter[i][cell.possibleValues[v]]++;
+                  colCounter[j][cell.possibleValues[v]]++;
+                  areaCounter[this.sudoku.gridData.rows[i].cells[j]][cell.possibleValues[v]]++;
+               }
+            }
+         }
+      }
+   }
+   if(this.lastMove){
+      var area = this.sudoku.gridData.rows[this.lastMove.row].cells[this.lastMove.col];
+   }
+   for(var a=1; a<=this.size; a++){
+      if (!this.lastMove || a == area){
+         for(var v=1; v<=this.size; v++){
+            if(areaCounter[a][v] == 1){
+               for(var i=0;i<this.size;i++){
+                  for(var j=0;j<this.size;j++){
+                     if(this.sudoku.gridData.rows[i].cells[j]==a){
+                        var cell = this.sudoku.cellData[i][j];
+                        if(!cell.value && cell.possibleValues.indexOf(v)>=0){
+                           return {row: i, col: j, value: v};
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+   for(var a=0; a<this.size; a++){
+      if (!this.lastMove || a == this.lastMove.row){
+         for(var v=1; v<=this.size; v++){
+            if(rowCounter[a][v] == 1){
+               for(var i=0;i<this.size;i++){
+                  var cell = this.sudoku.cellData[a][i];
+                  if(!cell.value && cell.possibleValues.indexOf(v)>=0){
+                     return {row: a, col: i, value: v};
+                  }
+               }
+            }
+         }
+      }
+      if (!this.lastMove || a == this.lastMove.col){
+         for(var v=1; v<=this.size; v++){
+            if(colCounter[a][v] == 1){
+               for(var i=0;i<this.size;i++){
+                  var cell = this.sudoku.cellData[i][a];
+                  if(!cell.value && cell.possibleValues.indexOf(v)>=0){
+                     return {row: i, col: a, value: v};
+                  }
+               }
+            }
+         }
+      }
+   }
+   return unique;
+};
+
+BaySmartBot.prototype.guessMove = function(){
+   var minSize = this.size + 1;
+   for(var i=0;i<this.size;i++){
+      for(var j=0;j<this.size;j++){
+         var cell = this.sudoku.cellData[i][j];
+         if(cell){
+            if(!cell.value) {
+               if(cell.possibleValues.length < minSize){
+                  minSize = cell.possibleValues.length;
+                  var move = {row: i, col: j, value: cell.possibleValues[0]};
+               }
+            }
+         }
+      }
+   }
+   return move;
+};
+
+BaySmartBot.prototype.makeMove = function(){
+   var move = this.findMove();
+   if(!move && !this.lastMove){
+      move = this.guessMove();
+   }
+   if (move) {
+      this.emit('click', move);
+      var cell = this.sudoku.cellData[move.row][move.col];
+      if(cell.possibleValues.indexOf(move.value) >= 0){
+         cell.possibleValues.splice(cell.possibleValues.indexOf(move.value), 1);
+      }
+   }
+   this.lastMove = move;
+   var self = this;
+   var interval = (Math.random()*3 + 1)*this.thinktime*(self.empty + self.size)/self.size;
+   if(self.rivals > 0){
+      interval = interval * (self.mine + self.rivals)/ self.rivals;
+   }
+   this.moveTimeout = setTimeout(function(){self.makeMove();}, interval);
+};
+
+var bots = [
+   {name: 'イザナギ', delay: 500, type: BaySudokuBot},
+   {name: 'Leong Guoti', delay: 550, type: BaySudokuBot},
+   {name: 'Alice Greenwell', delay: 600, type: BaySudokuBot},
+   {name: 'Wart', delay: 700, type: BaySudokuBot},
+   {name: 'Crazy', delay: 250, type: BaySmartBot},
+   {name: 'Okazaki', delay: 300, type: BaySmartBot},
+   {name: 'Yoko Tokawa', delay: 350, type: BaySmartBot},
+   {name: 'Martin J.', delay: 400, type: BaySmartBot},
+   {name: 'Matej Balenovic', delay: 450, type: BaySmartBot},
+   {name: 'Radik', delay: 500, type: BaySmartBot},
+   {name: 'Hua Qiang', delay: 500, type: BaySmartBot},
+   {name: 'Hamersley', delay: 550, type: BaySmartBot},
+   {name: 'Игорь Веселов', delay: 600, type: BaySmartBot},
+   {name: 'Curt McKnight', delay: 600, type: BaySmartBot},
+   {name: 'Aragorn', delay: 650, type: BaySmartBot},
+   {name: 'Masha Marinovic', delay: 700, type: BaySmartBot},
+   {name: 'Lénárd', delay: 800, type: BaySmartBot},
+   {name: 'Maïténa', delay: 900, type: BaySmartBot},
+   {name: 'Claude Houdin', delay: 1000, type: BaySmartBot},
+   ];
+
+var BayBotBuilder = function(size){
+   var index = Math.floor(Math.random()*bots.length);
+   var botData = bots[index];
+   return new botData.type(size, botData);
+};
+
 
 if(typeof(module) != 'undefined')
   module.exports=SudokuServer;
