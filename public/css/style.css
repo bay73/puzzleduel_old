@@ -466,10 +466,36 @@ input:focus ~ .highlight {
    font-weight: bold;
 }
 
-.ratingtable tr.win {
+.ratingtable .name a{
+   text-decoration: none;
+   font-weight: bold;
+   color: black;
+}
+
+.ratingtable .name.bot a{
+   font-weight: normal;
+}
+
+.ratingtable .name.anonym a{
+   font-style: italic;
+}
+
+.ratingtable .win {
    color: darkgreen;
 }
-.ratingtable tr.loose {
+
+.ratingtable .win a{
+   text-decoration: none;
+   color: darkgreen;
+}
+
+
+.ratingtable .loose {
+   color: darkred;
+}
+
+.ratingtable .loose a{
+   text-decoration: none;
    color: darkred;
 }
 
@@ -479,24 +505,25 @@ input:focus ~ .highlight {
 }
 
 .ratingtable .name{
-   padding: 5px 0 0 0;
+   padding: 3px 0 3px  5px;
    min-width: 150px;
    text-align: left;
 }
 
 .ratingtable .date{
-   padding: 5px 0 0 0;
+   padding: 3px 5px 3px 0;
    min-width: 80px;
    text-align: right;
 }
 
 .ratingtable .score{
-   padding: 5px 0 0 0;
+   padding: 3px 5px 3px 5px;
    min-width: 110px;
    text-align: center;
 }
 
 .ratingtable .value{
+   padding: 3px 5px 3px 0;
    min-width: 60px;
    text-align: right;
 }
