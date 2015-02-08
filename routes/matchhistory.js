@@ -53,7 +53,11 @@ exports.get = function(req, res, next){
                   rating = '+' + rating;
               }
               var d = matches[i].started;
-              var matchDate = d.getDate().toString().concat('/', (d.getMonth()+1), '/', d.getFullYear());
+              if(d){
+                  var matchDate = d.getDate().toString().concat('/', (d.getMonth()+1), '/', d.getFullYear());
+              } else {
+                  matchDate = '../../....'
+              }
               var winClass = '';
               if(typeof(matches[i].win)==='undefined') {
                   winClass = 'draw';

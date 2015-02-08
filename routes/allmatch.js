@@ -61,10 +61,13 @@ exports.get = function(req, res, next){
       function(users, matches, callback){
           var data = [];
           for(var i=0;i<matches.length;i++){
-             var show = (users[matches[i].user].type != 'bot');
-             if(show && users[matches[i].opponent].type != 'bot'){
-                show = (matches[i].user < matches[i].opponent);
-             }
+             var user1 = users[matches[i].user];
+             var user2 = users[matches[i].opponent];
+             var type1 = user1?user1.type:'undefined';
+             var type2 = user2?user2.type:'undefined';
+             var show = ((type1 != 'bot' && type2 == 'bot')
+                  || (type1 != 'bot' && type2 != 'bot' && matches[i].user < matches[i].opponent)
+                  || (type1 == 'bot' && type2 == 'bot' && matches[i].user < matches[i].opponent));
              if(userId || show) {
                  var score = matches[i].pro.toString().concat(' : ', matches[i].contra.toString());
                  if (matches[i].reason != 'finish'){
@@ -79,7 +82,11 @@ exports.get = function(req, res, next){
                      secondRating = '+' + secondRating;
                  }
                  var d = matches[i].started;
-                 var matchDate = d.getDate().toString().concat('/', (d.getMonth()+1), '/', d.getFullYear());
+                 if(d){
+                    var matchDate = d.getDate().toString().concat('/', (d.getMonth()+1), '/', d.getFullYear());
+                 } else {
+                    matchDate = '../../..';
+                 }
                  var firstWinClass = '';
                  var secondWinClass = '';
                  if(typeof(matches[i].win)==='undefined') {
@@ -96,8 +103,8 @@ exports.get = function(req, res, next){
                  }
                  data.push({date: matchDate, score: score, 
                            firstUser: matches[i].user, secondUser: matches[i].opponent, 
-                           firstName: users[matches[i].user].displayName, secondName: users[matches[i].opponent].displayName, 
-                           firstType: users[matches[i].user].type, secondType: users[matches[i].opponent].type, 
+                           firstName: user1?user1.displayName:'---', secondName: user2?user2.displayName:'---', 
+                           firstType: type1, secondType: type2, 
                            firstRating: firstRating, secondRating: secondRating, 
                            firstWin: firstWinClass, secondWin: secondWinClass });
              }
