@@ -527,7 +527,7 @@ BaySmartBot.prototype.makeMove = function(){
 
 var bots = [
    {name: 'イザナギ', delay: 500, type: BaySudokuBot},
-   {name: 'Leong Guoti', delay: 550, type: BaySudokuBot},
+   {name: 'Leong Guotin', delay: 550, type: BaySudokuBot},
    {name: 'Alice Greenwell', delay: 600, type: BaySudokuBot},
    {name: 'Wart', delay: 700, type: BaySudokuBot},
    {name: 'Crazy', delay: 250, type: BaySmartBot},

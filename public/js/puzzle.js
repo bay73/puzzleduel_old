@@ -305,6 +305,7 @@ BayPuzzle.prototype.changeState = function(state){
       $('#info').text(translate["Loose"]);
    else if(state == 'draw')
       $('#info').text(translate["Draw"]);
+   $('.fb-share-button').toggle(state == 'win');
    $('#name').toggle(state == 'choosing' || state == 'peer_not_found');
    $('#namelabel').text(translate["AskName"]);
    $('#namelabel').toggle(state == 'choosing');
