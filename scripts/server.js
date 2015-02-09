@@ -249,6 +249,7 @@ BaySocket.prototype.emit = function(event, data){
 };
 
 var BaySudokuBot = function(size, botData){
+   this.gameCount = 0;
    this.thinktime = botData.delay;
    this.name = botData.name;
    this.callbacks = {};
@@ -273,15 +274,7 @@ var BaySudokuBot = function(size, botData){
       }
    });
    this.on('finish',function(data){
-      self.sudoku = new BaySudoku(self.size);
-      self.sudoku.initSudoku();
-      self.clueCount = 0;
-      clearTimeout(self.moveTimeout);
-      if(self.mine > self.rivals * 3 || self.rivals > self.mine * 3) {
-         setTimeout(function(){
-            self.emit('disconnect');
-         }, 4000);
-      }
+      self.onFinish();
    });
    this.on('info',function(data){
       if(data.score){
@@ -326,7 +319,23 @@ BaySudokuBot.prototype.onCelldata = function(cellData){
    }
 };
 
+BaySudokuBot.prototype.onFinish = function(){
+   var self = this;
+   self.sudoku = new BaySudoku(self.size);
+   self.sudoku.initSudoku();
+   self.clueCount = 0;
+   clearTimeout(self.moveTimeout);
+   var maxGame = 5 + Math.random()*20;
+   if(self.mine > self.rivals * 3 || self.rivals > self.mine * 3 || this.gameCount > maxGame) {
+      setTimeout(function(){
+         self.emit('disconnect');
+      }, 3000);
+   }
+};
+
+
 BaySudokuBot.prototype.onStart = function(){
+   this.gameCount++;
    var self = this;
    var interval = Math.random()*this.sudoku.sudokuSize*this.thinktime*4 + this.sudoku.sudokuSize*this.thinktime*2;
    this.moveTimeout = setTimeout(function(){self.makeMove()}, interval);
