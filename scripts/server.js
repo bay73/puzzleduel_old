@@ -277,6 +277,11 @@ var BaySudokuBot = function(size, botData){
       self.sudoku.initSudoku();
       self.clueCount = 0;
       clearTimeout(self.moveTimeout);
+      if(self.mine > self.rivals * 3 || self.rivals > self.mine * 3) {
+         setTimeout(function(){
+            self.emit('disconnect');
+         }, 4000);
+      }
    });
    this.on('info',function(data){
       if(data.score){
