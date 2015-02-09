@@ -138,8 +138,13 @@ matchschema.statics.addMatch = function(started, sockets, counter, result, resul
         function(user0, user1, change, callback) {
             user0.rating += change[0];
             user1.rating += change[1];
-            user0.save();
-            user1.save();
+            if(user0.id == user1.id && user0.type == user1.type){
+                if(user0.rating < user1.rating) user0.save();
+                else user1.save();
+            } else {
+                user0.save();
+                user1.save();
+            }
         }
     ], callback
     );
