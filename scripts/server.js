@@ -42,6 +42,7 @@ var SudokuServer = function(socket){
    });
 
    socket.on('disconnect',function(data){
+      clearTimeout(socket.waitTimeout);
       var index = queue.indexOf(socket);
       if(index >= 0){
          queue.splice(index, 1);
@@ -526,25 +527,25 @@ BaySmartBot.prototype.makeMove = function(){
 };
 
 var bots = [
-   {name: 'Leong Guotin', delay: 350, type: BaySudokuBot},
-   {name: 'イザナギ', delay: 500, type: BaySudokuBot},
-   {name: 'Alice Greenwell', delay: 600, type: BaySudokuBot},
-   {name: 'Wart', delay: 700, type: BaySudokuBot},
-   {name: 'Crazy', delay: 350, type: BaySmartBot},
-   {name: 'Okazaki', delay: 400, type: BaySmartBot},
-   {name: 'Yoko Tokawa', delay: 450, type: BaySmartBot},
-   {name: 'Martin J.', delay: 500, type: BaySmartBot},
-   {name: 'Matej Balenovic', delay: 550, type: BaySmartBot},
-   {name: 'Radik', delay: 600, type: BaySmartBot},
-   {name: 'Hua Qiang', delay: 650, type: BaySmartBot},
-   {name: 'Hamersley', delay: 650, type: BaySmartBot},
-   {name: 'Игорь Веселов', delay: 700, type: BaySmartBot},
-   {name: 'Curt McKnight', delay: 700, type: BaySmartBot},
-   {name: 'Aragorn', delay: 750, type: BaySmartBot},
-   {name: 'Masha Marinovic', delay: 800, type: BaySmartBot},
-   {name: 'Lénárd', delay: 850, type: BaySmartBot},
-   {name: 'Maïténa', delay: 900, type: BaySmartBot},
-   {name: 'Claude Houdin', delay: 1000, type: BaySmartBot},
+   {name: 'Leong Guotin', delay: 250, type: BaySudokuBot},
+   {name: 'イザナギ', delay: 350, type: BaySudokuBot},
+   {name: 'Alice Greenwell', delay: 400, type: BaySudokuBot},
+   {name: 'Wart', delay: 500, type: BaySudokuBot},
+   {name: 'Crazy', delay: 300, type: BaySmartBot},
+   {name: 'Okazaki', delay: 350, type: BaySmartBot},
+   {name: 'Yoko Tokawa', delay: 400, type: BaySmartBot},
+   {name: 'Martin J.', delay: 450, type: BaySmartBot},
+   {name: 'Matej Balenovic', delay: 500, type: BaySmartBot},
+   {name: 'Radik', delay: 550, type: BaySmartBot},
+   {name: 'Hua Qiang', delay: 600, type: BaySmartBot},
+   {name: 'Hamersley', delay: 600, type: BaySmartBot},
+   {name: 'Игорь Веселов', delay: 650, type: BaySmartBot},
+   {name: 'Curt McKnight', delay: 650, type: BaySmartBot},
+   {name: 'Aragorn', delay: 700, type: BaySmartBot},
+   {name: 'Masha Marinovic', delay: 700, type: BaySmartBot},
+   {name: 'Lénárd', delay: 750, type: BaySmartBot},
+   {name: 'Maïténa', delay: 750, type: BaySmartBot},
+   {name: 'Claude Houdin', delay: 800, type: BaySmartBot},
    ];
 
 var BayBotBuilder = function(size){
