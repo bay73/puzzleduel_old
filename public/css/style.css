@@ -95,7 +95,7 @@ body.lefttitle .menu{
    float: left;
 }
 
-p {
+p,ul,li {
    margin: 15px;
    text-align: justify;
 }
