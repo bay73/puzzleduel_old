@@ -3,7 +3,7 @@ var mongoose = require('../scripts/mongoose'),
     Schema = mongoose.Schema;
     
 var INITIAL_RATING=100;
-var MATCH_COST=5;
+var MATCH_COST=3;
 
 var userschema = new Schema({
    type: {
@@ -116,9 +116,15 @@ matchschema.statics.addMatch = function(started, sockets, counter, result, resul
                     if(result) {
                         change[0] += MATCH_COST;
                         change[1] -= MATCH_COST;
+                        if(change[0] < 0){
+                            change[0] = 0;
+                        }
                     } else {
                         change[0] -= MATCH_COST;
                         change[1] += MATCH_COST;
+                        if(change[1] < 0){
+                            change[1] = 0;
+                        }
                     }
                 }
             }
