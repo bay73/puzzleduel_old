@@ -506,13 +506,13 @@ input:focus ~ .highlight {
 
 .ratingtable .name{
    padding: 3px 0 3px  5px;
-   min-width: 150px;
+   min-width: 180px;
    text-align: left;
 }
 
 .ratingtable .date{
    padding: 3px 5px 3px 0;
-   min-width: 80px;
+   min-width: 140px;
    text-align: right;
 }
 
@@ -523,6 +523,12 @@ input:focus ~ .highlight {
 }
 
 .ratingtable .value{
+   padding: 3px 5px 3px 0;
+   min-width: 60px;
+   text-align: right;
+}
+
+.ratingtable .duration{
    padding: 3px 5px 3px 0;
    min-width: 60px;
    text-align: right;

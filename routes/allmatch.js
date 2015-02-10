@@ -40,7 +40,7 @@ exports.get = function(req, res, next){
              .find({user: user})
              .sort({started: -1})
              .limit(1000)
-             .select('user opponent started win reason pro contra ratingChange')
+             .select('user opponent started fixed win reason pro contra ratingChange')
              .exec(function(err, data){
                 if(err) return callback(err);
                 callback(null, users, data);
@@ -50,7 +50,7 @@ exports.get = function(req, res, next){
              .find()
              .sort({started: -1})
              .limit(1000)
-             .select('user opponent started win reason pro contra ratingChange')
+             .select('user opponent started fixed win reason pro contra ratingChange')
              .exec(function(err, data){
                 if(err) return callback(err);
                 callback(null, users, data);
@@ -82,10 +82,19 @@ exports.get = function(req, res, next){
                      secondRating = '+' + secondRating;
                  }
                  var d = matches[i].started;
+                 var duration = '?';
+                 var matchDate = '../../..';
                  if(d){
-                    var matchDate = d.getDate().toString().concat('/', (d.getMonth()+1), '/', d.getFullYear());
-                 } else {
-                    matchDate = '../../..';
+                   var minutes = d.getMinutes();
+                   minutes = minutes < 10 ? '0'+minutes : minutes;
+                   matchDate = d.getDate().toString().concat('/', (d.getMonth()+1), '/', d.getFullYear(), ' ', d.getHours(), ':', minutes);
+                   if(matches[i].fixed){
+                      var diff = Math.abs(matches[i].fixed - d)/1000;
+                      var min = Math.floor(diff/60);
+                      var sec = Math.floor(diff - min*60);
+                      sec = sec < 10 ? '0'+sec: sec;
+                      duration = min.toString().concat(':', sec);
+                   }
                  }
                  var firstWinClass = '';
                  var secondWinClass = '';
@@ -101,7 +110,7 @@ exports.get = function(req, res, next){
                         secondWinClass = 'win';
                      }
                  }
-                 data.push({date: matchDate, score: score, 
+                 data.push({date: matchDate, score: score, duration: duration,
                            firstUser: matches[i].user, secondUser: matches[i].opponent, 
                            firstName: user1?user1.displayName:'---', secondName: user2?user2.displayName:'---', 
                            firstType: type1, secondType: type2, 

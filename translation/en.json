@@ -44,5 +44,6 @@
     "MatchDate": "Date",
     "MatchResult": "Result",
     "RatingChange": "Rating change",
+    "Duration": "Duration",
     "EOF": 0
 }
