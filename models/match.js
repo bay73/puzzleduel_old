@@ -24,10 +24,13 @@ var userschema = new Schema({
    }
 });
 
+userschema.index({id: 1, type: 1});
+
 var matchschema = new Schema({
    user: {
       type: Schema.Types.ObjectId,
-      required: true
+      required: true,
+      index: true
    },
    opponent: {
       type: Schema.Types.ObjectId,
