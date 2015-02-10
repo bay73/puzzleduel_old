@@ -41,7 +41,7 @@
     "Rating text": "Die Registrierte Benutzer können in der Rangliste teilnehmen, die Geschichte ihrer Änderungen und <a href='/matchhistory'>die Liste ihrer Spiele</a> sehen. <br>Die Rankliste wird am Ende des Spiels neu berechnet. Die Enderung des Ratings ist von der Ergebnis des Spiels und dem Rating Ihres Gegenspielers abhängig. Je höher das Rating des Gegenspielers ist, desto wertvoller ist Ihr Sieg.",
     "PlayedMatches": "Beendete Spiele",
     "Opponent": "Gegenspieler",
-    "MatchDate": "Datum",
+    "MatchDate": "Datum/Zeit(GMT)",
     "MatchResult": "Ergebnis",
     "RatingChange": "Ratings Änderung",
     "Duration": "Dauer",

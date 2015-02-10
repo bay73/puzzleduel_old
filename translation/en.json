@@ -41,7 +41,7 @@
     "Rating text": "Registered users participate in this rating and can see its history and <a href='/matchhistory'>the log of their matches</a>.<br>Rating recalculates after each match. Rating change depends on match result and the difference between players' ratings. A victory over stronger opponent is more valuable.",
     "PlayedMatches": "Finished games",
     "Opponent": "Opponent",
-    "MatchDate": "Date",
+    "MatchDate": "Date/time(GMT)",
     "MatchResult": "Result",
     "RatingChange": "Rating change",
     "Duration": "Duration",
