@@ -8,10 +8,10 @@
          <tr><td colspan=2><span class="infotext" id="info"></span></td></tr>
          <tr><td colspan=2>
              <div class="group">
-                <input type="text" name="name" id="name" required value="<%= user?user.displayName:'' %>">
+                <input type="text" name="name" id="name" required value="<%= user?user.displayName:'' %>" <%= user?'disabled=disabled':'' %> >
                 <span class="highlight"></span>
                 <span class="bar"></span>
-                <label id="namelabel" for="name"></label> 
+                <label id="namelabel" for="name" <%= user?'class=disabled':'' %>></label>
              </div>
          </td></tr>
          <tr><td colspan=2><img id="spinner" src="images/spinner.gif"></img></td></tr>

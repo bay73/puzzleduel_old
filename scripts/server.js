@@ -282,10 +282,13 @@ var BaySudokuBot = function(size, botData){
          self.rivals = data.score.rivals;
       }
    });
+   this.on('rivalclosed',function(data){
+      clearTimeout(self.moveTimeout);
+      delete self.server;
+   });
    this.on('disconnect',function(data){
       clearTimeout(self.moveTimeout);
-      self.server.delete();
-      self.delete();
+      delete self.server;
    });
 };
 
@@ -560,14 +563,78 @@ var bots = [
    {name: 'Lénárd', delay: 750, type: BaySmartBot},
    {name: 'Maïténa', delay: 750, type: BaySmartBot},
    {name: 'Claude Houdin', delay: 800, type: BaySmartBot},
-   ];
+];
 
 var BayBotBuilder = function(size){
-   var index = Math.floor(Math.random()*bots.length);
-   var botData = bots[index];
+   var readyBots = [];
+   var playerList = getPlayerList();
+   var currentPlay = function(id){
+      for(var p=0;p<playerList.length;p++){
+         if(playerList[p].type=='bot' && playerList[p].id==id){
+            return true;
+         }
+      }
+      return false;
+   };
+   for(var i=0;i<bots.length;i++){
+      if(!currentPlay(bots[i].name)){
+         readyBots.push(bots[i]);
+      }
+   }
+   if(readyBots.length==0){
+      readyBots=bots;
+   }
+   var index = Math.floor(Math.random()*readyBots.length);
+   var botData = readyBots[index];
    return new botData.type(size, botData);
 };
 
+var getUserData = function(socket){
+   if(socket.user){
+      return {
+         id: socket.user.id,
+         type: socket.user.type,
+         displayName: socket.user.displayName
+      };
+   }else{
+      return {
+         type: 'anonym',
+         displayName: socket.name
+      };
+   }
+};
+
+var getQueueData = function(){
+   var queueData = [];
+   for(var i=0;i<queue.length;i++){
+      queueData.push(getUserData(queue[i]));
+   }
+   return queueData;
+};
+
+var getMatchData = function(){
+   var matchData = [];
+   for(var i=0;i<matches.length;i++){
+      var status = 'playing';
+      if(!matches[i].emptyCount && matches[i].score[0]==0 && matches[i].score[1]==0){
+         status='waiting';
+      }
+      matchData.push({status: status, cellsLeft: matches[i].emptyCount, score: matches[i].score, 
+                      users: [getUserData(matches[i].socket[0]),getUserData(matches[i].socket[1])]});
+   }
+   return matchData;
+};
+
+var getPlayerList = function(){
+   var playerList = [];
+   for(var i=0;i<matches.length;i++){
+      playerList.push(getUserData(matches[i].socket[0]));
+      playerList.push(getUserData(matches[i].socket[1]));
+   }
+   return playerList;
+};
 
 if(typeof(module) != 'undefined')
   module.exports=SudokuServer;
+  module.exports.matchData=getMatchData;
+  module.exports.queueData=getQueueData;

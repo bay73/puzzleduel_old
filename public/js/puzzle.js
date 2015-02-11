@@ -311,7 +311,9 @@ BayPuzzle.prototype.changeState = function(state){
    $('#namelabel').toggle(state == 'choosing');
    var peerName = this.peername;
    if(peerName){
-      $('#peerName').html(translate["Versus"] + ' : <span id="rivalname">' + peerName + '</span>');
+      $('#peerName').empty();
+      $('<span>').text(translate["Versus"] + ' : ').appendTo($('#peerName'));
+      $('<span id="rivalname">').text(peerName).appendTo($('#peerName'));
       $('#peerName').show();
    }else{
       $('#peerName').hide();

@@ -3,7 +3,7 @@ var mongoose = require('../scripts/mongoose'),
     Schema = mongoose.Schema;
     
 var INITIAL_RATING=100;
-var MATCH_COST=5;
+var MATCH_COST=3;
 
 var userschema = new Schema({
    type: {
@@ -24,10 +24,13 @@ var userschema = new Schema({
    }
 });
 
+userschema.index({id: 1, type: 1});
+
 var matchschema = new Schema({
    user: {
       type: Schema.Types.ObjectId,
-      required: true
+      required: true,
+      index: true
    },
    opponent: {
       type: Schema.Types.ObjectId,
@@ -116,9 +119,15 @@ matchschema.statics.addMatch = function(started, sockets, counter, result, resul
                     if(result) {
                         change[0] += MATCH_COST;
                         change[1] -= MATCH_COST;
+                        if(change[0] < 0){
+                            change[0] = 0;
+                        }
                     } else {
                         change[0] -= MATCH_COST;
                         change[1] += MATCH_COST;
+                        if(change[1] < 0){
+                            change[1] = 0;
+                        }
                     }
                 }
             }
@@ -138,8 +147,13 @@ matchschema.statics.addMatch = function(started, sockets, counter, result, resul
         function(user0, user1, change, callback) {
             user0.rating += change[0];
             user1.rating += change[1];
-            user0.save();
-            user1.save();
+            if(user0.id == user1.id && user0.type == user1.type){
+                if(user0.rating < user1.rating) user0.save();
+                else user1.save();
+            } else {
+                user0.save();
+                user1.save();
+            }
         }
     ], callback
     );

@@ -189,10 +189,10 @@ BayTextPanel.prototype.onResize = function(parent){
 	}
 	this.element.width(w);
 	this.element.height(h);
-	this.element.html(this.text);
+	this.element.text(this.text);
 	this.element.css({'font-size': 2*h/3, 'padding-top': h/6});
 };
 
 BayTextPanel.prototype.reDraw = function(){
-	this.element.html(this.text);
+	this.element.text(this.text);
 };
