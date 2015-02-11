@@ -563,11 +563,29 @@ var bots = [
    {name: 'Lénárd', delay: 750, type: BaySmartBot},
    {name: 'Maïténa', delay: 750, type: BaySmartBot},
    {name: 'Claude Houdin', delay: 800, type: BaySmartBot},
-   ];
+];
 
 var BayBotBuilder = function(size){
-   var index = Math.floor(Math.random()*bots.length);
-   var botData = bots[index];
+   var readyBots = [];
+   var playerList = getPlayerList();
+   var currentPlay = function(id){
+      for(var p=0;p<playerList.length;p++){
+         if(playerList[p].type=='bot' && playerList[p].id==id){
+            return true;
+         }
+      }
+      return false;
+   };
+   for(var i=0;i<bots.length;i++){
+      if(!currentPlay(bots[i].name)){
+         readyBots.push(bots[i]);
+      }
+   }
+   if(readyBots.length==0){
+      readyBots=bots;
+   }
+   var index = Math.floor(Math.random()*readyBots.length);
+   var botData = readyBots[index];
    return new botData.type(size, botData);
 };
 
@@ -605,6 +623,15 @@ var getMatchData = function(){
                       users: [getUserData(matches[i].socket[0]),getUserData(matches[i].socket[1])]});
    }
    return matchData;
+};
+
+var getPlayerList = function(){
+   var playerList = [];
+   for(var i=0;i<matches.length;i++){
+      playerList.push(getUserData(matches[i].socket[0]));
+      playerList.push(getUserData(matches[i].socket[1]));
+   }
+   return playerList;
 };
 
 if(typeof(module) != 'undefined')
