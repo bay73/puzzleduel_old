@@ -466,17 +466,17 @@ input:focus ~ .highlight {
    font-weight: bold;
 }
 
-.ratingtable .name a{
+.ratingtable .name,.ratingtable .name a{
    text-decoration: none;
    font-weight: bold;
    color: black;
 }
 
-.ratingtable .name.bot a{
+.ratingtable .name.bot,.ratingtable .name.bot a{
    font-weight: normal;
 }
 
-.ratingtable .name.anonym a{
+.ratingtable .name.anonym,.ratingtable .name.anonym a{
    font-style: italic;
 }
 

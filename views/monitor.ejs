@@ -1,0 +1,27 @@
+<% layout('/logopage.ejs') -%>
+<div class="topic">
+    <h2><%= translate["PlayingMatches"]%></h2>
+    <table class="ratingtable">
+        <tr>
+            <th class="name">
+                <%=translate["Opponent"]%> 1
+            </th>
+            <th class="name">
+                <%=translate["Opponent"]%> 2
+            </th>
+            <th class="duration">
+                <%=translate["CellsLeft"]%>
+            </th>
+            <th class="score">
+                <%=translate["MatchResult"]%>
+            </th>
+        </tr>
+        <%-partial('currentmatchrow',matches)%>
+    </table>
+    <%if (queue.length > 0) { %>
+        <h4><%=translate["SearchRivals"]%></h4>
+        <table class="ratingtable">
+            <%-partial('currentqueuerow',queue)%>
+        </table>
+    <% } %>
+</div>

@@ -282,10 +282,13 @@ var BaySudokuBot = function(size, botData){
          self.rivals = data.score.rivals;
       }
    });
+   this.on('rivalclosed',function(data){
+      clearTimeout(self.moveTimeout);
+      delete self.server;
+   });
    this.on('disconnect',function(data){
       clearTimeout(self.moveTimeout);
-      self.server.delete();
-      self.delete();
+      delete self.server;
    });
 };
 
@@ -568,6 +571,43 @@ var BayBotBuilder = function(size){
    return new botData.type(size, botData);
 };
 
+var getUserData = function(socket){
+   if(socket.user){
+      return {
+         id: socket.user.id,
+         type: socket.user.type,
+         displayName: socket.user.displayName
+      };
+   }else{
+      return {
+         type: 'anonym',
+         displayName: socket.name
+      };
+   }
+};
+
+var getQueueData = function(){
+   var queueData = [];
+   for(var i=0;i<queue.length;i++){
+      queueData.push(getUserData(queue[i]));
+   }
+   return queueData;
+};
+
+var getMatchData = function(){
+   var matchData = [];
+   for(var i=0;i<matches.length;i++){
+      var status = 'playing';
+      if(!matches[i].emptyCount && matches[i].score[0]==0 && matches[i].score[1]==0){
+         status='waiting';
+      }
+      matchData.push({status: status, cellsLeft: matches[i].emptyCount, score: matches[i].score, 
+                      users: [getUserData(matches[i].socket[0]),getUserData(matches[i].socket[1])]});
+   }
+   return matchData;
+};
 
 if(typeof(module) != 'undefined')
   module.exports=SudokuServer;
+  module.exports.matchData=getMatchData;
+  module.exports.queueData=getQueueData;

@@ -6,6 +6,7 @@ var async = require('async');
 var sessionStore = require('./sessionStore');
 var cookieParser = require('cookie-parser');
 
+
 var loadSession = function(sid, callback) {
     sessionStore.load(sid, function(err, session){
         if(arguments.length == 0){
@@ -17,7 +18,7 @@ var loadSession = function(sid, callback) {
 };
 
 module.exports = function(server) {
-    var socket = io(server);
+    var socket = io(server, {pingTimeout: 10000});
     socket.use(function(socket, next){
         var handshake = socket.request;
         async.waterfall([
