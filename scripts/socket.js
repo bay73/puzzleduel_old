@@ -18,7 +18,7 @@ var loadSession = function(sid, callback) {
 };
 
 module.exports = function(server) {
-    var socket = io(server, {pingTimeout: 10000});
+    var socket = io(server, {pingTimeout: 20000, pingInterval: 9000});
     socket.use(function(socket, next){
         var handshake = socket.request;
         async.waterfall([
