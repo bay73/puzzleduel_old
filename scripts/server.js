@@ -20,10 +20,12 @@ var SudokuServer = function(socket){
       }
       if(!rival){
          queue.push(socket);
+         var interval = config.get("bots:waitingtime");
+         interval += Math.floor(Math.random()*6*interval);
          socket.waitTimeout = setTimeout(function(){
             var botSocket = new BaySocket(BayBotBuilder(data.size));
             SudokuServer(botSocket);
-         },config.get("bots:waitingtime"));
+         },interval);
       } else {
          clearTimeout(rival.waitTimeout);
          clearTimeout(socket.waitTimeout);
