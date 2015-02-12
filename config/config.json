@@ -34,6 +34,6 @@
       "callback_url" : "https://puzzleduel.herokuapp.com/oauth2callback"
    },
    "bots" : {
-      "waitingtime": 30000
+      "waitingtime": 18000
    }
 }
