@@ -258,6 +258,7 @@ h1,h2,h3,h4 {
 .ripple-effect.animate {
    animation: ripple .5s linear;
    -webkit-animation: ripple .5s linear;
+   -moz-animation: ripple .5s linear;
 }
 
 @-webkit-keyframes ripple {
@@ -290,6 +291,7 @@ h1,h2,h3,h4 {
 .overlay.animate {
    animation: overlay .5s linear;
    -webkit-animation: overlay .5s linear;
+   -moz-animation: overlay .5s linear;
 }
 
 @keyframes overlay {
@@ -304,6 +306,7 @@ h1,h2,h3,h4 {
 .overlay.animatehide {
    animation: overlayhide .5s linear;
    -webkit-animation: overlayhide .5s linear;
+   -moz-animation: overlayhide .5s linear;
 }
 
 @keyframes overlayhide {
@@ -357,7 +360,6 @@ select.chooser {
    height: 38px;
    width: 275px;
    padding: 8px 10px 8px 5px;
-   display: block;
    border: none;
    background-color: #fff;
    border-bottom: 1px solid #757575;
@@ -374,6 +376,7 @@ label 				 {
   left: 5px;
   top: 10px;
   transition: 0.2s ease all; 
+  -o-transition: 0.2s ease all;
   -moz-transition: 0.2s ease all; 
   -webkit-transition: 0.2s ease all;
 }
@@ -398,6 +401,7 @@ input:focus ~ label, input:valid ~ label, span.text ~ label, select.chooser ~ la
   position:absolute;
   background:#5264AE; 
   transition:0.2s ease all; 
+  -o-transition:0.2s ease all;
   -moz-transition:0.2s ease all; 
   -webkit-transition:0.2s ease all;
 }
@@ -468,15 +472,23 @@ input:focus ~ .highlight {
 
 .ratingtable .name,.ratingtable .name a{
    text-decoration: none;
-   font-weight: bold;
    color: black;
 }
 
-.ratingtable .name.bot,.ratingtable .name.bot a{
-   font-weight: normal;
+.ratingtable .name.local,.ratingtable .name.local a{
+   font-weight: bold;
+}
+
+.ratingtable .name.facebook,.ratingtable .name.facebook a{
+   font-weight: bold;
+}
+
+.ratingtable .name.google,.ratingtable .name.google a{
+   font-weight: bold;
 }
 
 .ratingtable .name.anonym,.ratingtable .name.anonym a{
+   font-weight: bold;
    font-style: italic;
 }
 
