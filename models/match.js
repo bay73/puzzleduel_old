@@ -142,6 +142,10 @@ matchschema.statics.addMatch = function(started, sockets, counter, result, resul
             return callback(null, user0, user1, change);
         },
         function(user0, user1, change, callback) {
+            var result2;
+            if(typeof(result) != 'undefined'){
+                result2 = !result;
+            }
             var match = new Match({user: user1, opponent: user0, started: started, win: !result, reason: resultreason, pro: counter[1], contra: counter[0], ratingChange: change[1]});
             match.save();
             return callback(null, user0, user1, change);
