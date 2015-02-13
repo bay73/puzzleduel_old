@@ -1,6 +1,6 @@
 <tr>
     <td class="name <%=statisticrow.type%>">
-        <a href="/allmatch/<%=statisticrow._id%>"><%=statisticrow.displayName%></a>
+        <a href="/allmatch/<%=statisticrow._id%>"><%=statisticrow.displayName%></a> (<%=statisticrow.rating?Math.round(statisticrow.rating):''%>)
     </td>
     <td class="duration">
         <%=statisticrow.duration%>
