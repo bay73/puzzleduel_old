@@ -1,0 +1,16 @@
+<tr>
+    <td class="name <%=statisticrow.type%>">
+        <a href="/allmatch/<%=statisticrow._id%>"><%=statisticrow.displayName%></a>
+    </td>
+    <td class="duration">
+        <%=statisticrow.duration%>
+    </td>
+    <td class="score">
+        <%=statisticrow.wins%>/<%=statisticrow.matches%>
+    </td>
+    <% for(var i=0;i<statisticrow.days.length;i++) { %>
+        <td class="narrow">
+            <%=statisticrow.days[i]%>
+        </td>
+    <% } %>
+</tr>
