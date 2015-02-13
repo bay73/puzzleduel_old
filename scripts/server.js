@@ -36,11 +36,13 @@ var SudokuServer = function(socket){
 
    socket.on('playerready',function(){
       socket.playerready = true;
-      socket.match.start();
+      if(socket.match)
+         socket.match.start();
    });
 
    socket.on('click',function(data){
-      socket.match.onClick(socket, data);
+      if(socket.match)
+         socket.match.onClick(socket, data);
    });
 
    socket.on('disconnect',function(data){
@@ -316,7 +318,7 @@ BaySudokuBot.prototype.ready = function(){
 BaySudokuBot.prototype.emit = function(event, data){
 //   console.log(event + ' from bot at ' + (new Date().getTime() - this.start));
 //   console.log(data);
-   if(this.server.callbacks[event]){
+   if(this.server && this.server.callbacks && this.server.callbacks[event]){
       var func = this.server.callbacks[event];
       setTimeout(function(){ func(data);},1);
    }

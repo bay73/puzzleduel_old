@@ -26,7 +26,8 @@ exports.get = function(req, res, next){
       function(callback){
         AllUser
         .find()
-        .select('_id id type displayName')
+        .select('_id id type rating displayName')
+        .sort({type: -1, rating: -1})
         .exec(function(err, data){
             if(err) return callback(err);
             callback(null, data);
@@ -65,20 +66,20 @@ exports.get = function(req, res, next){
              var index = userMap[matches[i].user];
              if(index != undefined){
                  users[index].matches++;
-                 total.matches++;
+                 total.matches += 1/2;
                  if(matches[i].win){
                     users[index].wins++;
                     total.wins++;
                  }
                  if(matches[i].fixed && matches[i].started){
                      users[index].duration += Math.abs(matches[i].fixed - matches[i].started);
-                     total.duration += Math.abs(matches[i].fixed - matches[i].started);
+                     total.duration += (Math.abs(matches[i].fixed - matches[i].started))/2;
                  }
                  if(matches[i].started){
                     var day = Math.round((matches[i].started - from)/(1000*24*60*60));
                     if(total.days[day]!=undefined){
                         users[index].days[day]++;
-                        total.days[day]++;
+                        total.days[day] +=1/2;
                     }
                  }
              }
