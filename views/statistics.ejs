@@ -1,0 +1,29 @@
+<% layout('/logopage.ejs') -%>
+<div class="topic">
+    <h2><%= translate["PlayedMatches"]%></h2>
+    <table class="ratingtable">
+        <tr>
+            <th class="name">
+            </th>
+            <th class="duration">
+                <%=translate["Duration"]%>
+            </th>
+            <th class="score">
+                <%=translate["MatchResult"]%>
+            </th>
+        </tr>
+        <%-partial('statisticrow',users)%>
+    </table>
+    <table class="ratingtable">
+        <% for(var i=0;i<types.length;i++) { %>
+            <tr>
+                <td class="name">
+                    <%=types[i].type%>
+                </td>
+                <td class="narrow">
+                    <%=types[i].count%>
+                </td>
+            </tr>
+        <% } %>
+    </table>
+</div>

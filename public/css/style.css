@@ -546,6 +546,12 @@ input:focus ~ .highlight {
    text-align: right;
 }
 
+.ratingtable .narrow{
+   padding: 3px 5px 3px 0;
+   min-width: 25px;
+   text-align: right;
+}
+
 .ratingtable .link{
    text-align: right;
    font-size: 75%;

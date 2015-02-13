@@ -6,7 +6,8 @@ module.exports = function(app){
    app.get('/allmatch', require('./allmatch').get);
    app.get('/allmatch/:userId', require('./allmatch').get);
    app.get('/monitor', require('./monitor').get);
-   
+   app.get('/statistics', require('./statistics').get);
+
    app.get('/policy', function(req, res, next) {
       res.render('policy', { languages: require('../translation').languages() });
    });
