@@ -33,10 +33,10 @@
     </header>
     <div class="menu">
       <div class="navigator">
-        <% if(page!='index') { %>
-          <a class="mainpage short" href="#"><img src="images/mainpage.png"></a>
-          <a class="mainpage long" href="#"><%=translate["MainPage"]%></a>
-        <% } %>
+        <a class="mainpage short" href="#"><img src="images/mainpage.png"></a>
+        <a class="mainpage long" href="#"><%=translate["MainPage"]%></a>
+        <a class="help short" href="#"><img src="images/help.png"></a>
+        <a class="help long" href="#"><%=translate["Rules"]%></a>
       </div>
       <% if (!user) { %>
         <div class="langchooser">
@@ -68,6 +68,7 @@
        });
        rippleButton($('#confirmationCancel'), function(){closeDialog($('#confirmationDialog'));});
        rippleButton($('#confirmationOk'), function(){location.href = '/';});
+       $('a.help').click(function(){puzzle.showRules();});
     </script>
     <div class="container raised">
        <%-body -%>
