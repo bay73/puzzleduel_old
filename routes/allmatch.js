@@ -121,7 +121,7 @@ exports.get = function(req, res, next){
           callback(null, data);
       },
       function(matches, callback){
-          res.render('allmatch', { languages: require('../translation').languages(), matches: matches });
+          res.render('allmatch', { languages: require('../translation').languages(), page: 'allmatch', matches: matches });
       }
       ], next);
 };

@@ -70,15 +70,15 @@ exports.get = function(req, res, next){
               if(typeof(matches[i].win)==='undefined') {
                   winClass = 'draw';
               } else {
-                  if(matches[i].win) winClass = 'win'
-                  else winClass = 'loose'
+                  if(matches[i].win) winClass = 'win';
+                  else winClass = 'loose';
               }
               data.push({date: matchDate, displayName: users[matches[i].opponent], score: score, rating: rating, win:winClass, duration: duration });
           }
           callback(null, data);
       },
       function(matches, callback){
-          res.render('matchhistory', { languages: require('../translation').languages(), matches: matches });
+          res.render('matchhistory', { languages: require('../translation').languages(), page: 'matchhistory', matches: matches });
       }
       ], next);
 };

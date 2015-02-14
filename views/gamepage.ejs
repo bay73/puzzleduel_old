@@ -18,19 +18,26 @@
     <link rel='stylesheet' href='/css/style.css' />
   </head>
   <body>
-  <div id="fb-root"></div>
-  <script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&appId=788712584538109&version=v2.0";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
-  <header class="logo">
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&appId=788712584538109&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    <header class="logo">
       <img src="images/logo.png">
       <span class="title">PuzzleDuel</span>
+      <%-partial('login') %>
     </header>
     <div class="menu">
+      <div class="navigator">
+        <a class="mainpage short" href="#"><img src="images/mainpage.png"></a>
+        <a class="mainpage long" href="#"><%=translate["MainPage"]%></a>
+        <a class="help short" href="#"><img src="images/help.png"></a>
+        <a class="help long" href="#"><%=translate["Rules"]%></a>
+      </div>
       <% if (!user) { %>
         <div class="langchooser">
           <% for(var i=0; i<languages.length; i++) { %>
@@ -40,6 +47,29 @@
         </div>
       <% } %>
     </div>
+    <div class="raised dialog" id="confirmationDialog">
+      <div class="topic" id="confirmationtext"><%= translate["Confirmation text"]%></div>
+      <button class="button" id="confirmationOk"><%= translate["OK button label"]%></button>
+      <button class="button default" id="confirmationCancel"><%= translate["Cancel button label"]%></button>
+    </div>
+    <script>
+       $('a.mainpage').click(function(){
+           if($('#confirmationDialog').css('display')=='none'){
+              showDialog($('#confirmationDialog'),{
+                 start: {
+                    left: 1,
+                    width: 1,
+                    height: 200
+                 },
+                 height: 120,
+                 width: 310
+              });
+           }
+       });
+       rippleButton($('#confirmationCancel'), function(){closeDialog($('#confirmationDialog'));});
+       rippleButton($('#confirmationOk'), function(){location.href = '/';});
+       $('a.help').click(function(){puzzle.showRules();});
+    </script>
     <div class="container raised">
        <%-body -%>
      </div>

@@ -47,5 +47,6 @@
     "RatingChange": "Ratings Änderung",
     "Duration": "Dauer",
     "CellsLeft": "Zellen zum Ende",
+    "Confirmation text": "Dies wird das aktuelle Spiel unterbrechen. Sind Sie sicher?",
     "EOF": 0
 }

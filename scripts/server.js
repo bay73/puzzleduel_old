@@ -570,28 +570,29 @@ BaySmartBot.prototype.makeMove = function(){
 };
 
 var bots = [
-   {name: 'Leong Guotin', delay: 250, type: BaySudokuBot},
-   {name: 'イザナギ', delay: 350, type: BaySudokuBot},
-   {name: 'Alice Greenwell', delay: 400, type: BaySudokuBot},
-   {name: 'Wart', delay: 500, type: BaySudokuBot},
-   {name: 'Crazy', delay: 300, type: BaySmartBot},
-   {name: 'Okazaki', delay: 350, type: BaySmartBot},
-   {name: 'Yoko Tokawa', delay: 400, type: BaySmartBot},
-   {name: 'Martin J.', delay: 450, type: BaySmartBot},
-   {name: 'Matej Balenovic', delay: 500, type: BaySmartBot},
-   {name: 'Radik', delay: 550, type: BaySmartBot},
-   {name: 'Hua Qiang', delay: 600, type: BaySmartBot},
-   {name: 'Hamersley', delay: 600, type: BaySmartBot},
-   {name: 'Игорь Веселов', delay: 650, type: BaySmartBot},
-   {name: 'Curt McKnight', delay: 650, type: BaySmartBot},
-   {name: 'Aragorn', delay: 700, type: BaySmartBot},
-   {name: 'Masha Marinovic', delay: 700, type: BaySmartBot},
-   {name: 'Lénárd', delay: 750, type: BaySmartBot},
-   {name: 'Maïténa', delay: 750, type: BaySmartBot},
-   {name: 'Claude Houdin', delay: 800, type: BaySmartBot},
+   {name: 'Leong Guotin', delay: 250, type: BaySudokuBot, hours: [{min: 0, max: 16}]},
+   {name: 'イザナギ', delay: 350, type: BaySudokuBot, hours: [{min: 12, max: 24}, {min: 0, max: 4}]},
+   {name: 'Alice Greenwell', delay: 400, type: BaySudokuBot, hours: [{min: 8, max: 24}]},
+   {name: 'Wart', delay: 500, type: BaySudokuBot, hours: [{min: 16, max: 24}, {min: 0, max: 8}]},
+   {name: 'Crazy', delay: 300, type: BaySmartBot, hours: [{min: 12, max: 24}, {min: 0, max: 4}]},
+   {name: 'Okazaki', delay: 350, type: BaySmartBot, hours: [{min: 0, max: 16}]},
+   {name: 'Yoko Tokawa', delay: 400, type: BaySmartBot, hours: [{min: 0, max: 16}]},
+   {name: 'Martin J.', delay: 450, type: BaySmartBot, hours: [{min: 8, max: 24}]},
+   {name: 'Matej Balenovic', delay: 500, type: BaySmartBot, hours: [{min: 4, max: 20}]},
+   {name: 'Radik', delay: 550, type: BaySmartBot, hours: [{min: 20, max: 24}, {min: 0, max: 12}]},
+   {name: 'Hua Qiang', delay: 600, type: BaySmartBot, hours: [{min: 0, max: 16}]},
+   {name: 'Hamersley', delay: 600, type: BaySmartBot, hours: [{min: 12, max: 24}, {min: 0, max: 4}]},
+   {name: 'Игорь Веселов', delay: 650, type: BaySmartBot, hours: [{min: 4, max: 20}]},
+   {name: 'Curt McKnight', delay: 650, type: BaySmartBot, hours: [{min: 8, max: 24}]},
+   {name: 'Aragorn', delay: 700, type: BaySmartBot, hours: [{min: 4, max: 20}]},
+   {name: 'Masha Marinovic', delay: 700, type: BaySmartBot, hours: [{min: 16, max: 24}, {min: 0, max: 8}]},
+   {name: 'Lénárd', delay: 750, type: BaySmartBot, hours: [{min: 8, max: 24}]},
+   {name: 'Maïténa', delay: 750, type: BaySmartBot, hours: [{min: 16, max: 24}, {min: 0, max: 8}]},
+   {name: 'Claude Houdin', delay: 800, type: BaySmartBot, hours: [{min: 20, max: 24}, {min: 0, max: 12}]},
 ];
 
 var BayBotBuilder = function(size){
+   var hour = new Date().getHours();
    var readyBots = [];
    var playerList = getPlayerList();
    var currentPlay = function(id){
@@ -602,8 +603,16 @@ var BayBotBuilder = function(size){
       }
       return false;
    };
+   var checkTime = function(hours){
+      for(var h=0;h<hours.length;h++){
+         if(hours[h].min <= hour && hours[h].max > hour){
+            return true;
+         }
+      }
+      return false;
+   };
    for(var i=0;i<bots.length;i++){
-      if(!currentPlay(bots[i].name)){
+      if(checkTime(bots[i].hours) && !currentPlay(bots[i].name)){
          readyBots.push(bots[i]);
       }
    }
