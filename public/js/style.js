@@ -8,18 +8,18 @@ var rippleButton = function(element, callback){
       ripple.removeClass('animate');
       if(!ripple.height() && !ripple.width())
       {
-         d = Math.max(parent.outerWidth(), parent.outerHeight());
+         var d = Math.max(parent.outerWidth(), parent.outerHeight());
          ripple.css({height: d, width: d});
       }
-      x = e.pageX - parent.offset().left - ripple.width()/2;
-      y = e.pageY - parent.offset().top - ripple.height()/2;
+      var x = e.pageX - parent.offset().left - ripple.width()/2;
+      var y = e.pageY - parent.offset().top - ripple.height()/2;
       if(parent.attr('data-ripple-color')){
          ripple.css({"background-color": parent.attr('data-ripple-color')});
       }
       ripple.css({top: y+'px', left: x+'px'}).addClass('animate');
       setTimeout(function(){
          ripple.remove();
-      },1000)
+      },1000);
       if(callback) {
          setTimeout(function(){
             callback(e);
@@ -62,7 +62,7 @@ var showDialog = function(element, options){
       left: startleft
    });
    var endtop = ($(window).height() - options.height)/2;
-   var endleft = ($(window).width() - options.width)/2;;
+   var endleft = ($(window).width() - options.width)/2;
    if(options.direction){
       var dirs = options.direction.split('-');
       endtop = starttop;
@@ -77,18 +77,19 @@ var showDialog = function(element, options){
       width: options.width - 20,
       top: endtop,
       left: endleft
-   })
-
+   });
 };
 
 var closeDialog = function(element, callback){
-   var overlay = $('body').find('.overlay');
-   overlay.addClass('animatehide');
-   setTimeout(function(){
-      $(element).hide();
-      $(element).appendTo($('body'));
-      overlay.remove();
-      if(callback)
-         callback();
-   }, 400);
-}
+   if($(element).css('display')!='none'){
+      var overlay = $('body').find('.overlay');
+      overlay.addClass('animatehide');
+      setTimeout(function(){
+         $(element).hide();
+         $(element).appendTo($('body'));
+         overlay.remove();
+         if(callback)
+            callback();
+      }, 400);
+   }
+};

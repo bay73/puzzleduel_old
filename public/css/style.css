@@ -112,6 +112,45 @@ p,ul,li {
     width: 47%;
 }
 
+.navigator {
+   position: relative;
+   top: 10px;
+   left: 40px;
+   float: left;
+}
+
+.navigator a {
+   padding: 5px 10px;
+   color: #ffffff;
+   text-decoration: none;
+}
+
+.navigator a img{
+   height: 16px;
+}
+
+.navigator a:hover {
+   text-decoration: underline;
+}
+
+body.lefttitle .navigator{
+   position: absolute;
+   top: 10px;
+   left: 0px;
+}
+
+.navigator a.short {
+   display: none;
+}
+
+body.lefttitle .navigator a.short{
+   display: inline-block;
+}
+
+body.lefttitle .navigator a.long{
+   display: none;
+}
+
 .langchooser {
    position: relative;
    top: 10px;
@@ -230,6 +269,10 @@ h1,h2,h3,h4 {
    right: 85px;
    float: right;
    font-size: 120%;
+}
+
+body.lefttitle .button.login {
+   display: none;
 }
 
 .button.login:hover {
@@ -607,6 +650,15 @@ body.lefttitle .menu {
    height: 100%;
 }
 
+.navigator {
+   top: 30px;
+}
+
+.navigator a img{
+   height: 22px;
+}
+
+
 .langchooser {
    top: 30px;
 }
@@ -654,6 +706,14 @@ body.lefttitle .logo img {
    right: 260px;
 }
 
+.navigator {
+   left: 160px;
+}
+
+body.lefttitle .navigator {
+   left: 0px;
+}
+
 .langchooser {
    left: -260px;
 }
@@ -685,8 +745,16 @@ body.lefttitle .logo img {
    right: 25px;
 }
 
+.navigator {
+   left: 10px;
+}
+
 .langchooser {
    left: -20px;
+}
+
+body.lefttitle .navigator {
+   left: 0px;
 }
 
 body.lefttitle .langchooser {
@@ -727,8 +795,16 @@ body.lefttitle .logo img {
    right: 5px;
 }
 
+.navigator {
+   left: 5px;
+}
+
 .langchooser {
    left: -5px;
+}
+
+body.lefttitle .navigator {
+   left: 0px;
 }
 
 body.lefttitle .langchooser {
@@ -737,6 +813,14 @@ body.lefttitle .langchooser {
 
 .topic.small {
     width: 47%;
+}
+
+.navigator a.short{
+   display: initial;
+}
+
+.navigator a.long{
+   display: none;
 }
 
 .langchooser a.short {
@@ -778,6 +862,14 @@ body.lefttitle .logo img {
    right: 5px;
 }
 
+.navigator {
+   left: 5px;
+}
+
+body.lefttitle .navigator {
+   left: 0px;
+}
+
 .langchooser {
    left: -5px;
 }
@@ -793,6 +885,14 @@ body.lefttitle .langchooser {
 h1,h2,h3,h4 {
    padding-top: 20px;
    padding-bottom: 10px;
+}
+
+.navigator a.short {
+   display: initial;
+}
+
+.navigator a.long {
+   display: none;
 }
 
 .langchooser a.short {
@@ -845,6 +945,10 @@ body.lefttitle .container{
 
 body.lefttitle .menu {
    height: 100%;
+}
+
+.navigator {
+   top: 3px;
 }
 
 .langchooser {

@@ -68,6 +68,7 @@
       }
       layout.onResize($('#board'));
       puzzle.changeState();
+      closeDialog($('#confirmationDialog'));
    }
    var resizeTimer;
    $(window).bind('resize',function(){
