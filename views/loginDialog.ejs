@@ -61,7 +61,10 @@
             },
             statusCode: {
                200: function(){
-                  window.location.href="/"
+                  closeDialog($('#userLoginDialog'));
+                  <% if(page!='sudoku') {%>
+                     window.location.href="/<%=page%>";
+                  <% } %>
                },
                403: function(){
                   $('#loginError').text('<%= translate["Wrong authorization data!"]%>');
