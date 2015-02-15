@@ -48,5 +48,8 @@
     "Duration": "Duration",
     "CellsLeft": "Cells to finish",
     "Confirmation text": "This will interrupt your current game. Are you sure?",
+    "Account settings": "Account settings",
+    "Forbidden": "Page is accessible for registered users only",
+    "Not Found": "Requested page is not found.<br>Check, please, the address entered.",
     "EOF": 0
 }
