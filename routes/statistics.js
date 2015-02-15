@@ -13,7 +13,7 @@ exports.get = function(req, res, next){
    if(fromStr){
        var from = new Date(fromStr.substring(0,4),(fromStr.substring(4,6)-1),fromStr.substring(6,8));
    }else{
-       from = to - 7*24*60*60*1000;
+       from = new Date(to - 7*24*60*60*1000);
    }
    async.waterfall([
       function(callback){
@@ -76,7 +76,7 @@ exports.get = function(req, res, next){
                      total.duration += (Math.abs(matches[i].fixed - matches[i].started))/2;
                  }
                  if(matches[i].started){
-                    var day = Math.round((matches[i].started - from)/(1000*24*60*60));
+                    var day = Math.floor((matches[i].started - from)/(1000*24*60*60));
                     if(total.days[day]!=undefined){
                         users[index].days[day]++;
                         total.days[day] +=1/2;
