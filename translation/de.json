@@ -48,5 +48,8 @@
     "Duration": "Dauer",
     "CellsLeft": "Zellen zum Ende",
     "Confirmation text": "Dies wird das aktuelle Spiel unterbrechen. Sind Sie sicher?",
+    "Account settings": "Benutzereinstellungen",
+    "Forbidden": "Seite ist für registrierte Benutzer zugänglich nur",
+    "Not Found": "Gewünschte Seite konnte nicht gefunden werden.<br>Überprüfen Sie bitte die eingegebenen Adresse.",
     "EOF": 0
 }

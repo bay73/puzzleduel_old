@@ -1,2 +1,3 @@
 <% layout('/logopage.ejs') -%>
-<h2><%= error.message %></h2>
+<br><br><br>
+<h2><%- translate[error.message]?translate[error.message]:error.message %></h2>
