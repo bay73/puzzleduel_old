@@ -15,8 +15,9 @@ var SudokuServer = function(socket){
       socket.name = data.name;
       socket.size = data.size;
       socket.emit('wait',{});
+      var rival;
       if(queue.length > 0){
-         var rival = queue.splice(0,1)[0];
+         rival = queue.splice(0,1)[0];
       }
       if(!rival){
          queue.push(socket);
@@ -96,7 +97,7 @@ BayMatch.prototype.start = function(){
       var interval = setInterval(function(){
          self.emitAll('start', {timer: timer});
          timer--;
-         if(timer==0){
+         if(timer === 0){
             clearInterval(interval);
             setTimeout(function(){
                self.emitAll('start', {timer: 0});
@@ -149,14 +150,16 @@ BayMatch.prototype.setCellValue = function(cell, value){
 
 BayMatch.prototype.onClick = function(socket, data){
    if(!this.started) return;
-   if(socket == this.socket[0]) var player = 0;
+   var player;
+   if(socket == this.socket[0]) player = 0;
    if(socket == this.socket[1]) player = 1;
    var row = data.row;
    var col = data.col;
    var self = this;
+   var cell;
    if(this.sudoku.cellData[row]){
       if(this.sudoku.cellData[row][col]){
-         var cell = this.sudoku.cellData[row][col];
+         cell = this.sudoku.cellData[row][col];
          this.setCellValue(cell, data.value);
          if(typeof(cell.player)=='undefined'){
             if(cell.answer == data.value){
@@ -181,12 +184,12 @@ BayMatch.prototype.onClick = function(socket, data){
       }
    }
    self.emitScore();
-   if(this.emptyCount==0){
+   if(this.emptyCount===0){
       var size = this.sudoku.sudokuSize;
       var counter = [0, 0];
       for(var i=0;i<size;i++){
          for(var j=0;j<size;j++){
-            var cell = this.sudoku.cellData[i][j];
+            cell = this.sudoku.cellData[i][j];
             if(typeof(cell.player) != 'undefined'){
                counter[cell.player]++;
             }
@@ -278,7 +281,7 @@ var BaySudokuBot = function(size, botData){
    });
    this.on('start', function(data){
       clearTimeout(self.rivalWaitTimeout);
-      if(data.timer == 0){
+      if(data.timer === 0){
          self.onStart();
       }
    });
@@ -350,11 +353,11 @@ BaySudokuBot.prototype.onFinish = function(){
    clearTimeout(self.moveTimeout);
    var duration = new Date().getTime() - this.start;
    var maxGame = 5 + Math.random()*20;
-   if(self.mine > self.rivals * 3
-         || self.rivals > self.mine * 1.5
-         || this.gameCount > maxGame
-         || self.gameResult < -40
-         || duration > 600000) {
+   if(self.mine > self.rivals * 3 ||
+         self.rivals > self.mine * 1.5 ||
+         this.gameCount > maxGame ||
+         self.gameResult < -40 ||
+         duration > 600000) {
       setTimeout(function(){
          self.emit('disconnect');
       }, 4000);
@@ -367,11 +370,12 @@ BaySudokuBot.prototype.onStart = function(){
    this.gameCount++;
    var self = this;
    var interval = Math.random()*this.sudoku.sudokuSize*this.thinktime*4 + this.sudoku.sudokuSize*this.thinktime*2;
-   this.moveTimeout = setTimeout(function(){self.makeMove()}, interval);
+   this.moveTimeout = setTimeout(function(){self.makeMove();}, interval);
 };
 
 BaySudokuBot.prototype.makeMove = function(){
    var size = this.sudoku.sudokuSize;
+   var empty = 0;
    if(this.clueCount > size*size/5){
       this.sudoku.solve();
       var cells = [];
@@ -383,7 +387,7 @@ BaySudokuBot.prototype.makeMove = function(){
             }
          }
       }
-      var empty = cells.length;
+      empty = cells.length;
       if(cells.length > 0){
          var rnd = cells[Math.floor(Math.random()*cells.length)];
          this.emit('click', {row: rnd.row, col: rnd.col, value: rnd.answer});
@@ -416,7 +420,7 @@ BaySmartBot.prototype.onStart = function(){
          }
       }
    }
-}
+};
 
 BaySmartBot.prototype.excludeValue = function(x, y, v){
    var area = this.sudoku.gridData.rows[x].cells[y];
@@ -453,25 +457,26 @@ BaySmartBot.prototype.findMove = function(){
    var rowCounter = [];
    var colCounter = [];
    var areaCounter = [];
-   for(var a=0; a<this.size; a++){
+   var unique,a,v,i,j,cell;
+   for(a=0; a<this.size; a++){
       rowCounter[a] = [];
       colCounter[a] = [];
       areaCounter[a+1] = [];
-      for(var v=1; v<=this.size; v++){
+      for(v=1; v<=this.size; v++){
          rowCounter[a][v] = 0;
          colCounter[a][v] = 0;
          areaCounter[a+1][v] = 0;
       }
    }
-   for(var i=0;i<this.size;i++){
-      for(var j=0;j<this.size;j++){
-         var cell = this.sudoku.cellData[i][j];
+   for(i=0;i<this.size;i++){
+      for(j=0;j<this.size;j++){
+         cell = this.sudoku.cellData[i][j];
          if(cell){
             if(!cell.value) {
                if(cell.possibleValues.length==1){
-                  var unique = {row: i, col: j, value: cell.possibleValues[0]};
+                  unique = {row: i, col: j, value: cell.possibleValues[0]};
                }
-               for(var v=0;v<cell.possibleValues.length;v++){
+               for(v=0;v<cell.possibleValues.length;v++){
                   rowCounter[i][cell.possibleValues[v]]++;
                   colCounter[j][cell.possibleValues[v]]++;
                   areaCounter[this.sudoku.gridData.rows[i].cells[j]][cell.possibleValues[v]]++;
@@ -480,17 +485,18 @@ BaySmartBot.prototype.findMove = function(){
          }
       }
    }
+   var area;
    if(this.lastMove){
-      var area = this.sudoku.gridData.rows[this.lastMove.row].cells[this.lastMove.col];
+      area = this.sudoku.gridData.rows[this.lastMove.row].cells[this.lastMove.col];
    }
-   for(var a=1; a<=this.size; a++){
+   for(a=1; a<=this.size; a++){
       if (!this.lastMove || a == area){
-         for(var v=1; v<=this.size; v++){
+         for(v=1; v<=this.size; v++){
             if(areaCounter[a][v] == 1){
-               for(var i=0;i<this.size;i++){
-                  for(var j=0;j<this.size;j++){
+               for(i=0;i<this.size;i++){
+                  for(j=0;j<this.size;j++){
                      if(this.sudoku.gridData.rows[i].cells[j]==a){
-                        var cell = this.sudoku.cellData[i][j];
+                        cell = this.sudoku.cellData[i][j];
                         if(!cell.value && cell.possibleValues.indexOf(v)>=0){
                            return {row: i, col: j, value: v};
                         }
@@ -501,12 +507,12 @@ BaySmartBot.prototype.findMove = function(){
          }
       }
    }
-   for(var a=0; a<this.size; a++){
+   for(a=0; a<this.size; a++){
       if (!this.lastMove || a == this.lastMove.row){
-         for(var v=1; v<=this.size; v++){
+         for(v=1; v<=this.size; v++){
             if(rowCounter[a][v] == 1){
-               for(var i=0;i<this.size;i++){
-                  var cell = this.sudoku.cellData[a][i];
+               for(i=0;i<this.size;i++){
+                  cell = this.sudoku.cellData[a][i];
                   if(!cell.value && cell.possibleValues.indexOf(v)>=0){
                      return {row: a, col: i, value: v};
                   }
@@ -515,10 +521,10 @@ BaySmartBot.prototype.findMove = function(){
          }
       }
       if (!this.lastMove || a == this.lastMove.col){
-         for(var v=1; v<=this.size; v++){
+         for(v=1; v<=this.size; v++){
             if(colCounter[a][v] == 1){
-               for(var i=0;i<this.size;i++){
-                  var cell = this.sudoku.cellData[i][a];
+               for(i=0;i<this.size;i++){
+                  cell = this.sudoku.cellData[i][a];
                   if(!cell.value && cell.possibleValues.indexOf(v)>=0){
                      return {row: i, col: a, value: v};
                   }
@@ -532,6 +538,7 @@ BaySmartBot.prototype.findMove = function(){
 
 BaySmartBot.prototype.guessMove = function(){
    var minSize = this.size + 1;
+   var move;
    for(var i=0;i<this.size;i++){
       for(var j=0;j<this.size;j++){
          var cell = this.sudoku.cellData[i][j];
@@ -539,7 +546,7 @@ BaySmartBot.prototype.guessMove = function(){
             if(!cell.value) {
                if(cell.possibleValues.length < minSize){
                   minSize = cell.possibleValues.length;
-                  var move = {row: i, col: j, value: cell.possibleValues[0]};
+                  move = {row: i, col: j, value: cell.possibleValues[0]};
                }
             }
          }
@@ -616,7 +623,7 @@ var BayBotBuilder = function(size){
          readyBots.push(bots[i]);
       }
    }
-   if(readyBots.length==0){
+   if(readyBots.length===0){
       readyBots=bots;
    }
    var index = Math.floor(Math.random()*readyBots.length);
@@ -651,7 +658,7 @@ var getMatchData = function(){
    var matchData = [];
    for(var i=0;i<matches.length;i++){
       var status = 'playing';
-      if(!matches[i].emptyCount && matches[i].score[0]==0 && matches[i].score[1]==0){
+      if(!matches[i].emptyCount && matches[i].score[0]===0 && matches[i].score[1]===0){
          status='waiting';
       }
       matchData.push({status: status, cellsLeft: matches[i].emptyCount, score: matches[i].score, 

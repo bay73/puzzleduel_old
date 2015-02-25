@@ -1,4 +1,3 @@
-var path = require('path');
 var util = require('util');
 var http = require('http');
 var log = require('../scripts/log')(module);
@@ -26,8 +25,8 @@ function sendHttpError(res, error){
 exports.notFound = function(app){
    return function(req, res, next){
       next(404);
-   }
-}
+   };
+};
 
 exports.errorHandler = function(app){
    return function(err, req, res, next){
@@ -44,5 +43,5 @@ exports.errorHandler = function(app){
             sendHttpError(res, new HttpError(500));
          }
       }
-   }
-}
+   };
+};

@@ -69,7 +69,7 @@ module.exports.init = function(app){
   app.use(function(req, res, next){
       res.locals.user = req.user;
       next();
-  })
+  });
 };
 
 module.exports.routes = function(app){

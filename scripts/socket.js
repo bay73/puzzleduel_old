@@ -9,7 +9,7 @@ var cookieParser = require('cookie-parser');
 
 var loadSession = function(sid, callback) {
     sessionStore.load(sid, function(err, session){
-        if(arguments.length == 0){
+        if(arguments.length === 0){
             return callback(null, null);
         } else {
             return callback(err, session);

@@ -9,7 +9,7 @@ var mongoose = require('../scripts/mongoose'),
 
 var shorten = function(text){
    return text.trim().substring(0,25);
-}
+};
 
 var schema = new Schema({
    username: {
@@ -46,11 +46,11 @@ var schema = new Schema({
 schema.methods.encryptPassword = function(password){
    password = password.trim().toLowerCase();
    return crypto.createHmac('sha1', this.salt).update(password).digest('hex');
-}
+};
 
 schema.methods.checkPassword = function(password){
    return this.encryptPassword(password) === this.hashedPassword;
-}
+};
 
 schema.virtual('password')
    .set(function(password){
@@ -61,7 +61,7 @@ schema.virtual('password')
    })
    .get(function(){
       return this._plainPassword;
-   })
+   });
 
 schema.statics.authorize = function(username, password, callback){
    username = shorten(username);
@@ -76,7 +76,7 @@ schema.statics.authorize = function(username, password, callback){
       function(user, callback){
          if(user) {
             if(user.checkPassword(password)){
-               callback(null, user)
+               callback(null, user);
             }else{
                callback(new AuthError());
             }
@@ -90,7 +90,7 @@ schema.statics.authorize = function(username, password, callback){
       }
       
    ], callback);
-}
+};
 
 
 schema.pre('save', function (next) {
@@ -111,7 +111,7 @@ schema.pre('save', function (next) {
    if(!good){
      err = new Error('Wrong language code!');
    }
-   next(err)
+   next(err);
 });
 
 exports.User = mongoose.model('User', schema);

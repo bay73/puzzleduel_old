@@ -20,5 +20,4 @@ exports.post = function(req, res, next){
    } else {
        next(500);
    }
-   
-}
+};
