@@ -58,7 +58,9 @@
             statusCode: {
                200: function(){
                   closeDialog($('#userInfoDialog'));
-                  <% if(page!='sudoku') {%>
+                  <% if(page=='error') {%>
+                     window.location.href="/";
+                  <% } else if(page!='sudoku') {%>
                      window.location.href="/<%=page%>";
                   <% } %>
                },

@@ -31,9 +31,7 @@ module.exports.translate = function(app){
     app.use(function(req, res, next){
         if(req.user){
             if(req.user.provider=='facebook' || req.user.provider=='google'){
-                if(req.session.lang = req.user._json.locale){
-                    req.session.lang = req.user._json.locale.substr(0,2);
-                }
+                req.session.lang = req.user._json.locale.substr(0,2);
             }
             if(req.user.language){
                 req.session.lang = req.user.language;
@@ -68,4 +66,4 @@ module.exports.languages = function(){
         list.push(getLanguage(supported[i]));
     }
     return list;
-}
+};

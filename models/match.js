@@ -70,7 +70,7 @@ var userFromSocket = function(socket){
         }
     }
     return user;
-}
+};
 
 matchschema.statics.addMatch = function(started, sockets, counter, result, resultreason, callback){
     async.waterfall([
@@ -146,7 +146,7 @@ matchschema.statics.addMatch = function(started, sockets, counter, result, resul
             if(typeof(result) != 'undefined'){
                 result2 = !result;
             }
-            var match = new Match({user: user1, opponent: user0, started: started, win: !result, reason: resultreason, pro: counter[1], contra: counter[0], ratingChange: change[1]});
+            var match = new Match({user: user1, opponent: user0, started: started, win: result2, reason: resultreason, pro: counter[1], contra: counter[0], ratingChange: change[1]});
             match.save();
             return callback(null, user0, user1, change);
         },

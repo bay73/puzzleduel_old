@@ -34,18 +34,23 @@ passport.use(new FacebookStrategy({
   }
 ));
 passport.use(new LocalStrategy(
-  function(username, password, done) {
+  {passReqToCallback: true},
+  function(req, username, password, done) {
     User.findOne({ username: username }, function (err, user) {
       if (err) { return done(err); }
       if (!user) {
-        user = new User({username: username, displayName: username, password: password});
-        user.save(function(err, user){
-           if(err) return done(err);
-           return done(null, user);
-        });
+        if(req.body.createnew=="true"){
+          user = new User({username: username, displayName: username, password: password});
+          user.save(function(err, user){
+             if(err) return done(err);
+             return done(null, user);
+          });
+        } else {
+          return done(null, false, { user: false, message: 'Incorrect username.' });
+        }
       } else {
         if (!user.checkPassword(password)) {
-          return done(null, false, { message: 'Incorrect password.' });
+          return done(null, false, { user: true, message: 'Incorrect password.' });
         }
         return done(null, user);
       }
@@ -69,7 +74,7 @@ module.exports.init = function(app){
   app.use(function(req, res, next){
       res.locals.user = req.user;
       next();
-  })
+  });
 };
 
 module.exports.routes = function(app){
@@ -80,9 +85,20 @@ module.exports.routes = function(app){
       res.redirect('/');
     });
     
-  app.post('/login', passport.authenticate('local'),
-    function(req, res) {
-      res.send({});
+  app.post('/login',function(req, res, next) {
+    passport.authenticate('local', function(err, user, info) {
+      if (err) { return next(err); }
+      if (!user) {
+        if(info.user)
+          return next(401);
+        else
+          return next(403);
+      }
+      req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        res.send({});
+      });
+    })(req, res, next);
   });
 
   app.get('/auth/google', passport.authenticate('google',

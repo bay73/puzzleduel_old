@@ -1,4 +1,3 @@
-var path = require('path');
 var util = require('util');
 var http = require('http');
 var log = require('../scripts/log')(module);
@@ -20,14 +19,14 @@ function sendHttpError(res, error){
    if(res.req.headers['x-requested-with'] == 'XMLHttpRequest'){
       res.json(error);
    } else {
-      res.render('error', {error: error, languages: require('../translation').languages(), page: 'index'});
+      res.render('error', {error: error, languages: require('../translation').languages(), page: 'error'});
    }
 }
 exports.notFound = function(app){
    return function(req, res, next){
       next(404);
-   }
-}
+   };
+};
 
 exports.errorHandler = function(app){
    return function(err, req, res, next){
@@ -44,5 +43,5 @@ exports.errorHandler = function(app){
             sendHttpError(res, new HttpError(500));
          }
       }
-   }
-}
+   };
+};

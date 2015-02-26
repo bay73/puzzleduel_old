@@ -112,6 +112,10 @@ p,ul,li {
     width: 47%;
 }
 
+form {
+   display: inline-block;
+}
+
 .navigator {
    position: relative;
    top: 10px;

@@ -51,5 +51,7 @@
     "Account settings": "Benutzereinstellungen",
     "Forbidden": "Seite ist für registrierte Benutzer zugänglich nur",
     "Not Found": "Gewünschte Seite konnte nicht gefunden werden.<br>Überprüfen Sie bitte die eingegebenen Adresse.",
+    "New Password": "Neues Passwort",
+    "New User Confirmation": "Neues Benutzerkonto wird erstellt. Weiter?",
     "EOF": 0
 }

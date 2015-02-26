@@ -19,6 +19,10 @@
           <a class="short" href="/"><img src="images/mainpage.png"></a>
           <a class="long" href="/"><%=translate["MainPage"]%></a>
         <% } %>
+        <% if(page!='account') { %>
+          <a class="short" href="/account"><img src="images/settings.png"></a>
+          <a class="long" href="/account"><%=translate["Settings"]%></a>
+        <% } %>
       </div>
       <% if (!user) { %>
         <div class="langchooser">

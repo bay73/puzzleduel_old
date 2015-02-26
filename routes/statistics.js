@@ -5,13 +5,14 @@ var Match = require('../models/match').Match;
 exports.get = function(req, res, next){
    var fromStr = req.param('from');
    var toStr = req.param('to');
+   var to, from;
    if(toStr){
-       var to = new Date(toStr.substring(0,4), (toStr.substring(4,6)-1),toStr.substring(6,8)) + 60*60*24*1000;
+       to = new Date(toStr.substring(0,4), (toStr.substring(4,6)-1),toStr.substring(6,8)) + 60*60*24*1000;
    }else{
        to = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
    }
    if(fromStr){
-       var from = new Date(fromStr.substring(0,4),(fromStr.substring(4,6)-1),fromStr.substring(6,8));
+       from = new Date(fromStr.substring(0,4),(fromStr.substring(4,6)-1),fromStr.substring(6,8));
    }else{
        from = new Date(to - 7*24*60*60*1000);
    }
@@ -64,7 +65,7 @@ exports.get = function(req, res, next){
           }
           for(var i=0;i<matches.length;i++){
              var index = userMap[matches[i].user];
-             if(index != undefined){
+             if(index !== undefined){
                  users[index].matches++;
                  total.matches += 1/2;
                  if(matches[i].win){
@@ -77,7 +78,7 @@ exports.get = function(req, res, next){
                  }
                  if(matches[i].started){
                     var day = Math.floor((matches[i].started - from)/(1000*24*60*60));
-                    if(total.days[day]!=undefined){
+                    if(total.days[day] !== undefined){
                         users[index].days[day]++;
                         total.days[day] +=1/2;
                     }

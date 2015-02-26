@@ -51,5 +51,7 @@
     "Account settings": "Account settings",
     "Forbidden": "Page is accessible for registered users only",
     "Not Found": "Requested page is not found.<br>Check, please, the address entered.",
+    "New Password": "New password",
+    "New User Confirmation": "New account will be created. Continue?",
     "EOF": 0
 }

@@ -1,6 +1,6 @@
-BaySudoku = function(size){
+var BaySudoku = function(size){
    this.sudokuSize = size;
-}
+};
 
 
 BaySudoku.prototype.random = function(symmetry){
@@ -9,7 +9,7 @@ BaySudoku.prototype.random = function(symmetry){
    var self = this;
    var data = this.cellData;
    var size = this.sudokuSize;
-   putRandom = function(x, y){
+   var putRandom = function(x, y){
       if(x >= size ){
          return putRandom(0, y + 1);
       }else if (y >= size ){
@@ -32,9 +32,9 @@ BaySudoku.prototype.random = function(symmetry){
                }
             }
             while (variantCount > 0){
-               var rnd = Math.floor((Math.random()*variantCount)+1)
+               var rnd = Math.floor((Math.random()*variantCount)+1);
                var rndVal = -1;
-               for(var v=1;v<=size;v++){
+               for(v=1; v<=size; v++){
                   if(variants[v]){
                      rnd--;
                   }
@@ -58,8 +58,7 @@ BaySudoku.prototype.random = function(symmetry){
              return putRandom(x+1, y);
          }
       }
-
-   }
+   };
    if(putRandom(0, 0)){
       var clueCount = size*size;
       var minCount = 28;
@@ -75,8 +74,17 @@ BaySudoku.prototype.random = function(symmetry){
             variantCount++;
          }
       }
+      var addCleared = function (a, b, cleared){
+         var added = false;
+         for(var c=0;c<cleared.length;c++){
+            if(cleared[c].x == a && cleared[c].y == b) added = true;
+         }
+         if(!added){
+            cleared.push({x:a, y:b, value: data[a][b].value});
+         }
+      };
       while (variantCount > 0 && clueCount > minCount){
-         var rnd = Math.floor((Math.random()*variantCount)+1)
+         var rnd = Math.floor((Math.random()*variantCount)+1);
          var rndVal = -1;
          for(var v=0;v<size*size;v++){
             if(variants[v]){
@@ -91,56 +99,47 @@ BaySudoku.prototype.random = function(symmetry){
             var x = Math.floor(rndVal / size);
             var y = rndVal % size;
             var cleared = [];
-            addCleared = function (a, b){
-               var added = false;
-               for(var c=0;c<cleared.length;c++){
-                  if(cleared[c].x == a && cleared[c].y == b) added = true;
-               }
-               if(!added){
-                  cleared.push({x:a, y:b, value: data[a][b].value});
-               }
-            }
 // value=1>Central
 // value=2>Vertical
 // value=3>Horisontal
 // value=4>Two axis
 // value=5>Four axis
 // value=6>Diagonal
-            addCleared(x, y);
+            addCleared(x, y, cleared);
             if(symmetry==1){
-               addCleared(size-x-1, size-y-1);
+               addCleared(size-x-1, size-y-1, cleared);
             }else if (symmetry==2){
-               addCleared(x, size-y-1);
+               addCleared(x, size-y-1, cleared);
             }else if (symmetry==3){
-               addCleared(size-x-1, y);
+               addCleared(size-x-1, y, cleared);
             }else if (symmetry==4){
-               addCleared(size-x-1, size-y-1);
-               addCleared(size-x-1, y);
-               addCleared(x, size-y-1);
+               addCleared(size-x-1, size-y-1, cleared);
+               addCleared(size-x-1, y, cleared);
+               addCleared(x, size-y-1, cleared);
             }else if (symmetry==5){
-               addCleared(size-x-1, size-y-1);
-               addCleared(size-x-1, y);
-               addCleared(x, size-y-1);
-               addCleared(y, x);
-               addCleared(size-y-1, x);
-               addCleared(y, size-x-1);
-               addCleared(size-y-1, size-x-1);
+               addCleared(size-x-1, size-y-1, cleared);
+               addCleared(size-x-1, y, cleared);
+               addCleared(x, size-y-1, cleared);
+               addCleared(y, x, cleared);
+               addCleared(size-y-1, x, cleared);
+               addCleared(y, size-x-1, cleared);
+               addCleared(size-y-1, size-x-1, cleared);
             }else if (symmetry==6){
-               addCleared(y, x);
+               addCleared(y, x, cleared);
             }
             for(var c=0;c<cleared.length;c++){
                data[cleared[c].x][cleared[c].y].value="";
                data[cleared[c].x][cleared[c].y].type="";
             }
             if(this.solve(true) > 1){
-               for(var c=0;c<cleared.length;c++){
+               for(c=0;c<cleared.length;c++){
                   data[cleared[c].x][cleared[c].y].value=cleared[c].value;
                   data[cleared[c].x][cleared[c].y].type="clue";
                }
             }else{
                clueCount-=cleared.length;
             }
-            for(var c=0;c<cleared.length;c++){
+            for(c=0;c<cleared.length;c++){
                variants[cleared[c].x*size+cleared[c].y] = false;
                variantCount--;
             }
@@ -148,7 +147,7 @@ BaySudoku.prototype.random = function(symmetry){
       }
    }
    this.solve(false);
-}
+};
 
 BaySudoku.prototype.getInitData = function(){
    if (this.sudokuSize==4){
@@ -260,7 +259,7 @@ BaySudoku.prototype.getInitData = function(){
         ]
       };
    }
-}
+};
 
 BaySudoku.prototype.initSudoku = function(){
    this.gridData = this.getInitData();
@@ -271,12 +270,12 @@ BaySudoku.prototype.initSudoku = function(){
          this.cellData[i][j] = {};
       }
     }
-}
+};
 
 BaySudoku.prototype.clear = function(){
    for(var i=0;i<this.sudokuSize;i++){
       for(var j=0;j<this.sudokuSize;j++){
-         cell = this.cellData[i][j];
+         var cell = this.cellData[i][j];
          if(cell){
             if(!cell.type || cell.type != "clue"){
                this.cellData[i][j] = {};
@@ -284,10 +283,10 @@ BaySudoku.prototype.clear = function(){
          }
       }
    }
-}
+};
 
 BaySudoku.prototype.checkValue = function(x, y, v){
-   area = this.gridData.rows[x].cells[y];
+   var area = this.gridData.rows[x].cells[y];
    for(var i=0;i<this.sudokuSize;i++){
       for(var j=0;j<this.sudokuSize;j++){
          if(i != x || j != y){
@@ -295,14 +294,14 @@ BaySudoku.prototype.checkValue = function(x, y, v){
             if(newCell){
                if( i == x && v==newCell.value) return false;
                if( j == y && v==newCell.value) return false;
-               newArea = this.gridData.rows[i].cells[j];
+               var newArea = this.gridData.rows[i].cells[j];
                if(area==newArea && v==newCell.value) return false;
             }
          }
       }
    }
    return true;
-}
+};
 
 
 BaySudoku.prototype.solve = function(checkOnly){
@@ -315,7 +314,7 @@ BaySudoku.prototype.solve = function(checkOnly){
    var size = this.sudokuSize;
    var self = this;
    var solutionCount = 0;
-   fixAnswer = function(){
+   var fixAnswer = function(){
       solutionCount++;
       if(toCheck){
          return;
@@ -329,8 +328,8 @@ BaySudoku.prototype.solve = function(checkOnly){
             }
          }
       }
-   }
-   putNext = function (x, y){
+   };
+   var putNext = function (x, y){
       if(x >= size ){
          putNext(0, y + 1);
       }else if (y >= size ){
@@ -354,12 +353,12 @@ BaySudoku.prototype.solve = function(checkOnly){
              putNext(x+1, y);
          }
       }
-   }
+   };
    putNext(0, 0);
    if(toCheck){
       return solutionCount;
    }
-}
+};
 
 if(typeof(module) != 'undefined')
   module.exports=BaySudoku;

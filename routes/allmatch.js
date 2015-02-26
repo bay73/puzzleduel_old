@@ -65,9 +65,9 @@ exports.get = function(req, res, next){
              var user2 = users[matches[i].opponent];
              var type1 = user1?user1.type:'undefined';
              var type2 = user2?user2.type:'undefined';
-             var show = ((type1 != 'bot' && type2 == 'bot')
-                  || (type1 != 'bot' && type2 != 'bot' && matches[i].user < matches[i].opponent)
-                  || (type1 == 'bot' && type2 == 'bot' && matches[i].user < matches[i].opponent));
+             var show = ((type1 != 'bot' && type2 == 'bot') ||
+                  (type1 != 'bot' && type2 != 'bot' && matches[i].user < matches[i].opponent) ||
+                  (type1 == 'bot' && type2 == 'bot' && matches[i].user < matches[i].opponent));
              if(userId || show) {
                  var score = matches[i].pro.toString().concat(' : ', matches[i].contra.toString());
                  if (matches[i].reason != 'finish'){
