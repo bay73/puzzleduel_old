@@ -32,6 +32,6 @@
     "cookie": "0"
   },
   "scripts": {
-    "postinstall": "ls && ls public && bower install"
+    "postinstall": "mkdir public/bower_components && bower install"
   }
 }
