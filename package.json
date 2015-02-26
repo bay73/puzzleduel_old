@@ -32,6 +32,6 @@
     "cookie": "0"
   },
   "scripts": {
-    "postinstall": "bower instal jquery"
+    "postinstall": "rm -r public/bower_components/* && bower instal"
   }
 }
