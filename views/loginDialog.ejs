@@ -34,13 +34,19 @@
             <span class="bar"></span>
             <label><%= translate["Password"]%></label>
          </div>
+         <input type="hidden" name="createnew" id="createnew" value="0">
          <span id="loginError" class="error"></span>
          <button class="button default" id="userLoginOkButton" data-ripple-color="#89669b"><%= translate["OK button label"]%></button>
          <button class="button" id="userLoginCancelButton"><%= translate["Cancel button label"]%></button>
       </form>
    </div>
+   <div class="raised dialog" id="newUserDialog">
+      <div class="topic" id="newUsertext"><%= translate["New User Confirmation"]%></div>
+      <button class="button default" id="newUserOk"><%= translate["OK button label"]%></button>
+      <button class="button" id="newUserCancel"><%= translate["Cancel button label"]%></button>
+   </div>
    <script>
-      rippleButton($('#userLoginButton'), function(){
+      function loginDialog(){
          showDialog($('#userLoginDialog'),{
             start: {
                from: $('#userLoginButton')
@@ -49,8 +55,12 @@
             height: 230,
             direction: 'bottom-left'
          });
-      });
-      rippleButton($('#userLoginOkButton'), function(){
+      };
+      function login(){
+         if($('#password').val().length===0 || $('#username').val().length===0){
+            $('#loginError').text('<%= translate["Wrong authorization data!"]%>');
+            return;
+         }
          $('#loginError').text('');
          var form = $('#loginForm');
          $.ajax({
@@ -68,14 +78,38 @@
                      window.location.href="/<%=page%>";
                   <% } %>
                },
-               403: function(){
+               401: function(){
                   $('#loginError').text('<%= translate["Wrong authorization data!"]%>');
+               },
+               403: function(){
+                 showDialog($('#newUserDialog'),{
+                    start: {
+                       width: 310,
+                       height: 100
+                    },
+                    height: 100,
+                    width: 310
+                 });
                }
             }
          })
+      };
+      rippleButton($('#userLoginButton'), function(){
+         loginDialog();
+      });
+      rippleButton($('#userLoginOkButton'), function(){
+         login();
       });
       rippleButton($('#userLoginCancelButton'), function(){
          $('#loginError').text('');
          closeDialog($('#userLoginDialog'));
+      });
+      rippleButton($('#newUserOk'), function(){
+         $('#createnew').val('true');
+         login();
+         closeDialog($('#newUserDialog'));
+      });
+      rippleButton($('#newUserCancel'), function(){
+         closeDialog($('#newUserDialog'), function(){loginDialog();});
       });
    </script>
