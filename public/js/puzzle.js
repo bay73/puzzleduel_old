@@ -163,6 +163,8 @@ var BayPuzzle = function(properties){
    this.socket.on('info',function(data){self.onInfo(data);});
    this.socket.on('finish',function(data){self.onFinish(data);});
    this.socket.on('rivalclosed',function(data){self.onRivalclosed(data);});
+   this.socket.on('disconnect',function(data){self.onDisconnect(data);});
+   this.socket.on('reconnect',function(data){self.onReconnect(data);});
    if(typeof(server) != 'undefined'){
       this.socket.connect(server);
    }
@@ -196,10 +198,15 @@ BayPuzzle.prototype.onRegister = function(data){
 };
 
 BayPuzzle.prototype.onWait = function(data){
-   this.state = 'connecting';
+   this.changeState('connecting');
+   this.board.reDraw();
+   this.scorePanel.text = '';
+   this.scorePanel.reDraw();
+   this.showInfo('');
 };
 
 BayPuzzle.prototype.onReady = function(data){
+   this.grid = this.generator.generate(this.properties);
    if(data.opponent) {
       this.peername = data.opponent;
       this.showInfo(translate["Versus"] + ' : ' + data.opponent);
@@ -215,6 +222,7 @@ BayPuzzle.prototype.onStart = function(data){
       this.board.setState('on');
       this.changeState('game');
    } else {
+      this.grid = this.generator.generate(this.properties);
       if(this.scorePanel) {
          this.scorePanel.text = '> ' + data.timer + ' <';
          this.scorePanel.reDraw();
@@ -265,6 +273,20 @@ BayPuzzle.prototype.onFinish = function(data){
    this.changeState(data.state);
 };
 
+BayPuzzle.prototype.onDisconnect = function(){
+   this.board.setState('off');
+   this.grid = this.generator.generate(this.properties);
+   this.peername='';
+   this.changeState('disconnect');
+};
+
+BayPuzzle.prototype.onReconnect = function(){
+   this.board.setState('off');
+   this.grid = this.generator.generate(this.properties);
+   this.peername='';
+   this.changeState('reconnect');
+};
+
 BayPuzzle.prototype.showInfo = function(text){
    if(this.infoPanel) {
       this.infoPanel.text = text;
@@ -294,7 +316,7 @@ BayPuzzle.prototype.changeState = function(state){
          });
       }      
    }
-   $('#info').toggle(state == 'peer_not_found' || state == 'peer_closed' || state == 'win' || state == 'loose' || state == 'draw');
+   $('#info').toggle(state == 'peer_not_found' || state == 'peer_closed' || state == 'win' || state == 'loose' || state == 'draw' || state == 'disconnect' || state == 'reconnect');
    if(state == 'peer_closed')
       $('#info').text(translate["PeerDisconnected"]);
    else if(state == 'peer_not_found')
@@ -305,6 +327,10 @@ BayPuzzle.prototype.changeState = function(state){
       $('#info').text(translate["Loose"]);
    else if(state == 'draw')
       $('#info').text(translate["Draw"]);
+   else if(state == 'disconnect')
+      $('#info').text(translate["ConnectionLost"]);
+   else if(state == 'reconnect')
+      $('#info').text(translate["ConnectionWasLost"]);
    $('.fb-share-button').toggle(state == 'win');
    $('#name').toggle(state == 'choosing' || state == 'peer_not_found');
    $('#namelabel').text(translate["AskName"]);

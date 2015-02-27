@@ -53,5 +53,6 @@
     "Not Found": "Gewünschte Seite konnte nicht gefunden werden.<br>Überprüfen Sie bitte die eingegebenen Adresse.",
     "New Password": "Neues Passwort",
     "New User Confirmation": "Neues Benutzerkonto wird erstellt. Weiter?",
+    "ConnectionLost": "Sorry, Verbindung wurde verloren. Spiel abgebrochen!",
     "EOF": 0
 }

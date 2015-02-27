@@ -53,5 +53,6 @@
     "Not Found": "Requested page is not found.<br>Check, please, the address entered.",
     "New Password": "New password",
     "New User Confirmation": "New account will be created. Continue?",
+    "ConnectionLost": "Sorry, connection was lost. Game aborted!",
     "EOF": 0
 }
