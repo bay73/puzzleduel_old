@@ -4,18 +4,38 @@
 <% if (user) { %>
    <% if (user.provider) { %>
        <div class="topic">
-          <form name="infoForm" id="infoForm" method="POST">
+          <form name="accountForm" id="accountForm" method="POST">
              <div class="group">
                 <span class="text" id="username"><%=user.provider %></span>
                 <span class="bar"></span>
                 <label><%= translate["Logged through"]%></label>
              </div>
              <div class="group">
-                <span class="text" id="username"><%=user.displayName %></span>
+                <span class="text" id="displayName"><%=user.displayName %></span>
                 <span class="bar"></span>
                 <label><%= translate["Display Name"]%></label>
              </div>
-             <span id="infoError" class="error"></span>
+             <div class="group">
+                <input type="text" name="email" id="email" autocomplete="off" value="<%=user.email?user.email:'' %>">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label><%= translate["Email"]%></label>
+             </div>
+             <div class="group">
+                <select name="language" id="language" class="chooser">
+                   <% for(var i=0; i<languages.length; i++) { %>
+                      <option value="<%=languages[i].lang -%>" <%=(languages[i].lang==user.language?'selected':'') -%> >
+                         <%=languages[i].label -%>
+                      </option>
+                   <% } %>
+                </select>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label><%= translate["Language"]%></label>
+             </div>
+             <input type="hidden" name="type" id="type" value="<%=user.provider %>">
+             <span id="accountError" class="error"></span>
+             <button class="button default" id="accountInfoOkButton"><%= translate["OK button label"]%></button>
           </form>
        </div>
    <% } else { %>
@@ -58,10 +78,12 @@
                 <span class="bar"></span>
                 <label><%= translate["Language"]%></label>
              </div>
+             <input type="hidden" name="type" id="type" value="local">
              <span id="accountError" class="error"></span>
              <button class="button default" id="accountInfoOkButton"><%= translate["OK button label"]%></button>
           </form>
        </div>
+   <% } %>
    <script>
       rippleButton($('#accountInfoOkButton'), function(){
          $('#accountError').text('');
@@ -84,5 +106,4 @@
          })
       });
    </script>   
-   <% } %>
 <% } %>

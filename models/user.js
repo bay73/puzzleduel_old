@@ -14,17 +14,14 @@ var shorten = function(text){
 var schema = new Schema({
    username: {
       type: String,
-      unique: true,
       required: true,
       set: shorten
    },
    salt: {
-      type: String,
-      required: true
+      type: String
    },
    hashedPassword: {
-      type: String,
-      required: true
+      type: String
    },
    created: {
       type: Date,
@@ -40,8 +37,14 @@ var schema = new Schema({
    email: {
       type: String,
       default: ''
+   },
+   provider: {
+      type: String,
+      default: 'local'
    }
 });
+
+schema.index({ username: 1, provider: 1 }, { unique: true });
 
 schema.methods.encryptPassword = function(password){
    password = password.trim().toLowerCase();

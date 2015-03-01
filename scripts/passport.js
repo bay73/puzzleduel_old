@@ -29,7 +29,16 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
-      return done(null, profile);
+      User.findOne({ username: profile.id, provider: profile.provider }, function (err, user) {
+        if(err) {
+          return done(null, profile);
+        }
+        if(user) {
+          profile.email = user.email;
+          profile.language = user.language;
+        }
+        return done(null, profile);
+      });
     });
   }
 ));
@@ -64,7 +73,16 @@ passport.use(new GoogleStrategy({
     callbackURL: config.get("google_login:callback_url")
   },
   function(accessToken, refreshToken, profile, done) {
-    done(null, profile);
+    User.findOne({ username: profile.id, provider: profile.provider }, function (err, user) {
+      if(err) {
+        return done(null, profile);
+      }
+      if(user) {
+        profile.email = user.email;
+        profile.language = user.language;
+      }
+      return done(null, profile);
+    });
   }
 ));
 
