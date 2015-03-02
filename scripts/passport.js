@@ -30,14 +30,16 @@ passport.use(new FacebookStrategy({
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
       User.findOne({ username: profile.id, provider: profile.provider }, function (err, user) {
-        if(err) {
-          return done(null, profile);
-        }
-        if(user) {
+        if(!err && user) {
           profile.email = user.email;
           profile.language = user.language;
+          return done(null, profile);
+        } else {
+          user = new User({username: profile.id, provider: profile.provider, displayName: profile.displayName});
+          user.save(function(err, user){
+            return done(null, profile);
+          });
         }
-        return done(null, profile);
       });
     });
   }
@@ -74,14 +76,16 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     User.findOne({ username: profile.id, provider: profile.provider }, function (err, user) {
-      if(err) {
-        return done(null, profile);
-      }
-      if(user) {
+      if(!err && user) {
         profile.email = user.email;
         profile.language = user.language;
+        return done(null, profile);
+      } else {
+        user = new User({username: profile.id, provider: profile.provider, displayName: profile.displayName});
+        user.save(function(err, user){
+          return done(null, profile);
+        });
       }
-      return done(null, profile);
     });
   }
 ));
