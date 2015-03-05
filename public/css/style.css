@@ -54,9 +54,9 @@ body.lefttitle .logo {
 }
 
 .logo img {
-   padding-top: 0px;
-   padding-left: 100px;
-   height: 70px;
+   padding-top: 20px;
+   padding-left: 50px;
+   height: 40px;
 }
 
 .logo img.small {
@@ -69,8 +69,8 @@ body.lefttitle .logo {
 
 body.lefttitle .logo img{
    padding-top: 10px;
-   padding-left: 0px;
-   width: 80px;
+   padding-left: 10px;
+   width: 60px;
    height: auto;
 }
 
@@ -372,7 +372,7 @@ body.lefttitle .button.login {
 }
 
 .group{ 
-   position:relative; 
+   position:relative;
    margin-bottom:15px; 
 }
 
@@ -650,11 +650,13 @@ body.lefttitle .logo {
 }
 
 .logo img {
-   height: 150px;
+   padding-top: 40px;
+   height: 80px;
 }
 
 body.lefttitle .logo img {
-   width: 160px;
+   padding-left: 30px;
+   width: 100px;
    height: auto;
 }
 
@@ -712,11 +714,11 @@ body.lefttitle .langchooser {
 
 @media screen and (min-width:2000px) and (max-width:10000px) {
 .logo img {
-   padding-left: 300px;
+   padding-left: 150px;
 }
 
 body.lefttitle .logo img {
-   padding-left: 0px;
+   padding-left: 10px;
 }
 
 .button.login {
@@ -739,7 +741,7 @@ body.lefttitle .langchooser {
    left: 0px;
 }
 }
-@media screen and (min-width:780px) and (max-width:1000px) {
+@media screen and (min-width:680px) and (max-width:1000px) {
 .container{
    width: 706px;
    max-width: 93%;
@@ -747,11 +749,11 @@ body.lefttitle .langchooser {
 }
 
 .logo img {
-   padding-left: 10px;
+   padding-left: 30px;
 }
 
 body.lefttitle .logo img {
-   padding-left: 0px;
+   padding-left: 10px;
 }
 
 .button.login {
@@ -779,7 +781,7 @@ body.lefttitle .langchooser {
 }
 }
 
-@media screen and (min-width:560px) and (max-width:780px) {
+@media screen and (min-width:560px) and (max-width:680px) {
 .container{
    width: 696px;
    max-width: 90%;
@@ -792,20 +794,12 @@ body.lefttitle .container{
 }
 
 .logo img {
-   padding-left: 5px;
+   padding-left: 10px;
 }
 
 body.lefttitle .logo img {
    padding-left: 0px;
    padding-top: 5px;
-}
-
-.logo img.small {
-   display: inherit;
-}
-
-.logo img.big {
-   display: none;
 }
 
 .button.login {
@@ -863,7 +857,7 @@ body.lefttitle .container{
 }
 
 .logo img {
-   padding-left: 5px;
+   padding-left: 15px;
 }
 
 body.lefttitle .logo img {
@@ -935,7 +929,8 @@ body.lefttitle .logo {
 }
 
 .logo img {
-   height: 45px;
+   padding-top: 10px;
+   height: 30px;
 }
 
 body.lefttitle .logo img{
