@@ -11,7 +11,7 @@
     "Wrong authorization data!": "Falsche Berechtigungsdaten!",
     "Wrong data!": "Falsche Daten!",
     "Welcome to Puzzleduel header": "Willkommen beim PuzzleDuel!",
-    "Welcome to Puzzleduel text": "Gefählt es Ihnen, Ihr Gehirn zu benutzen? Gefählt es Ihnen Rätseln zu lösen? Möchten Sie sich mit anderen Lösern vergleichen?<br>An PuzzleDuel haben Sie eine chance jeden Tag neue Rätseln zu lösen und im Online-Wettbewerb mit anderen Lösern teil zunehmen. Ihr Gegenspieler und Sie becommen das gleiche Rätsel gleichzeitig und müssen es gemeinsam lösen. Derjenige, der den größten Beitrag leistet, wirt einen Gewinner.<br> Regeln sind einfach und für jeden verständlich. Ihr Gegenspieler wartet schon auf Sie. Sind Sie bereit zu beginnen?",
+    "Welcome to Puzzleduel text": "Denken sie gerne? Lösen Sie gerne Rätsel? Möchten Sie sich mit anderen Rätsellösern vergleichen?<br>Auf PuzzleDuel haben Sie die Möglichkeit, jeden Tag ein neues Rätsel im Wettbewerb mit einem anderen Rätsellöser zu lösen. Sie und Ihr Konkurrent erhalten gleichzeitig das gleiche Rätsel und müssen es gemeinsam lösen. Es gewinnt derjenige, der dabei den größeren Beitrag leistet!<br>Die Regeln sind einfach und allgemein verständlich. Ihr Gegenspieler wartet bereits auf Sie! Sind sie bereit zu beginnen?",
     "Language": "Sprache",
     "Start duel button label" : "Das Duell beginnen ",
     "Logged through": "Angemeldet von",
@@ -33,7 +33,7 @@
     "Rules": "Regeln",
     "AskName": "Tasten Sie Ihren Namen ein",
     "SearchRivals": "Suche nach Gegenspieler",
-    "RulesText": "Tragen Sie die Ziffern fon 1 bis 9 so in das Diagramm ein, dass in jeder Zeile, jeder Spalte und jedem fett umrandeten Gebiet jede Ziffer genau einmal vorkommt. Einige Ziffern sind schon gegeben.<br>Ihr Gegenspieler wird das gleiche Rätsel gleichzeitig lösen. Jede Zelle wird grün gefärbt, wenn Sie da die Ziffer schneller als Ihren Gegenspieler stellen. Sonst wird die Zelle rot. Sie können alle eingetragenen Ziffern sehen.<br>Wenn Sie eine falsche Ziffer stellen, wird die Zelle rot, unabhängig davon, wenn da eine richtige Ziffer gestellt wird.<br>Klicken Sie die ausgewählte Zelle und wählen die nötige Ziffer aus, um sie in diese Zelle einzuschreiben.<br>",
+    "RulesText": "Tragen Sie in die Felder des Diagramms die Zahlen von 1 bis 9 ein, sodass in jeder Zeile, in jeder Spalte und in jedem stark umrandeten Gebiet jede Zahl genau einmal vorkommt. Einige Zahlen sind bereits vorgegeben.<br> Ihr Gegenspieler löst das gleiche Rätsel gleichzeitig mit Ihnen. Ein Feld wird grün gefärbt, wenn Sie die richtige Zahl schneller eintragen als Ihr Gegner. Es wird rot gefärbt, wenn Ihr Gegner schneller ist. Sie können alle eingetragenen Zahlen sehen.<br> Wenn Sie eine falsche Zahl eintragen, wird das Feld rot gefärbt - auch dann, wenn Sie später die richtige Zahl eintragen. Klicken Sie auf ein Feld und wählen Sie die Zahl aus, die Sie eintragen wollen.<br>",
     "Rating": "Aktuelles Rating",
     "News": "Neuigkeiten",
     "FullRating": "Liste",
@@ -54,5 +54,10 @@
     "New Password": "Neues Passwort",
     "New User Confirmation": "Neues Benutzerkonto wird erstellt. Weiter?",
     "ConnectionLost": "Sorry, Verbindung wurde verloren. Spiel abgebrochen!",
+    "AddChallenge": "Neuer Anruf",
+    "RegisteredUser": "Registrierte Benutzer",
+    "EmailUser": "E-Mail einladen",
+    "GameDate": "Spieltermin",
+    "GameTime": "Spielzeit",
     "EOF": 0
 }

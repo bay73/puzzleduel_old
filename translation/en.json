@@ -54,5 +54,10 @@
     "New Password": "New password",
     "New User Confirmation": "New account will be created. Continue?",
     "ConnectionLost": "Sorry, connection was lost. Game aborted!",
+    "AddChallenge": "New call",
+    "RegisteredUser": "Registered User",
+    "EmailUser": "Invite by email",
+    "GameDate": "Game date",
+    "GameTime": "Game time",
     "EOF": 0
 }
