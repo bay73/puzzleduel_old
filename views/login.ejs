@@ -1,5 +1,5 @@
 <% if (user) { %>
-   <% if (user.provider) { %>
+   <% if (user.provider!='local') { %>
       <%-partial('providerInfoDialog') %>
    <% } else { %>
       <%-partial('localInfoDialog') %>
