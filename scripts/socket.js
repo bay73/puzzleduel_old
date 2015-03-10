@@ -25,15 +25,15 @@ module.exports = function(server) {
             function(callback) {
                 var cookies = cookie.parse(handshake.headers.cookie || '');
                 if(!cookies) {
-                    return callback(null);
+                    return callback(null, null);
                 }
                 var sidCookie = cookies[config.get('session:name')];
                 if(!sidCookie) {
-                    return callback(null);
+                    return callback(null, null);
                 }
                 var sid = cookieParser.signedCookie(sidCookie, config.get('session:secret'));
                 if(!sid) {
-                    return callback(null);
+                    return callback(null, null);
                 }
                 loadSession(sid, callback);
             },
