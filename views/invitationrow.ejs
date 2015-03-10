@@ -1,0 +1,24 @@
+<tr class="<%=(invitationrow.status=='accepted'?'green':(invitationrow.status=='in'?'red':''))%>">
+    <td class="date">
+        <%=invitationrow.date%>
+    </td>
+    <td class="name">
+        <%=invitationrow.opponent%>
+    </td>
+    <td class="date">
+        <%=invitationrow.from%> - <%=invitationrow.to%>
+    </td>
+    <td class="name">
+        <div class="dropdown"><%=translate[invitationrow.status]%>
+            <ul class="raised">
+                <% if(invitationrow.status=='in'){ %>
+                <li onclick="accept('<%=invitationrow.id%>')">Accept</li>
+                <% }%>
+                <% if(invitationrow.status!='declined'){ %>
+                <li onclick="decline('<%=invitationrow.id%>')">Decline</li>
+                <% }%>
+                <li onclick="change('<%=invitationrow.id%>')">Change</li>
+            </ul>    
+        </div>    
+    </td>
+</tr>

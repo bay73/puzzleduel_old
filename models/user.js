@@ -95,6 +95,14 @@ schema.statics.authorize = function(username, password, callback){
    ], callback);
 };
 
+schema.statics.getUser = function(userData, callback){
+   var User = this;
+   if(userData.provider == 'local'){
+      User.findOne({_id: userData._id}, callback);
+   } else {
+      User.findOne({username: userData.id, provider: userData.provider}, callback);
+   }
+};
 
 schema.pre('save', function (next) {
   if(!this.displayName) {

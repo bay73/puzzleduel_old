@@ -2,10 +2,10 @@
     <td class="date">
         <%=allmatchrow.date%>
     </td>
-    <td class="name <%=allmatchrow.firstWin%> <%=allmatchrow.firstType%>">
+    <td class="name <%=(allmatchrow.firstWin=='win'?'green':(allmatchrow.firstWin=='loose'?'red':''))%> <%=allmatchrow.firstType%>">
         <a href="/allmatch/<%=allmatchrow.firstUser%>"><%=allmatchrow.firstName%></a>  (<%=allmatchrow.firstRating%>)
     </td>
-    <td class="name <%=allmatchrow.secondWin%> <%=allmatchrow.secondType%>">
+    <td class="name <%=(allmatchrow.secondWin=='win'?'green':(allmatchrow.secondWin=='loose'?'red':''))%> <%=allmatchrow.secondType%>">
         <a href="/allmatch/<%=allmatchrow.secondUser%>"><%=allmatchrow.secondName%></a>  (<%=allmatchrow.secondRating%>)
     </td>
     <td class="duration">

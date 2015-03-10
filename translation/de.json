@@ -59,5 +59,9 @@
     "EmailUser": "E-Mail einladen",
     "GameDate": "Spieltermin",
     "GameTime": "Spielzeit",
+    "in": "Eingehend",
+    "out": "Ausgehend",
+    "accepted": "Akzeptiert",
+    "declined": "Abgelehnt",
     "EOF": 0
 }

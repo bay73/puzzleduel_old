@@ -59,5 +59,9 @@
     "EmailUser": "Invite by email",
     "GameDate": "Game date",
     "GameTime": "Game time",
+    "in": "Incoming",
+    "out": "Outgoing",
+    "accepted": "Accepted",
+    "declined": "Declined",
     "EOF": 0
 }

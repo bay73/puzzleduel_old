@@ -1,4 +1,4 @@
-<tr class="<%=matchrow.win%>">
+<tr class="<%=(matchrow.win=='win'?'green':(matchrow.win=='loose'?'red':''))%>">
     <td class="name">
         <%=matchrow.displayName%>
     </td>

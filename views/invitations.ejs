@@ -1,0 +1,88 @@
+<% layout('/logopage.ejs') -%>
+<div class="topic">
+   <table class="ratingtable">
+      <%-partial('invitationrow',invitations)%>
+   </table>
+   <button class="button raised" id="addChallengeButton"><%= translate["AddChallenge"]%></button>
+   <div class="raised dialog" id="addChallengeDialog">
+      <form name="addChallengeForm" id="addChallengeForm" method="POST">
+         <input type="hidden" name="id" id="id">
+         <div class="group radio">
+            <input type="radio" name="type" value="byname" id="byname" checked><span><%-translate["RegisteredUser"]%></span><br>
+            <input type="radio" name="type" value="byemail" id="byemail"><span><%-translate["EmailUser"]%></span>
+         </div>
+         <div class="group">
+            <input type="text" name="opponentname" id="opponentname"  required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label><%= translate["Opponent"]%></label>
+         </div>
+         <div class="group">
+            <input type="date" name="calldate" id="calldate" required value="<%=tomorrow%>">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label><%= translate["GameDate"]%></label>
+         </div>
+         <div class="group">
+            <input type="time" name="calltimefrom" id="calltimefrom" value="00:00"> - 
+            <input type="time" name="calltimeto" id="calltimeto" value="23:59">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label><%= translate["GameTime"]%></label>
+         </div>
+         <span id="challengeError" class="error"></span>
+         <button class="button default" id="challengeOkButton" data-ripple-color="#89669b"><%= translate["OK button label"]%></button>
+         <button class="button" id="challengeCancelButton"><%= translate["Cancel button label"]%></button>
+      </form>
+   </div>
+   <script>
+      rippleButton($('#addChallengeButton'), function(){
+         showDialog($('#addChallengeDialog'),{
+            start: {
+               from: $('#addChallengeButton')
+            },
+            width: 310,
+            height: 290,
+         });
+      });
+      rippleButton($('#challengeCancelButton'), function(){
+         closeDialog($('#addChallengeDialog'));
+      });
+      rippleButton($('#challengeOkButton'), function(){
+         $('#challengeError').text('');
+         var form = $('#addChallengeForm');
+         postData(form.serialize());
+      });
+      function postData(data){
+         $.ajax({
+            url: "/invitations",
+            method: "POST",
+            data: data,
+            complete: function(){
+            },
+            statusCode: {
+               200: function(){
+                  closeDialog($('#addChallengeDialog'));
+                  window.location.href="/<%=page%>";
+               },
+               500: function(){
+                  $('#challengeError').text('<%= translate["Wrong data!"]%>');
+               },
+               400: function(request){
+                  var message = request.responseJSON.message;
+                  if(!message){
+                     message = '<%= translate["Wrong data!"]%>';
+                  }
+                  $('#challengeError').text(message);
+               }
+            }
+         })
+      }
+      function decline(challengeId){
+         postData({id: challengeId, status: 'declined'});
+      }
+      function accept(challengeId){
+         postData({id: challengeId, status: 'accepted'});
+      }
+   </script>
+</div>
