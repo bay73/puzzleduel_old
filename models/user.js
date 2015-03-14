@@ -3,7 +3,6 @@ var async = require('async');
 var util = require('util');
 var validator = require("email-validator");
 var langs = require('../translation').languages();
-var INITIAL_RATING = require('./match').INITIAL_RATING;
 
 var mongoose = require('../scripts/mongoose');
 var Schema = mongoose.Schema;
@@ -44,8 +43,7 @@ var schema = new Schema({
     default: 'local'
   },
   rating: {
-    type: Number,
-    default: INITIAL_RATING
+    type: Number
   }
 });
 
