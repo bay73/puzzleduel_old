@@ -8,6 +8,7 @@ module.exports = function(app){
    app.get('/statistics', require('./statistics').get);
    app.get('/invitations', require('./invitations').get);
    app.post('/invitations', require('./invitations').post);
+   app.get('/admin', require('./admin').get);
    app.get('/allmatch', require('./allmatch').get);
    app.get('/allmatch/:userId', require('./allmatch').get);
    app.get('/monitor', require('./monitor').get);

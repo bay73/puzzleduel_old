@@ -535,6 +535,21 @@ input:focus ~ .highlight {
    font-size: 90%;
 }
 
+.admintable {
+   max-width: 600px;
+   margin: 15px auto;
+   border-collapse: collapse;
+   font-size: 90%;
+}
+
+.admintable td{
+   width: 600px;
+   display: inline-block;
+   overflow: auto;
+   text-align: left;
+   border: solid 1px;
+}
+
 .ratingtable tr.currentuser {
    font-weight: bold;
 }
