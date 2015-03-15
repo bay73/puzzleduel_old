@@ -8,12 +8,7 @@ exports.get = function(req, res, next){
   }
   async.waterfall([
     function(callback){
-      User.getUser(req.user, callback);
-    },
-    function(user, callback){
-      if(!user){
-        return callback(403);
-      }
+      var user = req.user;
       Match
         .find({user: user})
         .sort({started: -1})

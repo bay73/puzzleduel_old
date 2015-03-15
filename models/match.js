@@ -63,50 +63,18 @@ var matchschema = new Schema({
 });
 
 var userFromSocket = function(socket){
-  var user = {type: 'anonym', id: socket.name, displayName: socket.name};
   if(socket.user) {
-    if(socket.user.provider) {
-      user = {type: socket.user.provider, id: socket.user.id, displayName: socket.user.displayName};
-    } else {
-      user = {type: socket.user.type, id: socket.user.id, displayName: socket.user.displayName};
-    }
+    return socket.user;
+  } else {
+    return {provider: 'anonym', _id: null, displayName: socket.name, rating: INITIAL_RATING};
   }
-  return user;
 };
 
 matchschema.statics.addMatch = function(started, sockets, counter, result, resultreason, callback){
   async.waterfall([
-    function(callback){
-      var userPattern = userFromSocket(sockets[0]);
-      AllUser.findOne({type: userPattern.type, id: userPattern.id},function(err, user){
-        if(err) return callback(err);
-        if(user){
-          if(user.displayName != userPattern.displayName){
-            user.displayName = userPattern.displayName;
-          }
-          return callback(null, user);
-        } else {
-          user = new AllUser(userPattern);
-          return callback(null, user);
-        }
-      });
-    },
-    function(user0, callback) {
-      var userPattern = userFromSocket(sockets[1]);
-      AllUser.findOne({type: userPattern.type, id: userPattern.id},function(err, user){
-        if(err) return callback(err);
-        if(user){
-          if(user.displayName != userPattern.displayName){
-            user.displayName = userPattern.displayName;
-          }
-          return callback(null, user0, user);
-        } else {
-          user = new AllUser(userPattern);
-          return callback(null, user0, user);
-        }
-      });
-    },
-    function(user0, user1, callback) {
+    function(callback) {
+      var user0 = userFromSocket(sockets[0]);
+      var user1 = userFromSocket(sockets[1]);
       var change = [0, 0];
       if(user1 && user0){
         if(user0.rating <= 0) user0.rating = INITIAL_RATING;
@@ -139,28 +107,43 @@ matchschema.statics.addMatch = function(started, sockets, counter, result, resul
       return callback(null, user0, user1, change);
     },
     function(user0, user1, change, callback) {
-      var match = new Match({user: user0, opponent: user1, started: started, win: result, reason: resultreason, pro: counter[0], contra: counter[1], ratingChange: change[0]});
-      match.save();
+      if(user0.provider != 'anonym') {
+        var match = new Match({user: user0._id, opponent: user1._id, opponentName: user1.displayName, started: started, win: result, reason: resultreason, pro: counter[0], contra: counter[1], ratingChange: change[0]});
+        match.save();
+      }
       return callback(null, user0, user1, change);
     },
     function(user0, user1, change, callback) {
-      var result2;
-      if(typeof(result) != 'undefined'){
-        result2 = !result;
+      if(user1.provider != 'anonym') {
+        var result2;
+        if(typeof(result) != 'undefined'){
+          result2 = !result;
+        }
+        var match = new Match({user: user1._id, opponent: user0._id, opponentName: user0.displayName, started: started, win: result2, reason: resultreason, pro: counter[1], contra: counter[0], ratingChange: change[1]});
+        match.save();
       }
-      var match = new Match({user: user1, opponent: user0, started: started, win: result2, reason: resultreason, pro: counter[1], contra: counter[0], ratingChange: change[1]});
-      match.save();
       return callback(null, user0, user1, change);
     },
     function(user0, user1, change, callback) {
       user0.rating += change[0];
       user1.rating += change[1];
-      if(user0.id == user1.id && user0.type == user1.type){
-        if(user0.rating < user1.rating) user0.save();
-        else user1.save();
+      if(user0.provider == 'anonym'){
+        if(user1.provider != 'anonym'){
+          user1.save();
+        }
       } else {
-        user0.save();
-        user1.save();
+        if(user0._id.equals(user1._id)){
+          if(user0.rating < user1.rating) {
+            user0.save();
+          } else {
+            user1.save();
+          }
+        } else {
+          user0.save();
+          if(user1.provider != 'anonym'){
+            user1.save();
+          }
+        }
       }
     }
   ], callback);
