@@ -8,10 +8,14 @@ var log = require('./log')(module);
 var convertLocaleToLang = require('../translation').convertLocaleToLang;
 
 passport.serializeUser(function(user, done) {
-  done(null, user);
+  done(null, user._id);
 });
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err,user){
+    err
+      ? done(err)
+      : done(null,user);
+  });
 });
 
 passport.use(new LocalStrategy(
@@ -23,10 +27,9 @@ passport.use(new LocalStrategy(
                     password: password, 
                     addNew: req.body.createnew=="true"};
     User.authorize(userData, function(err, user){
-      if(err) {
-        return done(null, false, { user: user!==null && user!==undefined, message: err.message });
-      }
-      return done(null, user);
+      err
+        ? done(null, false, { user: user!==null && user!==undefined, message: err.message })
+        : done(null, user);
     });
   }
 ));
@@ -44,10 +47,9 @@ passport.use(new FacebookStrategy({
                       language: convertLocaleToLang(profile._json.locale),
                       addNew: true};
       User.authorize(userData, function(err, user){
-        if(err) {
-          return done(null, false, { user: user!==null && user!==undefined, message: err.message });
-        }
-        return done(null, user);
+        err
+          ? done(null, false, { user: user!==null && user!==undefined, message: err.message })
+          : done(null, user);
       });
     });
   }
@@ -65,10 +67,9 @@ passport.use(new GoogleStrategy({
                     language: convertLocaleToLang(profile._json.locale),
                     addNew: true};
     User.authorize(userData, function(err, user){
-      if(err) {
-        return done(null, false, { user: user!==null && user!==undefined, message: err.message });
-      }
-      return done(null, user);
+      err
+        ? done(null, false, { user: user!==null && user!==undefined, message: err.message })
+        : done(null, user);
     });
   }
 ));
@@ -94,14 +95,14 @@ module.exports.routes = function(app){
     passport.authenticate('local', function(err, user, info) {
       if (err) { return next(err); }
       if (!user) {
-        if(info.user)
-          return next(401);
-        else
-          return next(403);
+        return info.user
+          ? next(401)
+          : next(403);
       }
       req.logIn(user, function(err) {
-        if (err) { return next(err); }
-        res.send({});
+        err
+          ? next(err)
+          : res.send({});
       });
     })(req, res, next);
   });

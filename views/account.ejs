@@ -2,108 +2,80 @@
 <h2><%= translate["Account settings"] %></h2>
 <br><br>
 <% if (user) { %>
-   <% if (user.provider) { %>
-       <div class="topic">
-          <form name="accountForm" id="accountForm" method="POST">
-             <div class="group">
-                <span class="text" id="username"><%=user.provider %></span>
-                <span class="bar"></span>
-                <label><%= translate["Logged through"]%></label>
-             </div>
-             <div class="group">
-                <span class="text" id="displayName"><%=user.displayName %></span>
-                <span class="bar"></span>
-                <label><%= translate["Display Name"]%></label>
-             </div>
-             <div class="group">
-                <input type="text" name="email" id="email" autocomplete="off" value="<%=user.email?user.email:'' %>">
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label><%= translate["Email"]%></label>
-             </div>
-             <div class="group">
-                <select name="language" id="language" class="chooser">
-                   <% for(var i=0; i<languages.length; i++) { %>
-                      <option value="<%=languages[i].lang -%>" <%=(languages[i].lang==user.language?'selected':'') -%> >
-                         <%=languages[i].label -%>
-                      </option>
-                   <% } %>
-                </select>
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label><%= translate["Language"]%></label>
-             </div>
-             <input type="hidden" name="type" id="type" value="<%=user.provider %>">
-             <span id="accountError" class="error"></span>
-             <button class="button default" id="accountInfoOkButton"><%= translate["OK button label"]%></button>
-          </form>
-       </div>
-   <% } else { %>
-       <div class="topic">
-          <form name="accountForm" id="accountForm" method="POST">
-             <div class="group">
-                <span class="text" id="username"><%=user.username %></span>
-                <span class="bar"></span>
-                <label><%= translate["Login Name"]%></label>
-             </div>
-             <div class="group">
-                <input type="text" name="displayName" id="displayName" required value="<%=user.displayName %>">
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label><%= translate["Display Name"]%></label>
-             </div>
-             <div class="group">
-                <input type="text" name="email" id="email" autocomplete="off" value="<%=user.email %>">
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label><%= translate["Email"]%></label>
-             </div>
-             <div class="group">
-                <input type="text" name="prevent_autofill" id="prevent_autofill" value="" style="display:none;" />
-                <input type="password" name="password_fake" id="password_fake" value="" style="display:none;" />
-                <input type="password" name="password" autocomplete="off" id="password" value="" >
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label><%= translate["New Password"]%></label>
-             </div>
-             <div class="group">
-                <select name="language" id="language" class="chooser">
-                   <% for(var i=0; i<languages.length; i++) { %>
-                      <option value="<%=languages[i].lang -%>" <%=(languages[i].lang==user.language?'selected':'') -%> >
-                         <%=languages[i].label -%>
-                      </option>
-                   <% } %>
-                </select>
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label><%= translate["Language"]%></label>
-             </div>
-             <input type="hidden" name="type" id="type" value="local">
-             <span id="accountError" class="error"></span>
-             <button class="button default" id="accountInfoOkButton"><%= translate["OK button label"]%></button>
-          </form>
-       </div>
-   <% } %>
-   <script>
-      rippleButton($('#accountInfoOkButton'), function(){
-         $('#accountError').text('');
-         var form = $('#accountForm');
-         $.ajax({
-            url: "/info",
-            method: "POST",
-            data: form.serialize(),
-            complete: function(){
-            },
-            statusCode: {
-               200: function(){
-                  window.location.href="/<%=page%>";
-               },
-               500: function(){
-                   console.log('error!!!');
-                  $('#accountError').text('<%= translate["Wrong data!"]%>');
-               }
-            }
-         })
-      });
-   </script>   
+  <div class="topic">
+    <form name="accountForm" id="accountForm" method="POST">
+      <% if (user.provider != 'local') { %>
+        <div class="group">
+          <span class="text" id="username"><%=user.provider %></span>
+          <span class="bar"></span>
+          <label><%= translate["Logged through"]%></label>
+        </div>
+      <% } else { %>
+        <div class="group">
+          <span class="text" id="username"><%=user.username %></span>
+          <span class="bar"></span>
+          <label><%= translate["Login Name"]%></label>
+        </div>
+      <% } %>
+      <div class="group">
+        <input type="text" name="displayName" id="displayName" required value="<%=user.displayName %>">
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label><%= translate["Display Name"]%></label>
+      </div>
+      <div class="group">
+        <input type="text" name="email" id="email" autocomplete="off" value="<%=user.email?user.email:'' %>">
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label><%= translate["Email"]%></label>
+      </div>
+      <% if (user.provider == 'local') { %>
+        <div class="group">
+          <input type="text" name="prevent_autofill" id="prevent_autofill" value="" style="display:none;" />
+          <input type="password" name="password_fake" id="password_fake" value="" style="display:none;" />
+          <input type="password" name="password" autocomplete="off" id="password" value="" >
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label><%= translate["New Password"]%></label>
+        </div>
+      <% } %>
+      <div class="group">
+        <select name="language" id="language" class="chooser">
+          <% for(var i=0; i<languages.length; i++) { %>
+            <option value="<%=languages[i].lang -%>" <%=(languages[i].lang==user.language?'selected':'') -%> >
+              <%=languages[i].label -%>
+            </option>
+          <% } %>
+        </select>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label><%= translate["Language"]%></label>
+      </div>
+      <input type="hidden" name="type" id="type" value="<%=user.provider %>">
+      <span id="accountError" class="error"></span>
+      <button class="button default" id="accountInfoOkButton"><%= translate["OK button label"]%></button>
+    </form>
+  </div>
+  <script>
+    rippleButton($('#accountInfoOkButton'), function(){
+      $('#accountError').text('');
+      var form = $('#accountForm');
+      $.ajax({
+        url: "/info",
+        method: "POST",
+        data: form.serialize(),
+        complete: function(){
+        },
+        statusCode: {
+          200: function(){
+            window.location.href="/<%=page%>";
+          },
+          500: function(){
+            console.log('error!!!');
+            $('#accountError').text('<%= translate["Wrong data!"]%>');
+          }
+        }
+      })
+    });
+  </script>
 <% } %>
