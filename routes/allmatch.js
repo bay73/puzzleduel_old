@@ -40,7 +40,7 @@ exports.get = function(req, res, next){
           .find({user: user})
           .sort({started: -1})
           .limit(1000)
-          .select('user opponent opponentName started fixed win reason pro contra ratingChange')
+          .select('user userName opponent opponentName started fixed win reason pro contra ratingChange')
           .exec(function(err, data){
             if(err) {
               return callback(err);
@@ -52,7 +52,7 @@ exports.get = function(req, res, next){
           .find()
           .sort({started: -1})
           .limit(1000)
-          .select('user opponent opponentName started fixed win reason pro contra ratingChange')
+          .select('user userName opponent opponentName started fixed win reason pro contra ratingChange')
           .exec(function(err, data) {
             if(err) {
               return callback(err);
@@ -64,18 +64,21 @@ exports.get = function(req, res, next){
     function(user, users, matches, callback){
       var data = [];
       for(var i=0;i<matches.length;i++){
-        var user1 = users[matches[i].user];
-        var type1 = user1?user1.provider:'undefined';
+        var user1 = 0;
+        var type1 = 'anonym';
+        if(matches[i].user) {
+          user1 = users[matches[i].user];
+          type1 = user1?user1.provider:'undefined';
+        }
+        var user2 = 1;
         var type2 = 'anonym';
-        var user2;
         if(matches[i].opponent){
           user2 = users[matches[i].opponent];
           type2 = user2?user2.provider:'undefined';
         }
-        var show = (type2 == 'anonym' || type2 == 'undefined') ||
-          ((type1 != 'bot' && type2 == 'bot') ||
-          (type1 != 'bot' && type2 != 'bot' && matches[i].user < matches[i].opponent) ||
-          (type1 == 'bot' && type2 == 'bot' && matches[i].user < matches[i].opponent));
+        var show = getOrder(type1) < getOrder(type2) ||
+          (getOrder(type1) == getOrder(type2) && matches[i].userName < matches[i].opponentName) ||
+          (getOrder(type1) == getOrder(type2) && matches[i].userName == matches[i].opponentName && !matches[i].win);
         if(user || show) {
           var score = matches[i].pro.toString().concat(' : ', matches[i].contra.toString());
           if (matches[i].reason != 'finish'){
@@ -120,7 +123,7 @@ exports.get = function(req, res, next){
           }
           data.push({date: matchDate, score: score, duration: duration,
                      firstUser: matches[i].user, secondUser: matches[i].opponent,
-                     firstName: user1?user1.displayName:'---', secondName: matches[i].opponentName,
+                     firstName: matches[i].userName, secondName: matches[i].opponentName,
                      firstType: type1, secondType: type2,
                      firstRating: firstRating, secondRating: secondRating,
                      firstWin: firstWinClass, secondWin: secondWinClass });
@@ -133,3 +136,16 @@ exports.get = function(req, res, next){
     }
   ], next);
 };
+
+var showOrder = {
+  "undefined": 6,
+  "bot": 5,
+  "anonym": 4,
+  "local": 2,
+  "google": 2,
+  "facebook": 2
+};
+
+function getOrder(provider){
+  return showOrder[provider]?showOrder[provider]:0;
+}

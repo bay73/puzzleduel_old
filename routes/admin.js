@@ -177,30 +177,28 @@ var convertAllMatch = function(req, res, next){
         var user = users[match.user];
         if(user){
           var userType = user.type;
-          if(userType=='anonym'){
-            match.remove(function (err, product) {
-              if (err) console.log('Error deleting match ' + match._id + ':', err);
-              else console.log('Match ' + match._id + ' removed');
-            });
+          if(userType == 'anonym'){
+            match.user = null;
           } else {
             match.user = user.id;
-            var opponent = users[match.opponent];
-            if(opponent){
-              var opponentType = opponent.type;
-              if(opponentType != 'anonym'){
-                match.opponent = opponent.id;
-              } else {
-                match.opponent = null;
-              }
-              match.opponentName = opponent.displayName;
-            } else {
-              console.log('Match ' + match._id + ': opponent unknown');
-            }
-            match.save(function (err, product) {
-              if (err) console.log('Error saving match ' + match._id + ':', err);
-              else console.log('Match ' + match._id + ' changed');
-            });
           }
+          match.userName = user.displayName;
+          var opponent = users[match.opponent];
+          if(opponent){
+            var opponentType = opponent.type;
+            if(opponentType != 'anonym'){
+              match.opponent = opponent.id;
+            } else {
+              match.opponent = null;
+            }
+            match.opponentName = opponent.displayName;
+          } else {
+            console.log('Match ' + match._id + ': opponent unknown');
+          }
+          match.save(function (err, product) {
+            if (err) console.log('Error saving match ' + match._id + ':', err);
+            else console.log('Match ' + match._id + ' changed');
+          });
         }
       }
       callback(null);

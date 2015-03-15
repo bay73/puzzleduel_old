@@ -29,8 +29,10 @@ userschema.index({id: 1, type: 1});
 var matchschema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    required: true,
     index: true
+  },
+  userName: {
+    type: String,
   },
   opponent: {
     type: Schema.Types.ObjectId,
@@ -107,21 +109,23 @@ matchschema.statics.addMatch = function(started, sockets, counter, result, resul
       return callback(null, user0, user1, change);
     },
     function(user0, user1, change, callback) {
-      if(user0.provider != 'anonym') {
-        var match = new Match({user: user0._id, opponent: user1._id, opponentName: user1.displayName, started: started, win: result, reason: resultreason, pro: counter[0], contra: counter[1], ratingChange: change[0]});
-        match.save();
-      }
+      var match = new Match({user: user0._id, userName: user0.displayName,
+                            opponent: user1._id, opponentName: user1.displayName,
+                            started: started, win: result, reason: resultreason,
+                            pro: counter[0], contra: counter[1], ratingChange: change[0]});
+      match.save();
       return callback(null, user0, user1, change);
     },
     function(user0, user1, change, callback) {
-      if(user1.provider != 'anonym') {
-        var result2;
-        if(typeof(result) != 'undefined'){
-          result2 = !result;
-        }
-        var match = new Match({user: user1._id, opponent: user0._id, opponentName: user0.displayName, started: started, win: result2, reason: resultreason, pro: counter[1], contra: counter[0], ratingChange: change[1]});
-        match.save();
+      var result2;
+      if(typeof(result) != 'undefined'){
+        result2 = !result;
       }
+      var match = new Match({user: user1._id, userName: user1.displayName,
+                            opponent: user0._id, opponentName: user0.displayName,
+                            started: started, win: result2, reason: resultreason,
+                            pro: counter[1], contra: counter[0], ratingChange: change[1]});
+      match.save();
       return callback(null, user0, user1, change);
     },
     function(user0, user1, change, callback) {
