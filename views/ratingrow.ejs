@@ -1,8 +1,8 @@
-<tr class="<%=(user&&ratingrow.id==user.id?'currentuser':'')%>">
-    <td class="name">
-        <%=ratingrow.displayName%>
-    </td>
-    <td class="value">
-        <%=Math.round(ratingrow.rating)%>
-    </td>
+<tr <%=(user&&ratingrow._id.equals(user._id)?'class=currentuser':'')%> >
+  <td class="name">
+    <%=ratingrow.displayName%>
+  </td>
+  <td class="value">
+    <%=Math.round(ratingrow.rating)%>
+  </td>
 </tr>

@@ -1,28 +1,28 @@
 <% layout('/logopage.ejs') -%>
 <div class="topic">
-    <h2><%= translate["Welcome to Puzzleduel header"]%></h2>
-    <p><%- translate["Welcome to Puzzleduel text"]%></p>
-    <button class="raised button start blue" id="startDuelButton"><%= translate["Start duel button label"]%></button>
-    <script>
+  <h2><%= translate["Welcome to Puzzleduel header"]%></h2>
+  <p><%- translate["Welcome to Puzzleduel text"]%></p>
+  <button class="raised button start blue" id="startDuelButton"><%= translate["Start duel button label"]%></button>
+  <script>
     rippleButton($('#startDuelButton'), function(){window.location.href="/sudokuduel"});
-    </script>
+  </script>
 </div>
 <div class="topic small">
-    <h4><%= translate["Rating"]%></h2>
-    <table class="ratingtable">
-        <%-partial('ratingrow',ratings)%>
-        <tr><td class="link" colspan=10><a href="/rating"><%= translate["FullRating"]%></a></td></tr>
-    </table>
+  <h4><%= translate["Rating"]%></h2>
+  <table class="ratingtable">
+    <%-partial('ratingrow',ratings)%>
+    <tr><td class="link" colspan=10><a href="/rating"><%= translate["FullRating"]%></a></td></tr>
+  </table>
 </div>
 <div class="topic small">
-    <h4><%= translate["Rules"]%></h4>
-    <p>
-        <%- translate["RulesText"]%>
-    </p>
+  <h4><%= translate["Rules"]%></h4>
+  <p>
+    <%- translate["RulesText"]%>
+  </p>
 </div>
 <div class="topic">
-    <p class="siteinfo">
-        <a href="mailto://andrey.iv.bogdanov@gmail.com">Contact us</a>
-        <a href="/policy">Privacy policy</a>
-    </p>
+  <p class="siteinfo">
+    <a href="mailto://andrey.iv.bogdanov@gmail.com">Contact us</a>
+    <a href="/policy">Privacy policy</a>
+  </p>
 </div>
