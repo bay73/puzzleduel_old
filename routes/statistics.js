@@ -18,7 +18,7 @@ exports.get = function(req, res, next){
   }
   async.waterfall([
     function(callback){
-      if(req.user && (req.user.id=='54ba6faadf5e31b2314364be' || req.user.id=='942960155727747')){
+      if(req.user && (req.user.id=='54ba6faadf5e31b2314364be' || req.user.id=='54fc120cb671b60300839a54')){
         callback(null);
       } else {
         callback(404);

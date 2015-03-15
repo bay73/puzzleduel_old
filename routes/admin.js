@@ -5,7 +5,7 @@ var Match = require('../models/match').Match;
 var AllUser = require('../models/match').AllUser;
 
 exports.get = function(req, res, next){
-  if(req.user && (req.user.id=='54ba6faadf5e31b2314364be' || req.user.id=='942960155727747')){
+  if(req.user && (req.user.id=='54ba6faadf5e31b2314364be' || req.user.id=='54fc120cb671b60300839a54')){
     var url_parts = url.parse(req.url, true);
     if(url_parts.query.query) {
       showData(url_parts.query.query, req, res, next);
