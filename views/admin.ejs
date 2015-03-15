@@ -1,0 +1,21 @@
+<% layout('/logopage.ejs') -%>
+<div class="topic">
+    <button class="raised button start blue" id="queryUsers">Query Users</button>
+    <button class="raised button start blue" id="queryMatches">Query Matchs</button>
+    <button class="raised button start blue" id="queryAllUsers">Query All Users</button>
+    &nbsp;
+    <button class="raised button start blue" id="setLocal">set Local</button>
+    <button class="raised button start blue" id="convertAllUsers">Convert All Users</button>
+    <button class="raised button start blue" id="convertAllMatch">Convert All Match</button>
+    <script>
+    rippleButton($('#queryUsers'), function(){window.location.href="/admin?query=users"});
+    rippleButton($('#queryMatches'), function(){window.location.href="/admin?query=matches"});
+    rippleButton($('#queryAllUsers'), function(){window.location.href="/admin?query=allusers"});
+    rippleButton($('#setLocal'), function(){window.location.href="/admin?run=setLocal"});
+    rippleButton($('#convertAllUsers'), function(){window.location.href="/admin?run=convertAllUsers"});
+    rippleButton($('#convertAllMatch'), function(){window.location.href="/admin?run=convertAllMatch"});
+    </script>
+    <table class="admintable">
+    <%-partial('adminrow',data)%>
+    </table>
+</div>

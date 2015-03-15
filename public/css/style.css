@@ -535,13 +535,27 @@ input:focus ~ .highlight {
    font-size: 90%;
 }
 
+.admintable {
+   max-width: 600px;
+   margin: 15px auto;
+   border-collapse: collapse;
+   font-size: 90%;
+}
+
+.admintable td{
+   width: 600px;
+   display: inline-block;
+   overflow: auto;
+   text-align: left;
+   border: solid 1px;
+}
+
 .ratingtable tr.currentuser {
    font-weight: bold;
 }
 
 .ratingtable .name,.ratingtable .name a{
    text-decoration: none;
-   color: black;
 }
 
 .ratingtable .name.local,.ratingtable .name.local a{
@@ -561,21 +575,21 @@ input:focus ~ .highlight {
    font-style: italic;
 }
 
-.ratingtable .win {
+.ratingtable .green {
    color: darkgreen;
 }
 
-.ratingtable .win a{
+.ratingtable .green a{
    text-decoration: none;
    color: darkgreen;
 }
 
 
-.ratingtable .loose {
+.ratingtable .red {
    color: darkred;
 }
 
-.ratingtable .loose a{
+.ratingtable .red a{
    text-decoration: none;
    color: darkred;
 }
@@ -633,6 +647,36 @@ input:focus ~ .highlight {
 
 .siteinfo a{
    padding: 2px 30px;
+}
+
+.dropdown {
+   text-decoration: underline;
+   cursor: pointer;
+}
+
+.dropdown ul {
+   margin: 0px;
+   padding: 0px;
+   list-style-type: none;
+   position: absolute;
+   display: none;
+   z-index: 10;
+   width: 100px;
+}
+
+.dropdown ul li{
+   margin: 0px;
+   padding: 0px;
+   height: 24px;
+}
+
+.dropdown ul li:hover{
+   background-color: #aac;
+   text-decoration: underline;
+}
+
+.dropdown:hover ul {
+   display: block;
 }
 
 @media screen and (min-height:1000px) and (max-height:5000px) and (min-width:2000px) {

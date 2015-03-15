@@ -5,23 +5,35 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var config = require('../config');
 var User = require('../models/user').User;
 var log = require('./log')(module);
+var convertLocaleToLang = require('../translation').convertLocaleToLang;
 
 passport.serializeUser(function(user, done) {
-  if(user.provider){
-    done(null, user);
-  } else {
-    done(null, {type: 'local', id: user.id, displayName: user.displayName});
-  }
+  done(null, user._id);
 });
-passport.deserializeUser(function(obj, done) {
-  if(obj.type=='local'){
-    User.findById(obj.id, function(err, user) {
-      done(err, user);
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err,user){
+    err
+      ? done(err)
+      : done(null,user);
+  });
+});
+
+passport.use(new LocalStrategy(
+  {passReqToCallback: true},
+  function(req, username, password, done) {
+    var userData = {provider: 'local', 
+                    username: username, 
+                    displayName: username, 
+                    password: password, 
+                    addNew: req.body.createnew=="true"};
+    User.authorize(userData, function(err, user){
+      err
+        ? done(null, false, { user: user!==null && user!==undefined, message: err.message })
+        : done(null, user);
     });
-  } else {
-    done(null, obj);
   }
-});
+));
+
 passport.use(new FacebookStrategy({
     clientID: config.get("facebook_login:api_key"),
     clientSecret: config.get("facebook_login:api_secret"),
@@ -29,42 +41,16 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
-      User.findOne({ username: profile.id, provider: profile.provider }, function (err, user) {
-        if(!err && user) {
-          profile.email = user.email;
-          profile.language = user.language;
-          return done(null, profile);
-        } else {
-          user = new User({username: profile.id, provider: profile.provider, displayName: profile.displayName});
-          user.save(function(err, user){
-            return done(null, profile);
-          });
-        }
+      var userData = {provider: profile.provider,
+                      username: profile.id,
+                      displayName: profile.displayName,
+                      language: convertLocaleToLang(profile._json.locale),
+                      addNew: true};
+      User.authorize(userData, function(err, user){
+        err
+          ? done(null, false, { user: user!==null && user!==undefined, message: err.message })
+          : done(null, user);
       });
-    });
-  }
-));
-passport.use(new LocalStrategy(
-  {passReqToCallback: true},
-  function(req, username, password, done) {
-    User.findOne({ username: username }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        if(req.body.createnew=="true"){
-          user = new User({username: username, displayName: username, password: password});
-          user.save(function(err, user){
-             if(err) return done(err);
-             return done(null, user);
-          });
-        } else {
-          return done(null, false, { user: false, message: 'Incorrect username.' });
-        }
-      } else {
-        if (!user.checkPassword(password)) {
-          return done(null, false, { user: true, message: 'Incorrect password.' });
-        }
-        return done(null, user);
-      }
     });
   }
 ));
@@ -75,17 +61,15 @@ passport.use(new GoogleStrategy({
     callbackURL: config.get("google_login:callback_url")
   },
   function(accessToken, refreshToken, profile, done) {
-    User.findOne({ username: profile.id, provider: profile.provider }, function (err, user) {
-      if(!err && user) {
-        profile.email = user.email;
-        profile.language = user.language;
-        return done(null, profile);
-      } else {
-        user = new User({username: profile.id, provider: profile.provider, displayName: profile.displayName});
-        user.save(function(err, user){
-          return done(null, profile);
-        });
-      }
+    var userData = {provider: profile.provider,
+                    username: profile.id,
+                    displayName: profile.displayName,
+                    language: convertLocaleToLang(profile._json.locale),
+                    addNew: true};
+    User.authorize(userData, function(err, user){
+      err
+        ? done(null, false, { user: user!==null && user!==undefined, message: err.message })
+        : done(null, user);
     });
   }
 ));
@@ -111,14 +95,14 @@ module.exports.routes = function(app){
     passport.authenticate('local', function(err, user, info) {
       if (err) { return next(err); }
       if (!user) {
-        if(info.user)
-          return next(401);
-        else
-          return next(403);
+        return info.user
+          ? next(401)
+          : next(403);
       }
       req.logIn(user, function(err) {
-        if (err) { return next(err); }
-        res.send({});
+        err
+          ? next(err)
+          : res.send({});
       });
     })(req, res, next);
   });

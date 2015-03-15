@@ -1,14 +1,14 @@
 <tr>
-    <td class="name <%=currentmatchrow.users[0].type%>">
-        <%=currentmatchrow.users[0].displayName%></a>
-    </td>
-    <td class="name <%=currentmatchrow.users[1].type%>">
-        <%=currentmatchrow.users[1].displayName%></a>
-    </td>
-    <td class="duration">
-        <%=currentmatchrow.status=='waiting'?'':currentmatchrow.cellsLeft%>
-    </td>
-    <td class="score">
-        <%=currentmatchrow.status=='waiting'?currentmatchrow.status:(currentmatchrow.score[0] + ':' + currentmatchrow.score[1])%>
-    </td>
+  <td class="name <%=currentmatchrow.users[0].provider%>">
+    <%=currentmatchrow.users[0].displayName%></a>
+  </td>
+  <td class="name <%=currentmatchrow.users[1].provider%>">
+    <%=currentmatchrow.users[1].displayName%></a>
+  </td>
+  <td class="duration">
+    <%=currentmatchrow.status=='waiting'?'':currentmatchrow.cellsLeft%>
+  </td>
+  <td class="score">
+    <%=currentmatchrow.status=='waiting'?currentmatchrow.status:(currentmatchrow.score[0] + ':' + currentmatchrow.score[1])%>
+  </td>
 </tr>
