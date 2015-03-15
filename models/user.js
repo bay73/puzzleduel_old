@@ -12,6 +12,10 @@ var shorten = function(text){
 };
 
 var schema = new Schema({
+  provider: {
+    type: String,
+    default: 'local'
+  },
   username: {
     type: String,
     required: true,
@@ -38,10 +42,6 @@ var schema = new Schema({
     type: String,
     default: ''
   },
-  provider: {
-    type: String,
-    default: 'local'
-  },
   rating: {
     type: Number
   }
@@ -57,6 +57,7 @@ schema.methods.encryptPassword = function(password){
 schema.methods.checkPassword = function(password){
   return this.encryptPassword(password) === this.hashedPassword;
 };
+
 schema.virtual('password')
   .set(function(password){
     password = password.trim().toLowerCase();
@@ -68,29 +69,34 @@ schema.virtual('password')
     return this._plainPassword;
   });
 
-schema.statics.authorize = function(username, password, callback){
-  username = shorten(username);
-  if(username.length === 0 || password.trim().length === 0) {
+schema.statics.authorize = function(userData, callback){
+  var username = shorten(userData.username);
+  if(username.length === 0 || userData.provider.length === 0 || 
+    (userData.provider == 'local' && userData.password.trim().length === 0)) {
     callback(new AuthError());
   }
   var User = this;
   async.waterfall([
     function(callback){
-      User.findOne({username: username}, callback);
+      User.findOne({provider: userData.provider, username: username}, callback);
     },
     function(user, callback){
       if(user) {
-        if(user.checkPassword(password)){
+        if(user.provider != 'local' || user.checkPassword(userData.password)){
           callback(null, user);
         }else{
-          callback(new AuthError());
+          callback(new AuthError('Wrong password'), user);
         }
-      } else {
-        user = new User({username: username, displayName: username, password: password});
-        user.save(function(err){
-          if(err) return callback(err);
+      } else if (userData.addNew){
+        user = new User(userData);
+        user.save(function(err, user){
+          if(err) {
+            return callback(err, null);
+          }
           callback(null, user);
         });
+      } else {
+        callback(new AuthError('User not found'), null);
       }
     }
   ], callback);
