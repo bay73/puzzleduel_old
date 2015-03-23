@@ -1,88 +1,156 @@
 <% layout('/logopage.ejs') -%>
 <div class="topic">
-   <table class="ratingtable">
+  <h2><%= translate["Invitation header"]%></h2>
+  <p><%- translate["Invitation text"]%></p>
+  <% if(invitations.length > 0) {%>
+    <table class="ratingtable">
+      <tr>
+        <th class="date">
+          <%=translate["Invitation date"]%>
+        </th>
+        <th class="name">
+          <%=translate["Opponent"]%>
+        </th>
+        <th class="date">
+          <%=translate["Invitation time"]%>
+        </th>
+        <th class="name">
+          <%=translate["Invitation status"]%>
+        </th>
+      </tr>
       <%-partial('invitationrow',invitations)%>
-   </table>
-   <button class="button raised" id="addChallengeButton"><%= translate["AddChallenge"]%></button>
-   <div class="raised dialog" id="addChallengeDialog">
-      <form name="addChallengeForm" id="addChallengeForm" method="POST">
-         <input type="hidden" name="id" id="id">
-         <div class="group radio">
-            <input type="radio" name="type" value="byname" id="byname" checked><span><%-translate["RegisteredUser"]%></span><br>
-            <input type="radio" name="type" value="byemail" id="byemail"><span><%-translate["EmailUser"]%></span>
-         </div>
-         <div class="group">
-            <input type="text" name="opponentname" id="opponentname"  required>
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label><%= translate["Opponent"]%></label>
-         </div>
-         <div class="group">
-            <input type="date" name="calldate" id="calldate" required value="<%=tomorrow%>">
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label><%= translate["GameDate"]%></label>
-         </div>
-         <div class="group">
-            <input type="time" name="calltimefrom" id="calltimefrom" value="00:00"> - 
-            <input type="time" name="calltimeto" id="calltimeto" value="23:59">
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label><%= translate["GameTime"]%></label>
-         </div>
-         <span id="challengeError" class="error"></span>
-         <button class="button default" id="challengeOkButton" data-ripple-color="#89669b"><%= translate["OK button label"]%></button>
-         <button class="button" id="challengeCancelButton"><%= translate["Cancel button label"]%></button>
-      </form>
-   </div>
-   <script>
-      rippleButton($('#addChallengeButton'), function(){
-         showDialog($('#addChallengeDialog'),{
-            start: {
-               from: $('#addChallengeButton')
-            },
-            width: 310,
-            height: 290,
-         });
+    </table>
+    <span id="statusInvitationError" class="error"></span>
+  <% } %>
+  <button class="button raised" id="addInvitationButton"><%= translate["Add invitation"]%></button>
+  <div class="raised dialog" id="addInvitationDialog">
+    <form name="addinvitationForm" id="addinvitationForm" method="POST">
+      <input type="hidden" name="id" id="addid">
+      <div class="group radio">
+        <input type="radio" name="type" value="byname" id="byname" checked><span><%-translate["RegisteredUser"]%></span><br>
+        <input type="radio" name="type" value="byemail" id="byemail"><span><%-translate["EmailUser"]%></span>
+      </div>
+      <div class="group">
+        <input type="text" name="opponentname" id="addopponentname"  required>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label><%= translate["Opponent"]%></label>
+      </div>
+      <div class="group">
+        <input type="date" name="calldate" id="addcalldate" required value="<%=tomorrow%>">
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label><%= translate["Invitation date"]%></label>
+      </div>
+      <div class="group">
+        <input type="time" name="calltimefrom" id="addcalltimefrom" value="00:00"> - 
+        <input type="time" name="calltimeto" id="addcalltimeto" value="23:59">
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label><%= translate["Invitation time"]%></label>
+      </div>
+      <span id="addInvitationError" class="error"></span>
+      <button class="button default" id="addInvitationOkButton" data-ripple-color="#89669b"><%= translate["OK button label"]%></button>
+      <button class="button" id="addInvitationCancelButton"><%= translate["Cancel button label"]%></button>
+    </form>
+  </div>
+  <div class="raised dialog" id="changeInvitationDialog">
+    <form name="changeInvitationForm" id="changeInvitationForm" method="POST">
+      <input type="hidden" name="id" id="changeid">
+      <div class="group">
+        <span class="text" id="changeopponentname"></span>
+        <span class="bar"></span>
+        <label><%= translate["Opponent"]%></label>
+      </div>
+      <div class="group">
+        <span class="text" id="changecalldate"></span>
+        <span class="bar"></span>
+        <label><%= translate["Invitation date"]%></label>
+      </div>
+      <div class="group">
+        <input type="time" name="calltimefrom" id="changecalltimefrom" value="00:00"> - 
+        <input type="time" name="calltimeto" id="changecalltimeto" value="23:59">
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label><%= translate["Invitation time"]%></label>
+      </div>
+      <span id="changeInvitationError" class="error"></span>
+      <button class="button default" id="changeInvitationOkButton" data-ripple-color="#89669b"><%= translate["OK button label"]%></button>
+      <button class="button" id="changeInvitationCancelButton"><%= translate["Cancel button label"]%></button>
+    </form>
+  </div>
+  <script>
+    rippleButton($('#addInvitationButton'), function(){
+      $('#addInvitationError').text('');
+      showDialog($('#addInvitationDialog'),{
+        start: {
+          from: $('#addInvitationButton')
+        },
+        width: 310,
+        height: 290,
       });
-      rippleButton($('#challengeCancelButton'), function(){
-         closeDialog($('#addChallengeDialog'));
-      });
-      rippleButton($('#challengeOkButton'), function(){
-         $('#challengeError').text('');
-         var form = $('#addChallengeForm');
-         postData(form.serialize());
-      });
-      function postData(data){
-         $.ajax({
-            url: "/invitations",
-            method: "POST",
-            data: data,
-            complete: function(){
-            },
-            statusCode: {
-               200: function(){
-                  closeDialog($('#addChallengeDialog'));
-                  window.location.href="/<%=page%>";
-               },
-               500: function(){
-                  $('#challengeError').text('<%= translate["Wrong data!"]%>');
-               },
-               400: function(request){
-                  var message = request.responseJSON.message;
-                  if(!message){
-                     message = '<%= translate["Wrong data!"]%>';
-                  }
-                  $('#challengeError').text(message);
-               }
+    });
+    rippleButton($('#addInvitationCancelButton'), function(){
+      closeDialog($('#addInvitationDialog'));
+    });
+    rippleButton($('#addInvitationOkButton'), function(){
+      $('#addInvitationError').text('');
+      var form = $('#addInvitationForm');
+      postData(form.serialize(), 'add');
+    });
+    function postData(data, operation){
+      $.ajax({
+        url: "/invitations",
+        method: "POST",
+        data: data,
+        complete: function(){
+        },
+        statusCode: {
+          200: function(){
+            closeDialog($('#'+operation+'invitationDialog'));
+            window.location.href="/<%=page%>";
+          },
+          500: function(){
+            $('#'+operation+'InvitationError').text('<%= translate["Wrong data!"]%>');
+          },
+          400: function(request){
+            var message = request.responseJSON.message;
+            if(!message){
+              message = '<%= translate["Wrong data!"]%>';
             }
-         })
-      }
-      function decline(challengeId){
-         postData({id: challengeId, status: 'declined'});
-      }
-      function accept(challengeId){
-         postData({id: challengeId, status: 'accepted'});
-      }
-   </script>
+            $('#'+operation+'InvitationError').text(message);
+          }
+        }
+      })
+    }
+    function decline(invitationId){
+      postData({id: invitationId, status: 'declined'},'status');
+    }
+    function accept(invitationId){
+      postData({id: invitationId, status: 'accepted'},'status');
+    }
+    function change(invitationId){
+      $('#changeid').val(invitationId);
+      $('#changeopponentname').text($('#'+invitationId+'_name').text());
+      $('#changecalldate').text($('#'+invitationId+'_date').text());
+      $('#changecalltimefrom').val($('#'+invitationId+'_from').text());
+      $('#changecalltimeto').val($('#'+invitationId+'_to').text());
+      $('#changeInvitationError').text('');
+      showDialog($('#changeInvitationDialog'),{
+        start: {
+          from: $('#addInvitationButton')
+        },
+        width: 310,
+        height: 230,
+      });
+    }
+    rippleButton($('#changeInvitationCancelButton'), function(){
+      closeDialog($('#changeInvitationDialog'));
+    });
+    rippleButton($('#changeInvitationOkButton'), function(){
+      $('#changeInvitationError').text('');
+      var form = $('#changeInvitationForm');
+      postData(form.serialize(), 'change');
+    });
+  </script>
 </div>
