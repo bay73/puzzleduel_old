@@ -34,6 +34,11 @@
       "callback_url" : "http://puzzleduel-bay73.c9.io/oauth2callback"
    },
    "bots" : {
-      "waitingtime": 3
+      "waitingtime": 3000
+   },
+   "mail" : {
+      "service" : "gmail",
+      "user" : "puzzleduel.club@gmail.com",
+      "password" : ""
    }
 }

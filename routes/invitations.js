@@ -3,6 +3,7 @@ var User = require('../models/user').User;
 var async = require('async');
 var validator = require("email-validator");
 var HttpError = require('../scripts/error').HttpError;
+var sendInvitationMail = require('../scripts/sendmail').sendInvitationMail;
 
 var pad = function(n){
   if(n < 10) return '0' + n.toString();
@@ -46,7 +47,7 @@ exports.get = function(req, res, next){
       for(var i=0;i<invitations.length;i++)      {
         var d = invitations[i].startTime;
         var challengeDate = pad(d.getDate().toString()).concat('/', pad(d.getMonth()+1), '/', pad(d.getFullYear()));
-        var startTime = pad(invitations[i].startTime.getHours()).concat(':', pad(invitations[i].startTime.getMinutes()));
+        var startTime = pad(d.getHours()).concat(':', pad(d.getMinutes()));
         var endTime = pad(invitations[i].endTime.getHours()).concat(':', pad(invitations[i].endTime.getMinutes()));
         var opponent;
         var status = invitations[i].status;
@@ -118,6 +119,7 @@ var saveNew = function(req, res, next){
               return callback(new HttpError(400, 'You cannot call youself!'));
             }
             opponent.id = data._id;
+            opponent.mail = data.email;
             return callback(null, opponent);
           } else {
             return callback(new HttpError(400, 'Incorrect user name!'));
@@ -132,11 +134,17 @@ var saveNew = function(req, res, next){
         startTime: calltimefrom, 
         endTime: calltimeto, 
         status: 'new'});
-      invitation.save(function(err){
+      invitation.save(function(err, data){
         return err
           ? callback(err)
-          : res.sendStatus(200);
+          : callback(null, opponent, data);
       });    
+    },
+    function (opponent, invitation){
+      if(opponent.mail){
+        sendInvitationMail(req.user.displayName, opponent.mail, invitation);
+      }
+      res.sendStatus(200);
     }], next);
 };
 
@@ -196,7 +204,6 @@ function changeOut(invitation, newData, req, res, next){
 }
 
 function changeIn(invitation, newData, req, res, next){
-  console.log('changeIn', invitation.status);
   if(invitation.status == 'new'){
     if(newData.status == 'declined'){
       invitation.status = 'declined';
@@ -234,7 +241,6 @@ function reverse(invitation, newData, req, res, next){
 }
 
 function saveDate(invitation, newData, req, res, next){
-  console.log('saveDate', newData);
   if(!checkTimes(newData.startTime, newData.endTime)){
     return next(new HttpError(400, 'Wrong date or time!'));
   }
@@ -263,7 +269,6 @@ function buildDateTime(date, time){
 
 exports.post = function(req, res, next){
   if(!req.user) next(403);
-  console.log(req.body.id);
   return req.body.id
     ? change(req, res, next)
     : saveNew(req, res, next);
