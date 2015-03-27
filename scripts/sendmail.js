@@ -14,18 +14,26 @@ var pad = function(n){
   else return n.toString();
 };
 
-var sendInvitationMail = function(from, to, invitation){
+var sendInvitationMail = function(from, to, invitation, message){
   var d = invitation.startTime;
   var challengeDate = pad(d.getDate().toString()).concat('/', pad(d.getMonth()+1), '/', pad(d.getFullYear()));
   var startTime = pad(d.getHours()).concat(':', pad(d.getMinutes()));
+  var text = 'On ' + challengeDate + ' at ' + startTime + ' ' + from +
+      ' invites you to play puzzle duel.'+
+      ' Go to ' + config.get('mail:url') + 'invitations?id=' + invitation._id +
+      ' to accept or decline the invitation.';
+  if(message) {
+    text = message + '.' +
+      ' Invitation is valid on ' + challengeDate + ' at ' + startTime + '.' +
+      ' Go to ' + config.get('mail:url') + 'invitations?id=' + invitation._id +
+      ' to accept or decline the invitation.';
+  }
   transporter.sendMail({
     from: config.get('mail:user'),
     to: to,
     subject: from + ' invites you to play puzzle duel',
-    text: 'On ' + challengeDate + ' at ' + startTime + ' ' + from + 
-      ' invites you to play puzzle duel. Go to ' + config.get('mail:url') + 'invitations?id=' + invitation._id + ' to accept or decline the invitation.'
+    text: text
   }, function(){
-    console.log(arguments);
   });
 };
 

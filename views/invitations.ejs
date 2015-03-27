@@ -49,6 +49,12 @@
         <span class="bar"></span>
         <label><%= translate["Invitation time"]%></label>
       </div>
+      <div class="group">
+        <input type="text" name="message" id="addmessage"  required>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label><%= translate["InvitationMessage"]%></label>
+      </div>
       <span id="addInvitationError" class="error"></span>
       <button class="button default" id="addInvitationOkButton" data-ripple-color="#89669b"><%= translate["OK button label"]%></button>
       <button class="button" id="addInvitationCancelButton"><%= translate["Cancel button label"]%></button>
@@ -87,7 +93,7 @@
           from: $('#addInvitationButton')
         },
         width: 310,
-        height: 290,
+        height: 340,
       });
     });
     rippleButton($('#addInvitationCancelButton'), function(){

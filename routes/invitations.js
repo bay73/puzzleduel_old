@@ -129,6 +129,7 @@ var saveNew = function(req, res, next){
   var calldate = new Date(req.body.calldate);
   var calltimefrom = buildDateTime(calldate, req.body.calltimefrom);
   var calltimeto = buildDateTime(calldate, req.body.calltimeto);
+  var message = req.body.message;
   async.waterfall([
     function(callback){
       return checkTimes(calltimefrom, calltimeto, callback)
@@ -175,7 +176,7 @@ var saveNew = function(req, res, next){
     },
     function (opponent, invitation){
       if(opponent.mail){
-        sendInvitationMail(req.user.displayName, opponent.mail, invitation);
+        sendInvitationMail(req.user.displayName, opponent.mail, invitation, message);
       }
       res.sendStatus(200);
     }], next);
