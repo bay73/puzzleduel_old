@@ -85,10 +85,12 @@ module.exports.init = function(app){
 
 module.exports.routes = function(app){
   app.get('/auth/facebook', passport.authenticate('facebook'));
-  app.get('/auth/facebook/callback',
+  app.get('/facebookcallback',
     passport.authenticate('facebook'),
     function(req, res) {
-      res.redirect('/');
+      var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/';
+      delete req.session.redirect_to;
+      res.redirect(redirect_to);
     });
     
   app.post('/login',function(req, res, next) {
@@ -114,7 +116,9 @@ module.exports.routes = function(app){
   app.get('/oauth2callback',
     passport.authenticate('google'),
     function(req, res) {
-      res.redirect('/');
+      var redirect_to = req.session.redirect_to ? req.session.redirect_to : '/';
+      delete req.session.redirect_to;
+      res.redirect(redirect_to);
     });
   app.post('/logout',function(req, res, next){
     req.logout();

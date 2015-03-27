@@ -152,5 +152,8 @@
       var form = $('#changeInvitationForm');
       postData(form.serialize(), 'change');
     });
+    <% if(showLogin) { %>
+    loginDialog();
+    <% } %>
   </script>
 </div>

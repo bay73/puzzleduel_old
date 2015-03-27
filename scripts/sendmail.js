@@ -23,7 +23,7 @@ var sendInvitationMail = function(from, to, invitation){
     to: to,
     subject: from + ' invites you to play puzzle duel',
     text: 'On ' + challengeDate + ' at ' + startTime + ' ' + from + 
-      ' invites you to play puzzle duel. Go to https://puzzleduel.herokuapp.com/invitations?id=' + invitation._id + ' to accept or decline the invitation.'
+      ' invites you to play puzzle duel. Go to ' + config.get('mail:url') + 'invitations?id=' + invitation._id + ' to accept or decline the invitation.'
   }, function(){
     console.log(arguments);
   });

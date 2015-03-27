@@ -26,7 +26,7 @@
    "facebook_login": {
       "api_key": "788712584538109",
       "api_secret": "",
-      "callback_url" : "http://puzzleduel-bay73.c9.io/auth/facebook/callback"
+      "callback_url" : "http://puzzleduel-bay73.c9.io/facebookcallback"
    },
    "google_login" : {
       "client_id": "1046633030815-8fb7tclfjk1iavrtdupommk2rq95ishj.apps.googleusercontent.com",
@@ -39,6 +39,7 @@
    "mail" : {
       "service" : "gmail",
       "user" : "puzzleduel.club@gmail.com",
-      "password" : ""
+      "password" : "",
+      "url": "https://puzzleduel-bay73.c9.io/"
    }
 }

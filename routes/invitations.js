@@ -11,9 +11,41 @@ var pad = function(n){
 };
 
 exports.get = function(req, res, next){
-  if(!req.user){
-    return next(403);
+  var id = req.query ? req.query.id : null;
+  if(req.user) {
+    if(id){
+      Invitation.findOne({_id: id}, function(err, invitation){
+        if(err) {
+          return next(err);
+        }
+        if(invitation && (invitation.opponent == null || invitation.opponent.equals(req.user._id))) {
+          invitation.opponent = req.user._id;
+          invitation.status = 'accepted';
+          return invitation.save({}, function(err){
+            return err ? next(err) : renderInvitations(req, res, next);
+          });
+        }
+        return renderInvitations(req, res, next);
+      });
+    } else {
+      return renderInvitations(req, res, next);
+    }
+  } else {
+    var d = new Date();
+    d.setDate(d.getDate()+1);
+    var tomorrow = d.getFullYear()+'-'+pad((d.getMonth()+1))+'-'+pad(d.getDate());
+    req.session.redirect_to = id ? 'invitations?id='+id : 'invitations';
+    res.render('invitations', {
+      languages: require('../translation').languages(),
+      page: id ? 'invitations?id='+id : 'invitations',
+      invitations: [],
+      tomorrow: tomorrow,
+      showLogin: true
+    });
   }
+};
+
+function renderInvitations(req, res, next) {
   async.waterfall([
     function(callback){
       User
@@ -84,11 +116,12 @@ exports.get = function(req, res, next){
         languages: require('../translation').languages(),
         page: 'invitations',
         invitations: invitations,
-        tomorrow: tomorrow
+        tomorrow: tomorrow,
+        showLogin: false
       });
     }],
     next);
-};
+}
 
 var saveNew = function(req, res, next){
   var type = req.body.type;
