@@ -1,3 +1,4 @@
 exports.get = function(req, res, next){
-   res.render('sudoku', { languages: require('../translation').languages(), page: 'sudoku'});
+  var invitation = req.query ? req.query.invitation : null;
+  res.render('sudoku', { languages: require('../translation').languages(), page: 'sudoku', invitation: invitation});
 };

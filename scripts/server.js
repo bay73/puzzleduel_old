@@ -15,19 +15,27 @@ var SudokuServer = function(socket){
   socket.on('choose',function(data){
     socket.name = data.name;
     socket.size = data.size;
+    socket.invitation = data.invitation;
     socket.emit('wait',{});
     var rival;
     if(queue.length > 0){
-      rival = queue.splice(0,1)[0];
+      for(var i=0;i<queue.length;i++){
+        if(queue[i].invitation==socket.invitation ||
+          queue[i].invitation==null && socket.invitation==null) {
+          rival = queue.splice(i,1)[0];
+        }
+      }
     }
     if(!rival){
       queue.push(socket);
-      var interval = config.get("bots:waitingtime");
-      interval += Math.floor(Math.random()*6*interval);
-      socket.waitTimeout = setTimeout(function(){
-        var botSocket = new BaySocket(BayBotBuilder(data.size));
-        SudokuServer(botSocket);
-      },interval);
+      if( !socket.invitation) {
+        var interval = config.get("bots:waitingtime");
+        interval += Math.floor(Math.random()*6*interval);
+        socket.waitTimeout = setTimeout(function(){
+          var botSocket = new BaySocket(BayBotBuilder(data.size));
+          SudokuServer(botSocket);
+        },interval);
+      }
     } else {
       clearTimeout(rival.waitTimeout);
       clearTimeout(socket.waitTimeout);
@@ -646,12 +654,14 @@ var getUserData = function(socket){
     return {
       id: socket.user._id,
       provider: socket.user.provider,
-      displayName: socket.user.displayName
+      displayName: socket.user.displayName,
+      invitation: socket.invitation
     };
   }else{
     return {
       provider: 'anonym',
-      displayName: socket.name
+      displayName: socket.name,
+      invitation: socket.invitation
     };
   }
 };
