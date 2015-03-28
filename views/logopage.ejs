@@ -24,6 +24,10 @@
           <a class="short" href="/account"><img src="images/settings.png"></a>
           <a class="long" href="/account"><%=translate["Settings"]%></a>
         <% } %>
+        <% if(page.substring(0,11)!='invitations') { %>
+          <a class="short" href="/invitations"><img src="images/invitations.png"></a>
+          <a class="long" href="/invitations"><%=translate["Invitations"]%></a>
+        <% } %>
       </div>
       <% if (!user) { %>
         <div class="langchooser">

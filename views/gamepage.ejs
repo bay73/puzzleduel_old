@@ -36,6 +36,8 @@
       <div class="navigator">
         <a class="mainpage short" href="#"><img src="images/mainpage.png"></a>
         <a class="mainpage long" href="#"><%=translate["MainPage"]%></a>
+        <a class="invitations short" href="#"><img src="images/invitations.png"></a>
+        <a class="invitations long" href="#"><%=translate["Invitations"]%></a>
         <a class="help short" href="#"><img src="images/help.png"></a>
         <a class="help long" href="#"><%=translate["Rules"]%></a>
       </div>
@@ -54,22 +56,28 @@
       <button class="button default" id="confirmationCancel"><%= translate["Cancel button label"]%></button>
     </div>
     <script>
-       $('a.mainpage').click(function(){
-           if($('#confirmationDialog').css('display')=='none'){
-              showDialog($('#confirmationDialog'),{
-                 start: {
-                    left: 1,
-                    width: 1,
-                    height: 200
-                 },
-                 height: 120,
-                 width: 310
-              });
-           }
-       });
-       rippleButton($('#confirmationCancel'), function(){closeDialog($('#confirmationDialog'));});
-       rippleButton($('#confirmationOk'), function(){location.href = '/';});
-       $('a.help').click(function(){puzzle.showRules();});
+      function confirmation(link){
+        if($('#confirmationDialog').css('display')=='none'){
+          showDialog($('#confirmationDialog'),{
+            start: {
+              left: 1,
+              width: 1,
+              height: 200
+            },
+            height: 120,
+            width: 310
+          });
+        }
+        rippleButton($('#confirmationCancel'), function(){closeDialog($('#confirmationDialog'));});
+        rippleButton($('#confirmationOk'), function(){location.href = link;});
+      }
+      $('a.mainpage').click(function(){
+        confirmation('/');
+      });
+      $('a.invitations').click(function(){
+        confirmation('/invitations');
+      });
+      $('a.help').click(function(){puzzle.showRules();});
     </script>
     <div class="container raised">
        <%-body -%>
