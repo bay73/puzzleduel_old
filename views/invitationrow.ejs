@@ -11,14 +11,21 @@
   <td class="name">
     <div class="dropdown"><%=translate[invitationrow.status]%>
       <ul class="raised">
-        <li onclick="change('<%=invitationrow.id%>')"><%=translate["Change invitation"]%></li>
+        <% if(invitationrow.status!='Invitation current'){ %>
+          <li onclick="change('<%=invitationrow.id%>')"><%=translate["Change invitation"]%></li>
+        <% }%>
         <% if(invitationrow.status=='Invitation in'){ %>
           <li onclick="accept('<%=invitationrow.id%>')"><%=translate["Accept invitation"]%></li>
         <% }%>
-        <% if(invitationrow.status!='Invitation declined'){ %>
+        <% if(invitationrow.status!='Invitation declined' && invitationrow.status!='Invitation current'){ %>
           <li onclick="decline('<%=invitationrow.id%>')"><%=translate["Decline invitation"]%></li>
         <% }%>
       </ul> 
     </div>
+  </td>
+  <td class="name">
+    <% if(invitationrow.status=='Invitation current'){ %>
+      <a href="/sudokuduel?invitation=<%=invitationrow.id%>"><%=translate["Start duel button label"]%></a>
+    <% } %>
   </td>
 </tr>

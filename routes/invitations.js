@@ -77,6 +77,7 @@ function renderInvitations(req, res, next) {
     function(user, users, invitations, callback){
       var data = [];
       for(var i=0;i<invitations.length;i++)      {
+        var now = new Date();
         var d = invitations[i].startTime;
         var challengeDate = pad(d.getDate().toString()).concat('/', pad(d.getMonth()+1), '/', pad(d.getFullYear()));
         var startTime = pad(d.getHours()).concat(':', pad(d.getMinutes()));
@@ -84,7 +85,11 @@ function renderInvitations(req, res, next) {
         var opponent;
         var status = invitations[i].status;
         if(status=='accepted'){
-          status = 'Invitation accepted';
+          if(now > d){
+            status = 'Invitation current';
+          } else {
+            status = 'Invitation accepted';
+          }
         }
         if(status=='declined'){
           status = 'Invitation declined';
