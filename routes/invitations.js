@@ -205,9 +205,7 @@ var change = function(req, res, next){
   var newData = {status : req.body.status};
   var calltimefrom = req.body.calltimefrom;
   var calltimeto = req.body.calltimeto;
-  console.log('change');
   Invitation.findOne({_id: id}, function(err, invitation){
-    console.log('findOne',arguments);
     if(err) {
       return next(err);
     }
@@ -216,7 +214,6 @@ var change = function(req, res, next){
     }
     newData.startTime = calltimefrom ? buildDateTime(invitation.startTime, calltimefrom) : invitation.startTime;
     newData.endTime = calltimeto ? buildDateTime(invitation.startTime, calltimeto) : invitation.endTime;
-    console.log('found!!!');
     if(invitation.user.equals(req.user._id)){
       return changeOut(invitation, newData, req, res, next);
     } else if (invitation.opponent == null){
@@ -304,9 +301,7 @@ function saveDate(invitation, newData, req, res, next){
 }
 
 function save(invitation, req, res, next){
-  console.log('save!!!');
   return invitation.save(function(err){
-    console.log(arguments);
     return err ? next(err) : res.sendStatus(200);
   });
 }
@@ -324,7 +319,6 @@ function buildDateTime(date, time){
 }
 
 exports.post = function(req, res, next){
-  console.log('POST',req.body.id);
   if(!req.user || !req.user._id) next(403);
   return req.body.id
     ? change(req, res, next)
