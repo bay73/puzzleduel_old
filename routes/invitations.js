@@ -142,6 +142,11 @@ var saveNew = function(req, res, next){
   var message = req.body.message;
   async.waterfall([
     function(callback){
+      return (req.user&&req.user._id)
+        ? callback(null)
+        : callback(new HttpError(400, 'You are not registered!'));
+    },
+    function(callback){
       return checkTimes(calltimefrom, calltimeto, callback)
         ? callback(null)
         : callback(new HttpError(400, 'Wrong date or time!'));
@@ -193,6 +198,9 @@ var saveNew = function(req, res, next){
 };
 
 var change = function(req, res, next){
+  if(!req.user || !req.user._id){
+    return next(new HttpError(400, 'You are not registered!'));
+  }
   var id = req.body.id;
   var newData = {status : req.body.status};
   var calltimefrom = req.body.calltimefrom;
@@ -312,7 +320,7 @@ function buildDateTime(date, time){
 }
 
 exports.post = function(req, res, next){
-  if(!req.user) next(403);
+  if(!req.user || !req.user._id) next(403);
   return req.body.id
     ? change(req, res, next)
     : saveNew(req, res, next);
