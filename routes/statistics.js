@@ -133,7 +133,7 @@ exports.get = function(req, res, next){
       for(var type in typeMap){
         types.push({type: type, count: typeMap[type]});
       }
-      res.render('statistics', { languages: require('../translation').languages(), page: 'statistics', users: users, types: types });
+      res.render('statistics', { languages: require('../translation').languages(), page: 'statistics', users: users, types: types, invitationCount: 0 });
     }
   ], next);
 };

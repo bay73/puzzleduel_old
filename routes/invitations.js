@@ -40,7 +40,8 @@ exports.get = function(req, res, next){
       page: id ? 'invitations?id='+id : 'invitations',
       invitations: [],
       tomorrow: tomorrow,
-      showLogin: true
+      showLogin: true,
+      invitationCount: 0
     });
   }
 };
@@ -122,7 +123,8 @@ function renderInvitations(req, res, next) {
         page: 'invitations',
         invitations: invitations,
         tomorrow: tomorrow,
-        showLogin: false
+        showLogin: false,
+        invitationCount: 0
       });
     }],
     next);

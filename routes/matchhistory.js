@@ -60,7 +60,7 @@ exports.get = function(req, res, next){
       callback(null, data);
     },
     function(matches, callback){
-      res.render('matchhistory', { languages: require('../translation').languages(), page: 'matchhistory', matches: matches });
+      res.render('matchhistory', { languages: require('../translation').languages(), page: 'matchhistory', matches: matches, invitationCount: 0 });
     }
   ], next);
 };
