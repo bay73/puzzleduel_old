@@ -302,7 +302,7 @@ function saveDate(invitation, newData, req, res, next){
 }
 
 function save(invitation, req, res, next){
-  return invitation.save({}, function(err){
+  return invitation.save(function(err){
     return err ? next(err) : res.sendStatus(200);
   });
 }
