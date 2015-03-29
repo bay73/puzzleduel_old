@@ -18,13 +18,13 @@ var sendInvitationMail = function(from, to, invitation, message){
   var d = invitation.startTime;
   var challengeDate = pad(d.getDate().toString()).concat('/', pad(d.getMonth()+1), '/', pad(d.getFullYear()));
   var startTime = pad(d.getHours()).concat(':', pad(d.getMinutes()));
-  var text = 'On ' + challengeDate + ' at ' + startTime + ' ' + from +
+  var text = 'On ' + challengeDate + ' at ' + startTime + '(GMT) ' + from +
       ' invites you to play puzzle duel.'+
       ' Go to ' + config.get('mail:url') + 'invitations?id=' + invitation._id +
       ' to accept or decline the invitation.';
   if(message) {
     text = message + '.' +
-      ' Invitation is valid on ' + challengeDate + ' at ' + startTime + '.' +
+      ' Invitation is valid on ' + challengeDate + ' at ' + startTime + '(GMT).' +
       ' Go to ' + config.get('mail:url') + 'invitations?id=' + invitation._id +
       ' to accept or decline the invitation.';
   }
