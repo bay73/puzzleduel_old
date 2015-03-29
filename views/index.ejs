@@ -8,13 +8,23 @@
   </script>
 </div>
 <div class="topic small">
+  <h4><%= translate["Invitations"]%></h4>
+  <p>
+    <%- translate["InvitationAd"]%>
+  </p>
+  <button class="raised button start blue" id="addInvitation"><%= translate["Add invitation"]%></button>
+  <script>
+    rippleButton($('#addInvitation'), function(){window.location.href="/invitations?name=_"});
+  </script>
+</div>
+<div class="topic small">
   <h4><%= translate["Rating"]%></h2>
   <table class="ratingtable">
     <%-partial('ratingrow',ratings)%>
     <tr><td class="link" colspan=10><a href="/rating"><%= translate["FullRating"]%></a></td></tr>
   </table>
 </div>
-<div class="topic small">
+<div class="topic">
   <h4><%= translate["Rules"]%></h4>
   <p>
     <%- translate["RulesText"]%>

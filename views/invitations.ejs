@@ -165,7 +165,11 @@
     loginDialog();
     <% } %>
     <% if(name) { %>
-    $('#addopponentname').val("<%=name%>");
+      <% if(name=='_') { %>
+        $('#byemail').prop('checked', true);
+      <% } else {%>
+        $('#addopponentname').val("<%=name%>");
+      <% } %>
     showAddDialog();
     <% } %>
   </script>

@@ -72,6 +72,7 @@
   "Invitation text": "You can call  any registered user or your friend for duel. To invite somebody press 'New call' button at the bottom of the page. After call you have to wait while your opponent accepts it. To accept a call you should press link 'Accept' which appears if you point to the invitation's status. You can change the specified time if it is not suitable for you. And you can decline invitations if you don't want to play with this player. When time comes press the start link near the selected invitation.",
   "InvitationMessage" : "Message to invitee",
   "Invitations": "Invitations",
+  "InvitationAd": "You can invite some player for duel if you want to play with him at the particular time. If this is registered player then just click at his name in the rating table. If you want to invite friend who is not yet registered then click to the button below and enter the email of invitee.<br>You should be registered to have posibility of invitations. You could also specify your email to obtain notifications about invitations.<br>After sending of invitations wait while your opponent accepts it and play.",
   "Invite for duel": "Invite for duel",
   "EOF": 0
 }
