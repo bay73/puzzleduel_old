@@ -1,6 +1,18 @@
 <tr <%=(user&&ratingrow._id.equals(user._id)?'class=currentuser':'')%> >
   <td class="name">
-    <%=ratingrow.displayName%>
+    <% if(user) { %>
+      <% if(ratingrow._id.equals(user._id)){ %>
+        <%=ratingrow.displayName%>
+      <% } else { %>
+        <div class="dropdown"><%=ratingrow.displayName%>
+          <ul class="raised">
+            <li><a href="invitations?name=<%=encodeURIComponent(ratingrow.displayName) %>"><%=translate["Invite for duel"]%></li>
+          </ul>
+        </div>
+      <% } %>
+    <% } else { %>
+      <%=ratingrow.displayName%>
+    <% } %>
   </td>
   <td class="value">
     <%=Math.round(ratingrow.rating)%>

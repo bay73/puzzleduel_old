@@ -86,7 +86,7 @@
     </form>
   </div>
   <script>
-    rippleButton($('#addInvitationButton'), function(){
+    function showAddDialog(){
       $('#addInvitationError').text('');
       showDialog($('#addInvitationDialog'),{
         start: {
@@ -95,6 +95,9 @@
         width: 310,
         height: 340,
       });
+    }
+    rippleButton($('#addInvitationButton'), function(){
+      showAddDialog();
     });
     rippleButton($('#addInvitationCancelButton'), function(){
       closeDialog($('#addInvitationDialog'));
@@ -160,6 +163,10 @@
     });
     <% if(showLogin) { %>
     loginDialog();
+    <% } %>
+    <% if(name) { %>
+    $('#addopponentname').val("<%=name%>");
+    showAddDialog();
     <% } %>
   </script>
 </div>

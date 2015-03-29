@@ -41,7 +41,8 @@ exports.get = function(req, res, next){
       invitations: [],
       tomorrow: tomorrow,
       showLogin: true,
-      invitationCount: 0
+      invitationCount: 0,
+      name: null
     });
   }
 };
@@ -115,6 +116,7 @@ function renderInvitations(req, res, next) {
       callback(null, data);
     },
     function(invitations){
+      var name = req.query ? req.query.name : null;
       var d = new Date();
       d.setDate(d.getDate()+1);
       var tomorrow = d.getFullYear()+'-'+pad((d.getMonth()+1))+'-'+pad(d.getDate());
@@ -124,7 +126,8 @@ function renderInvitations(req, res, next) {
         invitations: invitations,
         tomorrow: tomorrow,
         showLogin: false,
-        invitationCount: 0
+        invitationCount: 0,
+        name: name
       });
     }],
     next);

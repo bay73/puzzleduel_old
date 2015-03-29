@@ -38,7 +38,7 @@
   "FullRating": "Full table",
   "News": "News",
   "MainPage": "Main page",
-  "Rating text": "Registered users participate in this rating and can see its history and <a href='/matchhistory'>the log of their matches</a>.<br>Rating recalculates after each match. Rating change depends on match result and the difference between players' ratings. A victory over stronger opponent is more valuable.",
+  "Rating text": "Registered users participate in this rating and can see its history and <a href='/matchhistory'>the log of their matches</a>.<br>Rating recalculates after each match. Rating change depends on match result and the difference between players' ratings. A victory over stronger opponent is more valuable.<br>You can invite any player for duel - just click on his name in the list.",
   "PlayedMatches": "Finished games",
   "PlayingMatches": "Playing games",
   "Opponent": "Opponent",
@@ -72,5 +72,6 @@
   "Invitation text": "You can call  any registered user or your friend for duel. To invite somebody press 'New call' button at the bottom of the page. After call you have to wait while your opponent accepts it. To accept a call you should press link 'Accept' which appears if you point to the invitation's status. You can change the specified time if it is not suitable for you. And you can decline invitations if you don't want to play with this player. When time comes press the start link near the selected invitation.",
   "InvitationMessage" : "Message to invitee",
   "Invitations": "Invitations",
+  "Invite for duel": "Invite for duel",
   "EOF": 0
 }
