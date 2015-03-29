@@ -20,7 +20,7 @@ exports.get = function(req, res, next){
         convertAllMatch(req, res, next);
       }
     } else {
-      res.render('admin', { languages: require('../translation').languages(), page: 'admin', data: [] });
+      res.render('admin', { languages: require('../translation').languages(), page: 'admin', data: [], invitationCount: 0 });
     }
   } else {
     next(404);
@@ -40,7 +40,7 @@ var showData = function(query, req, res, next){
       if(err){
         return next(err);
       } 
-      res.render('admin', { languages: require('../translation').languages(), page: 'admin', data: stringify(data) });
+      res.render('admin', { languages: require('../translation').languages(), page: 'admin', data: stringify(data), invitationCount: 0 });
     });
 };
 

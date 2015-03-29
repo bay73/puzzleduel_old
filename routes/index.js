@@ -14,7 +14,7 @@ module.exports = function(app){
    app.get('/monitor', require('./monitor').get);
 
    app.get('/policy', function(req, res, next) {
-      res.render('policy', { languages: require('../translation').languages() });
+      res.render('policy', { languages: require('../translation').languages(), page: 'policy', invitationCount: 0 });
    });
 
    app.post('/info', require('./info').post);

@@ -1,5 +1,8 @@
 <tr>
   <td class="name <%=currentqueuerow.provider%>">
-    <%=currentqueuerow.displayName%></a>
+    <%=currentqueuerow.displayName%>
+    <% if(currentqueuerow.invitation) { %>
+      (<%=currentqueuerow.invitation%>)
+    <% } %>
   </td>
 </tr>

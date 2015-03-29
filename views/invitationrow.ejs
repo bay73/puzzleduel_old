@@ -1,24 +1,31 @@
 <tr class="<%=(invitationrow.status=='accepted'?'green':(invitationrow.status=='in'?'red':''))%>">
-    <td class="date">
-        <%=invitationrow.date%>
-    </td>
-    <td class="name">
-        <%=invitationrow.opponent%>
-    </td>
-    <td class="date">
-        <%=invitationrow.from%> - <%=invitationrow.to%>
-    </td>
-    <td class="name">
-        <div class="dropdown"><%=translate[invitationrow.status]%>
-            <ul class="raised">
-                <% if(invitationrow.status=='in'){ %>
-                <li onclick="accept('<%=invitationrow.id%>')">Accept</li>
-                <% }%>
-                <% if(invitationrow.status!='declined'){ %>
-                <li onclick="decline('<%=invitationrow.id%>')">Decline</li>
-                <% }%>
-                <li onclick="change('<%=invitationrow.id%>')">Change</li>
-            </ul>    
-        </div>    
-    </td>
+  <td class="date" id="<%=invitationrow.id%>_date">
+    <%=invitationrow.date%>
+  </td>
+  <td class="name" id="<%=invitationrow.id%>_name">
+    <%=invitationrow.opponent%>
+  </td>
+  <td class="date">
+    <span id="<%=invitationrow.id%>_from"><%=invitationrow.from%></span> - <span id="<%=invitationrow.id%>_to"><%=invitationrow.to%></span>
+  </td>
+  <td class="name">
+    <div class="dropdown"><%=translate[invitationrow.status]%>
+      <ul class="raised">
+        <% if(invitationrow.status!='Invitation current'){ %>
+          <li onclick="change('<%=invitationrow.id%>')"><%=translate["Change invitation"]%></li>
+        <% }%>
+        <% if(invitationrow.status=='Invitation in'){ %>
+          <li onclick="accept('<%=invitationrow.id%>')"><%=translate["Accept invitation"]%></li>
+        <% }%>
+        <% if(invitationrow.status!='Invitation declined' && invitationrow.status!='Invitation current'){ %>
+          <li onclick="decline('<%=invitationrow.id%>')"><%=translate["Decline invitation"]%></li>
+        <% }%>
+      </ul> 
+    </div>
+  </td>
+  <td class="name">
+    <% if(invitationrow.status=='Invitation current'){ %>
+      <a href="/sudokuduel?invitation=<%=invitationrow.id%>"><%=translate["Start duel button label"]%></a>
+    <% } %>
+  </td>
 </tr>

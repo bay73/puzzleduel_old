@@ -48,6 +48,7 @@ var schema = new Schema({
 });
 
 schema.index({ username: 1, provider: 1 }, { unique: true });
+schema.index({ displayName: 1}, { unique: false });
 
 schema.methods.encryptPassword = function(password){
   password = password.trim().toLowerCase();
@@ -102,15 +103,6 @@ schema.statics.authorize = function(userData, callback){
   ], callback);
 };
 
-schema.statics.getUser = function(userData, callback){
-  var User = this;
-  if(userData.provider == 'local'){
-    User.findOne({_id: userData._id}, callback);
-  } else {
-    User.findOne({username: userData.id, provider: userData.provider}, callback);
-  }
-};
-
 schema.pre('save', function (next) {
   if(!this.displayName) {
     this.displayName = this.username;
@@ -132,7 +124,6 @@ schema.pre('save', function (next) {
   next(err);
 });
 
-exports.User = mongoose.model('User', schema);
 
 util.inherits(AuthError, Error);
 function AuthError(message) {
@@ -143,4 +134,5 @@ function AuthError(message) {
 }
 AuthError.prototype.name = 'AuthError';
 
+exports.User = mongoose.model('User', schema);
 exports.AuthError = AuthError;
