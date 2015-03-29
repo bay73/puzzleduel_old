@@ -305,7 +305,7 @@ function saveDate(invitation, newData, req, res, next){
 
 function save(invitation, req, res, next){
   console.log('save!!!');
-  return invitation.save({}, function(err){
+  return invitation.save(function(err){
     console.log(arguments);
     return err ? next(err) : res.sendStatus(200);
   });
