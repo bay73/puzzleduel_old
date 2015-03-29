@@ -1,5 +1,4 @@
 exports.post = function(req, res, next){
-  console.log(req.body);
   var displayName = req.body.displayName;
   var language = req.body.language;
   var email = req.body.email;
