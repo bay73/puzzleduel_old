@@ -21,7 +21,7 @@ exports.get = function(req, res, next){
         if(invitation && (invitation.opponent == null || invitation.opponent.equals(req.user._id))) {
           invitation.opponent = req.user._id;
           invitation.status = 'accepted';
-          return invitation.save({}, function(err){
+          return invitation.save(function(err){
             return err ? next(err) : renderInvitations(req, res, next);
           });
         }
