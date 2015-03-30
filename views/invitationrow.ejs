@@ -27,5 +27,8 @@
     <% if(invitationrow.status=='Invitation current'){ %>
       <a href="/sudokuduel?invitation=<%=invitationrow.id%>"><%=translate["Start duel button label"]%></a>
     <% } %>
+    <% if(invitationrow.timer) { %>
+      <span class="timer" inv="<%=invitationrow.id%>" data="<%=invitationrow.timer%>">
+    <% } %>
   </td>
 </tr>

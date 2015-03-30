@@ -172,5 +172,26 @@
       <% } %>
     showAddDialog();
     <% } %>
+    function pad(n){
+      if(n < 10) return '0' + n.toString();
+      else return n.toString();
+    };
+    function decreaseCounters(){
+      $('.timer').each(function(index){
+        var timer = $(this).attr('data');
+        timer = timer - 1000;
+        if(timer > 0){
+          var hours = Math.floor(timer/3600000);
+          var minutes = Math.floor(timer/60000);
+          var seconds = Math.floor(timer/1000) - minutes * 60;
+          minutes -= hours * 60;
+          $(this).attr('data', timer);
+          $(this).text(pad(hours) + ':' + pad(minutes) + ':' + pad(seconds));
+        } else {
+          $(this).html('<a href="/sudokuduel?invitation='+$(this).attr('inv')+'"><%=translate["Start duel button label"]%></a>');
+        }
+      });
+    }
+    setInterval(decreaseCounters, 1000);
   </script>
 </div>

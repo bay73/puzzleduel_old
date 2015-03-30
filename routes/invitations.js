@@ -86,14 +86,17 @@ function renderInvitations(req, res, next) {
         var endTime = pad(invitations[i].endTime.getHours()).concat(':', pad(invitations[i].endTime.getMinutes()));
         var opponent;
         var status = invitations[i].status;
+        var timer = d - now;
         if(status=='accepted'){
           if(now > d){
+            timer = null;
             status = 'Invitation current';
           } else {
             status = 'Invitation accepted';
           }
         }
         if(status=='declined'){
+          timer = null;
           status = 'Invitation declined';
         }
         if(invitations[i].user.equals(user._id)){
@@ -103,6 +106,7 @@ function renderInvitations(req, res, next) {
             opponent = invitations[i].opponentMail;
           }
           if(status=='new'){
+            timer = null;
             status = 'Invitation out';
           }
         } else {
@@ -111,7 +115,10 @@ function renderInvitations(req, res, next) {
           }
           opponent = users[invitations[i].user];
         }
-        data.push({id: invitations[i]._id, date: challengeDate, opponent: opponent, from: startTime, to: endTime, status: status});
+        if(timer > 86400000) {
+          timer = null;
+        }
+        data.push({id: invitations[i]._id, date: challengeDate, opponent: opponent, from: startTime, to: endTime, status: status, timer: timer});
       }
       callback(null, data);
     },
