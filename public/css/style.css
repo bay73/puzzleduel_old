@@ -28,7 +28,7 @@ body.lefttitle {
 .container{
    margin: 20px auto;
    width: 1000px;
-   max-width: 65%;
+   max-width: 70%;
    min-height: 75%;
    min-width: 500px;
    text-align: center;
@@ -619,31 +619,31 @@ input:focus ~ .highlight {
 
 .ratingtable .name{
    padding: 3px 0 3px  5px;
-   min-width: 140px;
+   min-width: 125px;
    text-align: left;
 }
 
 .ratingtable .date{
    padding: 3px 5px 3px 0;
-   min-width: 130px;
+   min-width: 120px;
    text-align: right;
 }
 
 .ratingtable .score{
    padding: 3px 5px 3px 5px;
-   min-width: 90px;
+   min-width: 80px;
    text-align: center;
 }
 
 .ratingtable .value{
    padding: 3px 5px 3px 0;
-   min-width: 60px;
+   min-width: 55px;
    text-align: right;
 }
 
 .ratingtable .duration{
    padding: 3px 5px 3px 0;
-   min-width: 60px;
+   min-width: 55px;
    text-align: right;
 }
 
@@ -679,7 +679,7 @@ input:focus ~ .highlight {
    position: absolute;
    display: none;
    z-index: 10;
-   width: 150px;
+   width: 120px;
 }
 
 .dropdown ul li{
@@ -704,6 +704,10 @@ body {
 
 .logo {
    height: 160px;
+}
+
+.container{
+   width: 1300px;
 }
 
 body.lefttitle .logo {
@@ -904,9 +908,33 @@ body.lefttitle .langchooser {
    display: none;
 }
 
+.ratingtable .name{
+   min-width: 100px;
+}
+
+.ratingtable .date{
+   min-width: 90px;
+}
+
+.ratingtable .score{
+   min-width: 60px;
+}
+
+.ratingtable .value{
+   min-width: 40px;
+}
+
+.ratingtable .duration{
+   min-width: 40px;
+}
+
 }
 
 @media screen and (min-width:40px) and (max-width:560px) {
+body {
+   font-size: 12px;
+}
+
 .container{
    width: 97%;
    max-width: 97%;
@@ -979,9 +1007,35 @@ h1,h2,h3,h4 {
 .langchooser a.long {
    display: none;
 }
+
+.ratingtable .name{
+   min-width: 70px;
+}
+
+.ratingtable .date{
+   min-width: 55px;
+}
+
+.ratingtable .score{
+   min-width: 45px;
+}
+
+.ratingtable .value{
+   min-width: 25px;
+}
+
+.ratingtable .duration{
+   min-width: 25px;
+}
+
+.ratingtable .narrow{
+   min-width: 15px;
+}
+
 }
 
 @media screen and (min-height:40px) and (max-height:560px) {
+
 .logo {
    height: 50px;
 }
