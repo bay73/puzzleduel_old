@@ -78,9 +78,13 @@ matchschema.statics.addMatch = function(started, sockets, counter, result, resul
       var user0 = userFromSocket(sockets[0]);
       var user1 = userFromSocket(sockets[1]);
       var change = [0, 0];
+      console.log('user0: ', user0);
+      console.log('user1: ', user1);
       if(user1 && user0){
-        if(user0.rating <= 0) user0.rating = INITIAL_RATING;
-        if(user1.rating <= 0) user1.rating = INITIAL_RATING;
+        if(typeof user0.rating === 'undefined' || user0.rating <= 0) user0.rating = INITIAL_RATING;
+        if(typeof user1.rating === 'undefined' || user1.rating <= 0) user1.rating = INITIAL_RATING;
+        console.log('user0.r: ', user0);
+        console.log('user1.r: ', user1);
         var sumR = user0.rating + user1.rating;
         var sumC = counter[0] + counter[1] + 2*MATCH_COST;
         var expected0 = user0.rating * sumC / sumR;
