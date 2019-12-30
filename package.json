@@ -17,7 +17,7 @@
     "nconf": "0",
     "winston": "0",
     "ejs-locals": "1",
-    "mongoose": "4",
+    "mongoose": "5",
     "express-session": "1",
     "connect-mongo": "0",
     "async": "0",
