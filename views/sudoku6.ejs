@@ -1,0 +1,80 @@
+<% layout('/gamepage.ejs') -%>
+  <div id="board" style="position:absolute;">
+  </div>
+  <div class="raised dialog" id="connectDialog">
+    <table>
+      <tr><td colspan=2><span class="infotext" id="peerName"></span></td></tr>
+      <tr><td colspan=2><div class="fb-share-button" data-href="http://puzzleduel.club" data-layout="button"></div></td></tr>
+      <tr><td colspan=2><span class="infotext" id="info"></span></td></tr>
+      <tr><td colspan=2>
+        <div class="group">
+          <input type="text" name="name" id="name" required value="<%= user?user.displayName:'' %>" <%= user?'disabled=disabled':'' %> >
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <label id="namelabel" for="name" <%= user?'class=disabled':'' %>></label>
+        </div>
+      </td></tr>
+      <tr><td colspan=2><img id="spinner" src="images/spinner.gif"></img></td></tr>
+      <tr><td colspan=2><button class="button blue raised" id="connect"><%= translate["SearchRivals"]%></button></td></tr>
+      <tr><td colspan=2><button class="button blue raised" id="ready"><%= translate["Start"]%></button></td></tr>
+      <tr><td colspan=2><span class="infotext" id="waitingforready"></span></td></tr>
+      <tr><td class="leftlink"><a id="mainlink" href="/"><%= translate["MainPage"]%></a></td><td class="rightlink"><a id="ruleslink" href="#"><%= translate["Rules"]%></a></td></tr>
+    </table>
+  </div>
+  <div class="raised dialog" id="rulesDialog">
+    <div id="rulestext"></div>
+    <button class="button blue raised closedialog" id="rulesclose"><%= translate["OK button label"]%></button>
+  </div>
+  <div class="raised dialog" id="skinsDialog">
+    <button class="button blue raised closedialog" id="skinsclose"><%= translate["OK button label"]%></button>
+  </div>
+<script>
+  var SIZE = 6;
+  translate = <%- JSON.stringify(translate) %>
+  $('#ruleslink').click(function(){puzzle.showRules();});
+
+  var statusPanel = new BayTextPanel(10, 'status');
+  var scorePanel = new BayTextPanel(2.3, 'score');
+  var infoPanel = new BayLayout([scorePanel, statusPanel],{vertical: [72, 28], horizontal: [50, 50]}, 'info');
+
+  var puzzle = new BayPuzzle({generator: new SquareGridGenerator(), width: SIZE, height: SIZE, sudoku: true, digits: SIZE <%- invitation ? ', invitation: "'+invitation+'"' : '' %> });
+  var board = new BayBoard({puzzle: puzzle, colorScheme: BayColorScheme.basic});
+
+  var layout = new BayLayout([infoPanel, board],{vertical: [15, 85], horizontal: [30, 70]});
+
+  puzzle.setScorePanel(scorePanel);
+  puzzle.setInfoPanel(statusPanel);
+  puzzle.setBoard(board);
+
+  function BoardResize() {
+    var headerSize = Math.min($('header.logo').height(), $('header.logo').width());
+    var menuSize = Math.min($('.menu').height(), $('.menu').width());
+    var margin = $('.container').css('margin-top').match(/\d+/)[0];
+    var winHeight = $(window).height() - headerSize - menuSize - 2*margin;
+    var winWidth = $(window).width() - headerSize - menuSize - 2*margin;
+    if(winWidth > winHeight * 1.5 && winHeight < 400){
+      var width = Math.max(winHeight * 1.5, winWidth*0.9);
+      $('body').addClass('lefttitle');
+      $('#board').width(width);
+      $('.container').innerWidth(width);
+      $('#board').height($(window).height() - 2*margin);
+      $('.container').innerHeight($(window).height() - 2*margin);
+    } else {
+      $('body').removeClass('lefttitle');
+      $('#board').height(winHeight);
+      $('#board').width($('.container').innerWidth());
+      $('.container').innerHeight(winHeight);
+    }
+    layout.onResize($('#board'));
+    puzzle.changeState();
+    closeDialog($('#confirmationDialog'));
+  }
+
+  var resizeTimer;
+  $(window).bind('resize',function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(BoardResize,100);
+  })
+
+  BoardResize();
+</script>

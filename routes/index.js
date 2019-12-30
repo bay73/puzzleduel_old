@@ -4,6 +4,7 @@ module.exports = function(app){
    app.get('/account', require('./account').get);
    app.get('/rating', require('./rating').get);
    app.get('/sudokuduel', require('./sudoku').get);
+   app.get('/sudokuduel6', require('./sudoku6').get);
    app.get('/matchhistory', require('./matchhistory').get);
    app.get('/statistics', require('./statistics').get);
    app.get('/invitations', require('./invitations').get);
